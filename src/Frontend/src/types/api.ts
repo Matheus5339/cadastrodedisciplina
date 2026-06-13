@@ -12,8 +12,8 @@ export interface AlunoDto {
 export interface AuthResultDto {
   accessToken: string;
   accessTokenExpiresAtUtc: string;
-  refreshToken: string;
   aluno: AlunoDto;
+  // O refresh token não vem no corpo: viaja em cookie httpOnly gerenciado pelo navegador.
 }
 
 export interface DisciplinaDto {

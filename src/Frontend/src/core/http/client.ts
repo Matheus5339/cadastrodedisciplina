@@ -12,6 +12,7 @@ import type { AuthResultDto } from "@/types/api";
 export const http = axios.create({
   baseURL: env.apiBaseUrl,
   timeout: 30_000,
+  withCredentials: true, // envia o cookie httpOnly de refresh (login/refresh/logout)
 });
 
 http.interceptors.request.use((config) => {
@@ -25,12 +26,12 @@ http.interceptors.request.use((config) => {
 let renovacaoEmAndamento: Promise<string | null> | null = null;
 
 async function renovarSessao(): Promise<string | null> {
-  const { refreshToken, aplicarSessao, limparSessao } = useAuthStore.getState();
-  if (!refreshToken) return null;
+  const { aplicarSessao, limparSessao } = useAuthStore.getState();
   try {
-    // axios "cru" para não entrar nos interceptadores e causar loop
-    const { data } = await axios.post<AuthResultDto>(`${env.apiBaseUrl}/auth/refresh`, {
-      refreshToken,
+    // axios "cru" para não entrar nos interceptadores e causar loop.
+    // O refresh token vem do cookie httpOnly (withCredentials), não do corpo.
+    const { data } = await axios.post<AuthResultDto>(`${env.apiBaseUrl}/auth/refresh`, null, {
+      withCredentials: true,
     });
     aplicarSessao(data);
     return data.accessToken;

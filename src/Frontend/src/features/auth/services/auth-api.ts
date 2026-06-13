@@ -20,7 +20,8 @@ export const authApi = {
     return data;
   },
 
-  async logout(refreshToken: string): Promise<void> {
-    await http.post("/auth/logout", { refreshToken });
+  async logout(): Promise<void> {
+    // o refresh token vem do cookie httpOnly; nada no corpo
+    await http.post("/auth/logout");
   },
 };
