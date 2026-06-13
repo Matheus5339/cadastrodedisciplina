@@ -3,11 +3,13 @@ using ControleDisciplinas.Application.DTOs;
 using ControleDisciplinas.Application.Features.Auth;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.RateLimiting;
 
 namespace ControleDisciplinas.Api.Controllers;
 
 [ApiController]
 [Route("api/auth")]
+[EnableRateLimiting(RateLimitPolicies.Auth)] // P0: anti brute-force nos endpoints de autenticação
 public sealed class AuthController(IAuthService auth) : ControllerBase
 {
     [HttpPost("register")]
