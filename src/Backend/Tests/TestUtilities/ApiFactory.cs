@@ -1,5 +1,6 @@
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using ControleDisciplinas.Api;
 using ControleDisciplinas.Application.DTOs;
 using ControleDisciplinas.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
@@ -64,23 +65,41 @@ public sealed class ApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
 
     private static int _seq;
 
-    /// <summary>Registra um aluno novo (dados únicos) e devolve client autenticado + tokens.</summary>
-    public async Task<(HttpClient Client, AuthResultDto Auth)> RegistrarAlunoAsync(string? nome = null)
+    public sealed record RegistroAluno(string Rgu, string Cpf, string Email, string Nome, string Senha);
+
+    /// <summary>Gera dados de cadastro únicos (RGU/CPF/e-mail) para um novo aluno.</summary>
+    public static RegistroAluno NovoRegistro(string? nome = null)
     {
         var n = Interlocked.Increment(ref _seq);
+        return new RegistroAluno($"20261{n:D5}", GerarCpfValido(n), $"aluno{n}@teste.ucp.edu.br",
+            nome ?? $"Aluno Teste {n}", "SenhaForte123");
+    }
+
+    /// <summary>Client que NÃO gerencia cookies automaticamente — usado para testar o fluxo de refresh manualmente.</summary>
+    public HttpClient CreateRawClient() =>
+        CreateClient(new WebApplicationFactoryClientOptions { HandleCookies = false });
+
+    /// <summary>Extrai o valor do cookie de refresh de uma resposta (ou null se ausente).</summary>
+    public static string? RefreshCookie(HttpResponseMessage resposta)
+    {
+        if (!resposta.Headers.TryGetValues("Set-Cookie", out var cookies))
+            return null;
+        var prefixo = RefreshTokenCookie.Name + "=";
+        foreach (var c in cookies)
+            if (c.StartsWith(prefixo, StringComparison.Ordinal))
+                return c.Split(';')[0][prefixo.Length..];
+        return null;
+    }
+
+    /// <summary>Registra um aluno novo (dados únicos) e devolve client autenticado (cookie de refresh já no container).</summary>
+    public async Task<(HttpClient Client, AuthResponseDto Auth)> RegistrarAlunoAsync(string? nome = null)
+    {
         var client = CreateClient();
-        var request = new
-        {
-            rgu = $"20261{n:D5}",
-            cpf = GerarCpfValido(n),
-            email = $"aluno{n}@teste.ucp.edu.br",
-            nome = nome ?? $"Aluno Teste {n}",
-            senha = "SenhaForte123",
-        };
+        var request = NovoRegistro(nome);
 
         var resposta = await client.PostAsJsonAsync("/api/auth/register", request);
         resposta.EnsureSuccessStatusCode();
-        var auth = (await resposta.Content.ReadFromJsonAsync<AuthResultDto>())!;
+        var auth = (await resposta.Content.ReadFromJsonAsync<AuthResponseDto>())!;
         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", auth.AccessToken);
         return (client, auth);
     }

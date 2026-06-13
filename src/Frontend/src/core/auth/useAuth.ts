@@ -6,11 +6,11 @@ import { secureStorage } from "@/core/security/storage";
 /** Ações de autenticação compartilhadas (logout com invalidação no servidor — segurança 16). */
 export function useAuth() {
   const navigate = useNavigate();
-  const { refreshToken, limparSessao } = useAuthStore();
+  const { limparSessao } = useAuthStore();
 
   async function logout() {
     try {
-      if (refreshToken) await authApi.logout(refreshToken);
+      await authApi.logout();
     } catch {
       // mesmo se a API falhar, a sessão local é encerrada
     } finally {

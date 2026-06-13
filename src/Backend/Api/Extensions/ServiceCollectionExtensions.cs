@@ -47,7 +47,8 @@ public static class ServiceCollectionExtensions
         services.AddCors(options => options.AddPolicy(CorsPolicy, policy =>
             policy.WithOrigins(origens)
                 .AllowAnyHeader()
-                .AllowAnyMethod()));
+                .AllowAnyMethod()
+                .AllowCredentials())); // necessário para enviar/receber o cookie httpOnly de refresh
         return services;
     }
 
