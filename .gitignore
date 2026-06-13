@@ -1,0 +1,43 @@
+# Build e artefatos .NET
+bin/
+obj/
+*.user
+publish/
+*.binlog
+
+# Banco de dados local (nunca versionar)
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+
+# Node / frontend
+node_modules/
+dist/
+dist-ssr/
+coverage/
+test-results/
+playwright-report/
+*.local
+
+# Segredos e configuração local (nunca versionar)
+.env
+.env.*
+!.env.example
+appsettings.Development.json
+appsettings.Local.json
+secrets.json
+
+# IDE e SO
+.vs/
+.vscode/
+.idea/
+*.swp
+Thumbs.db
+.DS_Store
+
+# Logs e temporários
+logs/
+*.log
+*.tmp
