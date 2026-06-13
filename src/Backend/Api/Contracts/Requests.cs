@@ -15,9 +15,7 @@ public sealed record LoginRequest(
     [Required, EmailAddress] string Email,
     [Required] string Senha);
 
-public sealed record RefreshRequest([Required] string RefreshToken);
-
-public sealed record LogoutRequest([Required] string RefreshToken);
+// Refresh e logout não recebem mais corpo: o refresh token vem do cookie httpOnly.
 
 public sealed record UpdateAlunoRequest(
     [Required, MinLength(3), MaxLength(120)] string Nome,
