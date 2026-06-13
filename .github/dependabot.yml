@@ -1,0 +1,11 @@
+version: 2
+updates:
+  # Mantém as actions do CI atualizadas (baixo ruído).
+  # As dependências de npm/NuGet seguem versões fixadas pelo normativo do
+  # projeto e por isso não são gerenciadas automaticamente pelo Dependabot.
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    commit-message:
+      prefix: "ci"

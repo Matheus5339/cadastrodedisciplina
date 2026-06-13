@@ -1,6 +1,12 @@
 # Controle de Disciplinas — UCP (Projeto Novo)
 
 <p align="center">
+  <a href="https://github.com/Matheus5339/cadastrodedisciplina/actions/workflows/ci.yml">
+    <img alt="CI" src="https://github.com/Matheus5339/cadastrodedisciplina/actions/workflows/ci.yml/badge.svg">
+  </a>
+</p>
+
+<p align="center">
   <img alt=".NET 10"      src="https://img.shields.io/badge/.NET-10-512BD4?logo=dotnet&logoColor=white">
   <img alt="C#"           src="https://img.shields.io/badge/C%23-239120?logo=csharp&logoColor=white">
   <img alt="React 19"     src="https://img.shields.io/badge/React-19.2-61DAFB?logo=react&logoColor=black">

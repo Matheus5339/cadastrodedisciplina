@@ -1,0 +1,26 @@
+# Normaliza fim de linha: evita o ruído de "LF will be replaced by CRLF" no Windows.
+* text=auto eol=lf
+
+# Scripts específicos de Windows mantêm CRLF
+*.cmd text eol=crlf
+*.bat text eol=crlf
+*.ps1 text eol=crlf
+
+# Tipos textuais explícitos
+*.cs    text eol=lf
+*.ts    text eol=lf
+*.tsx   text eol=lf
+*.js    text eol=lf
+*.json  text eol=lf
+*.css   text eol=lf
+*.md    text eol=lf
+*.csv   text eol=lf
+*.yml   text eol=lf
+*.yaml  text eol=lf
+
+# Binários (sem conversão)
+*.png  binary
+*.jpg  binary
+*.jpeg binary
+*.ico  binary
+*.db   binary
