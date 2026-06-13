@@ -1,0 +1,499 @@
+codigo,nome,professor,periodo,creditos
+ECOMP-001,Linguagem e Redação I,,1,4
+ECOMP-002,Segurança no Trabalho,,1,2
+ECOMP-003,Administração e Organização Empresarial,,1,2
+ECOMP-004,Química,Mauro Cresta de Barros Dolinsky,1,4
+ECOMP-005,Ciência dos Materiais,Mauro Cresta de Barros Dolinsky,1,2
+ECOMP-006,Álgebra Linear,Ana Carolina Carius,1,2
+ECOMP-007,Humanismo Cristão e Fenômeno Religioso,Pedro Paulo de Carvalho Rosa,1,4
+ECOMP-008,Introdução à Inteligência Artificial,,2,2
+ECOMP-009,Introdução à Engenharia,Fabini Hoelz Bargas Alvarez,2,2
+ECOMP-010,Introdução à Computação,Bruno Clemente Guingo,2,4
+ECOMP-011,Introdução ao Cálculo,Rosenberg Coutinho Ramos,2,4
+ECOMP-012,Geometria Analítica,Paulo Cesar Ferreira,2,2
+ECOMP-013,Tópicos de Teologia,Adenilson Silva Ferreira,2,4
+ECOMP-014,Introdução à Física,Flávio Carnelli Frade,2,2
+ECOMP-015,Ergonomia e Desenho Universal,,3,2
+ECOMP-016,Projetos e Ativ. de Extensão I,Fábio Lopes Licht,3,4
+ECOMP-017,Ciências do Ambiente,,3,2
+ECOMP-018,Cálculo I,Rosenberg Coutinho Ramos,3,4
+ECOMP-019,Estatística,,3,4
+ECOMP-020,Programação I,Fábio Lopes Licht,3,4
+ECOMP-021,Introdução à Filosofia,Daniel Leite Cabrera Pereira da Rosa,3,2
+ECOMP-022,Mecânica Clássica,Flávio Carnelli Frade,4,4
+ECOMP-023,Projetos e Ativ. de Extensão II (IA),Fábio Lopes Licht,4,4
+ECOMP-024,Cálculo II,,4,4
+ECOMP-025,Ética,Júlio Cesar Figueiredo Offredi,4,2
+ECOMP-026,Programação II,,4,4
+ECOMP-027,Sinais e Sistemas,,4,4
+ECOMP-028,Introdução à Teoria Econômica,,4,2
+ECOMP-029,Eletricidade e Magnetismo,,4,4
+ECOMP-030,Projetos e Ativ. de Extensão III,Fábio Lopes Licht,5,4
+ECOMP-031,Ética Profissional em Engenharia,,5,2
+ECOMP-032,Análise Vetorial,,5,4
+ECOMP-033,Cálculo III,,5,4
+ECOMP-034,Programação Estruturada,Mozar Baptista da Silva,5,2
+ECOMP-035,"Fluidos, Ondas e Calor",,5,4
+ECOMP-036,Circuitos Elétricos I,,5,4
+ECOMP-037,Desenho de Instalações em Redes,,5,2
+ECOMP-038,Técnicas Digitais,,6,4
+ECOMP-039,Cálculo Numérico,,6,4
+ECOMP-040,Fenômenos de Transporte,,6,2
+ECOMP-041,Inteligência Artificial,,6,4
+ECOMP-042,Estruturas de Dados,,6,4
+ECOMP-043,Eletrônica I,,6,4
+ECOMP-044,Projetos e Ativ. de Extensão IV,,6,4
+ECOMP-045,Controle e Servomecanismos I,,7,4
+ECOMP-046,Engenharia de Software,Luis Alexandre Estevão da Silva,7,4
+ECOMP-047,Arquitetura de Computadores,Bruno Clemente Guingo,7,4
+ECOMP-048,Banco de Dados I,Luis Alexandre Estevão da Silva,7,2
+ECOMP-049,Lógica em Computação,Flávio Carnelli Frade,7,2
+ECOMP-050,Projetos e Ativ. de Extensão V,Fábio Lopes Licht,7,4
+ECOMP-051,Programação Orientada a Objetos,,7,4
+ECOMP-052,Sistemas Operacionais,,8,4
+ECOMP-053,Análise Orientada a Objetos,,8,4
+ECOMP-054,Redes de Computadores,,8,2
+ECOMP-055,Mecânica dos Sólidos,,8,4
+ECOMP-056,Banco de Dados II,,8,2
+ECOMP-057,Programação em Python,Fábio Lopes Licht,8,2
+ECOMP-058,Projetos e Ativ. de Extensão VI,,8,4
+ECOMP-059,Computação Gráfica,Mozar Baptista da Silva,9,4
+ECOMP-060,Análise de Algoritmos,Bruno Clemente Guingo,9,4
+ECOMP-061,Sistemas Distribuídos,Bruno Richard Schulze,9,4
+ECOMP-062,Programação em Plataforma Arduino,Mozar Baptista da Silva,9,4
+ECOMP-063,Programação Web,Fábio Lopes Licht,9,2
+ECOMP-064,Metodologia Científica no TCC,,9,2
+ECOMP-065,Teoria da Computação,Bruno Clemente Guingo,9,2
+ECOMP-066,Análise de Dados,,10,2
+ECOMP-067,Sistemas Embarcados,,10,4
+ECOMP-068,Propriedade Intelectual,,10,2
+ECOMP-069,Programação Paralela e Distribuída,Fábio Lopes Licht,10,2
+ECOMP-070,Segurança da Informação,,10,2
+ECOMP-071,Trabalho de Conclusão de Curso,Bruno Clemente Guingo / Fábio Lopes Licht / Luis Alexandre Estevão da Silva,10,1
+ECOMP-072,Estágio Supervisionado,Bruno Clemente Guingo,10,11
+CIV-001,Linguagem e Redação I,,1,4
+CIV-002,Segurança no Trabalho,,1,2
+CIV-003,Administração e Organização Empresarial,,1,2
+CIV-004,Química,,1,4
+CIV-005,Ciência dos Materiais,,1,2
+CIV-006,Álgebra Linear,,1,2
+CIV-007,Humanismo Cristão e Fenômeno Religioso,,1,4
+CIV-008,Introdução à Inteligência Artificial,,1,2
+CIV-009,Introdução à Engenharia,,1,2
+CIV-010,Introdução à Computação,,1,4
+CIV-011,Introdução ao Cálculo,,1,4
+CIV-012,Geometria Analítica,,1,2
+CIV-013,Tópicos de Teologia,,2,4
+CIV-014,Introdução à Física,,2,2
+CIV-015,Ergonomia e Desenho Universal,,2,2
+CIV-016,Projetos e Ativ. de Extensão I (Gerência),,2,4
+CIV-017,Ciências do Ambiente,,2,2
+CIV-018,Cálculo I,,2,4
+CIV-019,Estatística,,2,4
+CIV-020,Programação I,,2,4
+CIV-021,Introdução à Filosofia,,2,2
+CIV-022,Mecânica Clássica,,2,4
+CIV-023,Projetos e Ativ. de Extensão II (IA),,3,4
+CIV-024,Mecânica Geral I,,3,4
+CIV-025,Cálculo II,,3,4
+CIV-026,Ética,,3,2
+CIV-027,Programação II,,3,4
+CIV-028,Introdução à Teoria Econômica,,3,2
+CIV-029,Eletricidade e Magnetismo,,3,4
+CIV-030,Projetos e Ativ. de Extensão III (Inovação),,4,4
+CIV-031,Resistência dos Materiais I,,4,4
+CIV-032,Ética Profissional em Engenharia,,4,2
+CIV-033,Análise Vetorial,,4,4
+CIV-034,Cálculo III,,4,4
+CIV-035,"Fluidos, Ondas e Calor",,4,4
+CIV-036,Desenho Técnico de Construção Civil,,4,4
+CIV-037,Resistência dos Materiais II,,5,4
+CIV-038,Materiais de Construção Civil,,5,4
+CIV-039,Geologia Geral,,5,2
+CIV-040,Desenho Computacional na Const. Civil,,5,4
+CIV-041,Topografia,,5,4
+CIV-042,Laboratório de Mecânica dos Fluidos,,5,2
+CIV-043,Mecânica dos Fluidos,,5,2
+CIV-044,Análise Estrutural,,6,4
+CIV-045,Hidráulica,,6,4
+CIV-046,Estruturas de Concreto Armado I,,6,4
+CIV-047,Tecnologia da Construção Civil,,6,4
+CIV-048,Mecânica dos Solos I,,6,4
+CIV-049,Laboratório de Mecânica dos Solos,,6,2
+CIV-050,Obras de Terra,,6,2
+CIV-051,Projetos e Ativ. de Extensão IV,,7,4
+CIV-052,Hidrologia,,7,4
+CIV-053,Estruturas de Concreto Armado II,,7,4
+CIV-054,Mecânica dos Solos II,,7,4
+CIV-055,Instalações Elétricas,,7,4
+CIV-056,Instalações Hidráulicas,,7,4
+CIV-057,Laboratório de Materiais de Const. Civil,,7,2
+CIV-058,Projetos e Ativ. de Extensão V,,8,4
+CIV-059,Pontes,,8,4
+CIV-060,Saneamento,,8,4
+CIV-061,Programação e Controle de Obras,,8,4
+CIV-062,Estruturas de Aço,,8,4
+CIV-063,Fundações,,8,4
+CIV-064,Metodologia Científica no TCC,,8,2
+CIV-065,Projetos e Ativ. de Extensão VI,,9,4
+CIV-066,Arquitetura e Urbanismo,,9,2
+CIV-067,Estruturas de Madeira,,9,2
+CIV-068,Estágio Supervisionado,,9,11
+CIV-069,Trabalho de Conclusão de Curso,,10,1
+CIV-070,Transportes e Construção de Estradas,,10,4
+PROD-001,Linguagem e Redação I,,1,4
+PROD-002,Segurança no Trabalho,,1,2
+PROD-003,Administração e Organização Empresarial,,1,2
+PROD-004,Química,,1,4
+PROD-005,Ciência dos Materiais,,1,2
+PROD-006,Álgebra Linear,,1,2
+PROD-007,Humanismo Cristão e Fenômeno Religioso,,1,4
+PROD-008,Introdução à Inteligência Artificial,,1,2
+PROD-009,Introdução à Engenharia,,1,2
+PROD-010,Introdução à Computação,,1,4
+PROD-011,Introdução ao Cálculo,,2,4
+PROD-012,Geometria Analítica,,2,2
+PROD-013,Introdução à Teoria Econômica,,2,2
+PROD-014,Tópicos de Teologia,,2,4
+PROD-015,Introdução à Física,,2,2
+PROD-016,Ergonomia e Desenho Universal,,2,2
+PROD-017,Projetos e Ativ. de Extensão I (Gerência),,2,4
+PROD-018,Ciências do Ambiente,,2,2
+PROD-019,Cálculo I,,3,4
+PROD-020,Estatística,,3,4
+PROD-021,Programação I,,3,4
+PROD-022,Introdução à Filosofia,,3,2
+PROD-023,Mecânica Clássica,,3,4
+PROD-024,Projetos e Ativ. de Extensão II (IA),,3,4
+PROD-025,Cálculo II,,4,4
+PROD-026,Ética,,4,2
+PROD-027,Programação II,,4,4
+PROD-028,Eletricidade e Magnetismo,,4,4
+PROD-029,Mecânica dos Sólidos,,4,2
+PROD-030,Projetos e Ativ. de Extensão III,,4,4
+PROD-031,Gerência de Operações,,5,5
+PROD-032,Ética Profissional em Engenharia,,5,2
+PROD-033,Análise Vetorial,,5,4
+PROD-034,Desenho Técnico I,,5,4
+PROD-035,Cálculo III,,5,4
+PROD-036,Eletrotécnica,,5,4
+PROD-037,Programação Estruturada,,5,2
+PROD-038,"Fluidos, Ondas e Calor",,5,4
+PROD-039,Arranjo Físico Industrial,,6,2
+PROD-040,Desenho Técnico II,,6,4
+PROD-041,Fenômenos de Transporte,,6,2
+PROD-042,Lab. Processos Especiais de Fabricação,,6,2
+PROD-043,Materiais de Construção Mecânica,,6,2
+PROD-044,Lab. Materiais de Construção Mecânica,,6,2
+PROD-045,Projeto de Produtos,,6,2
+PROD-046,Controle Estatístico de Processos,,6,2
+PROD-047,Processos Especiais de Fabricação,,6,2
+PROD-048,Metrologia Industrial,,6,2
+PROD-049,Gestão da Qualidade,,7,3
+PROD-050,Lab. Tecnologia de Usinagem,,7,2
+PROD-051,Lean Manufacturing,,7,2
+PROD-052,Gestão de Estoques e Sistemas MRP,,7,2
+PROD-053,Engenharia de Confiabilidade,,7,2
+PROD-054,Tecnologia de Usinagem,,7,2
+PROD-055,Tecnologias de Inspeções e Testes,,7,4
+PROD-056,Manutenção de Equipamentos,,7,2
+PROD-057,Gestão Logística e Cadeia de Suprimentos,,8,3
+PROD-058,Projetos e Ativ. de Extensão IV,,8,4
+PROD-059,Programação e Controle da Produção,,8,3
+PROD-060,Processos Estocásticos,,8,2
+PROD-061,Teoria dos Jogos,,8,2
+PROD-062,Gestão de Sistemas de Informação,,8,2
+PROD-063,Inferência Estatística,,8,2
+PROD-064,Inteligência Artificial,,9,4
+PROD-065,Programação em Python,,9,2
+PROD-066,Projetos e Ativ. de Extensão V,,9,4
+PROD-067,Pesquisa Operacional,,9,5
+PROD-068,Técnicas de Simulação,,9,2
+PROD-069,Simulação de Negócios (Business Game),,9,2
+PROD-070,Contabilidade Introdutória,,9,2
+PROD-071,Gestão de Custos e Preços,,9,2
+PROD-072,Análise de Dados,,9,2
+PROD-073,Metodologia Científica e Tecnológica,,9,2
+PROD-074,Matemática Financeira,,10,3
+PROD-075,Engenharia Econômica,,10,2
+PROD-076,Gestão Financeira e Orçamento,,10,2
+PROD-077,Mercado Financeiro e de Capitais,,10,6
+PROD-078,Estratégia de Negócios,,10,2
+PROD-079,Trabalho de Conclusão de Curso,,10,1
+PROD-080,Estágio Supervisionado,,10,11
+PROD-081,Projetos e Ativ. de Extensão VI,,10,4
+ELET-001,Linguagem e Redação I,,1,4
+ELET-002,Introdução ao Cálculo,,1,4
+ELET-003,Introdução à Computação,,1,4
+ELET-004,Introdução à Física,,1,2
+ELET-005,Humanismo Cristão e Fenômeno Religioso,,1,4
+ELET-006,Ciências do Ambiente,,1,2
+ELET-007,Projetos e Ativ. de Extensão I,,1,4
+ELET-008,Cálculo I,,2,4
+ELET-009,Programação I,,2,4
+ELET-010,Estatística,,2,4
+ELET-011,Geometria Analítica,,2,2
+ELET-012,Introdução à Filosofia,,2,2
+ELET-013,Segurança no Trabalho,,2,2
+ELET-014,Projetos e Ativ. de Extensão II,,2,4
+ELET-015,Cálculo II,,3,4
+ELET-016,Programação II,,3,4
+ELET-017,Sinais e Sistemas,,3,4
+ELET-018,Mecânica Clássica,,3,4
+ELET-019,Tópicos de Teologia,,3,4
+ELET-020,Ética,,3,2
+ELET-021,Projetos e Ativ. de Extensão III,,3,4
+ELET-022,Análise Vetorial,,4,4
+ELET-023,Cálculo III,,4,4
+ELET-024,Programação Estruturada,,4,2
+ELET-025,Eletricidade e Magnetismo,,4,4
+ELET-026,"Fluidos, Ondas e Calor",,5,4
+ELET-027,Circuitos Elétricos I,,5,4
+ELET-028,Processamento Digital de Sinais,,5,4
+ELET-029,Técnicas Digitais,,5,4
+ELET-030,Álgebra Linear,,5,2
+ELET-031,Introdução à Inteligência Artificial,,5,2
+ELET-032,Eletromagnetismo,,6,4
+ELET-033,Circuitos Elétricos II,,6,4
+ELET-034,Eletrônica I,,6,4
+ELET-035,Eletricidade Aplicada,,7,4
+ELET-036,Fenômenos de Transporte,,7,2
+ELET-037,Geração de Energia Elétrica,,7,2
+ELET-038,Mecânica dos Sólidos,,7,2
+ELET-039,Ética Profissional em Engenharia,,7,2
+ELET-040,Administração e Organização Empresarial,,7,2
+ELET-041,Conversão de Energia I,,8,4
+ELET-042,Eletrônica II,,8,4
+ELET-043,Controle e Servomecanismos I,,8,4
+ELET-044,Instalações Elétricas,,8,4
+ELET-045,Desenho de Instalações em Redes,,8,2
+ELET-046,Ciência dos Materiais,,8,2
+ELET-047,Projetos e Ativ. de Extensão IV,,8,4
+ELET-048,Conversão de Energia II,,9,4
+ELET-049,Controle e Servomecanismos II,,9,4
+ELET-050,Eletrônica Industrial,,9,4
+ELET-051,Automação de Processos Industriais,,9,4
+ELET-052,Laboratório de Controle,,9,2
+ELET-053,Fontes Alternativas de Energia,,9,2
+ELET-054,Inteligência Artificial,,9,4
+ELET-055,Projetos e Ativ. de Extensão V,,9,4
+ELET-056,Distribuição e Transmissão de Energia,,10,4
+ELET-057,Análise de Sistemas de Energia,,10,4
+ELET-058,Sistemas Fotovoltaicos,,10,4
+ELET-059,Sistemas de Geração Eólica e Hidráulica,,10,4
+ELET-060,Subestações Transformadoras,,10,2
+ELET-061,Planejamento Energético,,10,2
+ELET-062,Eficiência Energética,,10,2
+ELET-063,Metodologia Científica e Tecnológica,,10,2
+ELET-064,Trabalho de Conclusão de Curso,,10,1
+ELET-065,Estágio Supervisionado,,10,11
+ELET-066,Química,,10,4
+ELET-067,Introdução à Engenharia,,10,2
+ELET-068,Ergonomia e Desenho Universal,,10,2
+ELET-069,Introdução à Teoria Econômica,,10,2
+ELET-070,Projetos e Ativ. de Extensão VI,,10,4
+MEC-001,Linguagem e Redação I,,1,4
+MEC-002,Introdução ao Cálculo,,1,4
+MEC-003,Geometria Analítica,,1,2
+MEC-004,Humanismo Cristão e Fenômeno Religioso,,1,4
+MEC-005,Introdução à Engenharia,,1,2
+MEC-006,Introdução à Computação,,1,4
+MEC-007,Química,,2,4
+MEC-008,Ciência dos Materiais,,2,2
+MEC-009,Álgebra Linear,,2,2
+MEC-010,Introdução à Inteligência Artificial,,2,2
+MEC-011,Introdução à Física,,2,2
+MEC-012,Cálculo I,,3,4
+MEC-013,Estatística,,3,4
+MEC-014,Programação I,,3,4
+MEC-015,Introdução à Filosofia,,3,2
+MEC-016,Mecânica Clássica,,3,4
+MEC-017,Mecânica Geral I,,4,4
+MEC-018,Cálculo II,,4,4
+MEC-019,Ética,,4,2
+MEC-020,Programação II,,4,4
+MEC-021,Introdução à Teoria Econômica,,4,2
+MEC-022,Eletricidade e Magnetismo,,4,4
+MEC-023,Resistência dos Materiais I,,5,4
+MEC-024,Ética Profissional em Engenharia,,5,2
+MEC-025,Análise Vetorial,,5,4
+MEC-026,Desenho Técnico I,,5,4
+MEC-027,Cálculo III,,5,4
+MEC-028,Eletrotécnica,,5,4
+MEC-029,"Fluidos, Ondas e Calor",,5,4
+MEC-030,Mecânica Geral II,,6,4
+MEC-031,Resistência dos Materiais II,,6,4
+MEC-032,Termodinâmica Aplicada,,6,4
+MEC-033,Desenho Técnico II,,6,4
+MEC-034,Lab. de Mecânica dos Fluidos,,6,2
+MEC-035,Materiais de Construção Mecânica,,6,2
+MEC-036,Lab. de Materiais de Const. Mecânica,,6,2
+MEC-037,Mecânica dos Fluidos,,6,2
+MEC-038,Metrologia Industrial,,6,2
+MEC-039,Vibrações Mecânicas,,7,4
+MEC-040,Elementos de Máquinas I,,7,4
+MEC-041,Mecânica Aplicada,,7,4
+MEC-042,Lab. de Tecnologia de Usinagem,,7,2
+MEC-043,Tecnologia de Usinagem,,7,2
+MEC-044,Transferência de Calor e Massa,,7,2
+MEC-045,Desenho Técnico III,,7,2
+MEC-046,Elementos de Máquinas II,,8,4
+MEC-047,Máquinas Hidráulicas,,8,4
+MEC-048,Máquinas Térmicas,,8,4
+MEC-049,Lab. de Processos Especiais,,8,2
+MEC-050,Sistemas de Atuação,,8,4
+MEC-051,Elementos Finitos Aplicados,,8,2
+MEC-052,Processos Especiais de Fabricação,,8,2
+MEC-053,Tecnologias de Inspeções e Testes,,9,4
+MEC-054,Manutenção de Equipamentos,,9,2
+MEC-055,Automação de Processos Industriais,,9,4
+MEC-056,Refrigeração e Climatização,,9,4
+MEC-057,Metodologia Científica e Tecnológica,,9,2
+MEC-058,Introdução à Robótica,,9,4
+MEC-059,Controle Estatístico de Processos,,9,2
+MEC-060,Projeto de Instalações Industriais,,9,2
+MEC-061,Trabalho de Conclusão de Curso,,10,1
+MEC-062,Estágio Supervisionado,,10,11
+MEC-063,Introdução à Gestão da Produção,,10,2
+MEC-064,Projetos e Ativ. de Extensão I,,3,4
+MEC-065,Projetos e Ativ. de Extensão II (IA),,4,4
+MEC-066,Projetos e Ativ. de Extensão III,,5,4
+MEC-067,Projetos e Ativ. de Extensão IV,,6,4
+MEC-068,Projetos e Ativ. de Extensão V,,7,4
+MEC-069,Projetos e Ativ. de Extensão VI,,8,4
+MECT-001,Introdução à Engenharia,,1,2
+MECT-002,Química,,1,4
+MECT-003,Introdução à Computação,,1,4
+MECT-004,Introdução ao Cálculo,,1,4
+MECT-005,Introdução à Filosofia,,1,2
+MECT-006,Humanismo Cristão e Fenômeno Religioso,,1,4
+MECT-007,Introdução à Física,,1,2
+MECT-008,Cálculo I,,2,4
+MECT-009,Ética,,2,2
+MECT-010,Ciência dos Materiais,,2,2
+MECT-011,Programação I,,2,4
+MECT-012,Álgebra Linear,,2,2
+MECT-013,Geometria Analítica,,2,2
+MECT-014,Tópicos de Teologia,,2,4
+MECT-015,Mecânica Clássica,,2,4
+MECT-016,Mecânica Geral I,,3,4
+MECT-017,Cálculo II,,3,4
+MECT-018,Estatística,,3,4
+MECT-019,Programação II,,3,4
+MECT-020,Eletricidade e Magnetismo,,3,4
+MECT-021,Projetos e Atividades de Extensão I,,3,4
+MECT-022,Mecânica Geral II,,4,4
+MECT-023,Análise Vetorial,,4,4
+MECT-024,Cálculo III,,4,4
+MECT-025,Sinais e Sistemas,,4,4
+MECT-026,"Fluidos, Ondas e Calor",,4,4
+MECT-027,Circuitos Elétricos I,,4,4
+MECT-028,Projetos e Atividades de Extensão II,,4,3
+MECT-029,Ciências do Ambiente,,5,2
+MECT-030,Segurança no Trabalho,,5,2
+MECT-031,Mecânica Aplicada,,5,4
+MECT-032,Administração e Organização Empresarial,,5,2
+MECT-033,Programação Estruturada,,5,2
+MECT-034,Programa em Plataforma Arduíno,,5,4
+MECT-035,Introdução à Teoria Econômica,,5,2
+MECT-036,Gerência de Projetos,,5,2
+MECT-037,Projetos e Atividades de Extensão III,,5,3
+MECT-038,Resistência dos Materiais I,,6,4
+MECT-039,Técnicas Digitais,,6,4
+MECT-040,Desenho Técnico II,,6,4
+MECT-041,Redes de Computadores,,6,4
+MECT-042,Fenômenos de Transporte,,6,2
+MECT-043,Eletrônica I,,6,4
+MECT-044,Projetos e Atividades de Extensão IV,,6,3
+MECT-045,Eletrônica II,,7,4
+MECT-046,Controle e Servomecanismos I,,7,4
+MECT-047,Laboratório de Tecnologia de Usinagem,,7,2
+MECT-048,Sistemas de Atuação,,7,4
+MECT-049,Tecnologia de Usinagem,,7,2
+MECT-050,Eletrônica Industrial,,7,4
+MECT-051,Projetos e Atividades de Extensão V,,7,3
+MECT-052,Resistência dos Materiais II,,8,4
+MECT-053,Microcontroladores,,8,4
+MECT-054,Ergonomia e Desenho Universal,,8,2
+MECT-055,Controle e Servomecanismos II,,8,4
+MECT-056,Laboratório de Controle e Servomecanismos,,8,2
+MECT-057,Projetos e Atividades de Extensão VI,,8,3
+MECT-058,Instrumentação I,,8,2
+MECT-059,Elementos de Máquinas I,,9,4
+MECT-060,Programação III,,9,4
+MECT-061,Automação de Processos Industriais,,9,4
+MECT-062,Metodologia Científica no Trabalho de Conclusão de Curso,,9,2
+MECT-063,Automação e Instrumentação Industrial,,9,2
+MECT-064,Projetos e Atividades de Extensão VII,,9,3
+ARQ-001,Expressão Gráfica,,1,4
+ARQ-002,Plástica,,1,4
+ARQ-003,Geografia Urbana,,1,2
+ARQ-004,Introdução à Filosofia,,1,2
+ARQ-005,Humanismo Cristão e Fenômeno Religioso,,1,4
+ARQ-006,História e Arte,,1,2
+ARQ-007,Introdução à Física,,1,2
+ARQ-008,Desenho Técnico de Construção Civil,,1,4
+ARQ-009,Ética,,2,2
+ARQ-010,História da Arte – Arquitetura Média,,2,4
+ARQ-011,Introdução ao Projeto de Arquitetura,,2,4
+ARQ-012,Elementos de Arquitetura,,2,4
+ARQ-013,Topografia,,2,4
+ARQ-014,Tópicos de Teologia,,2,4
+ARQ-015,Introdução a Sociologia,,2,2
+ARQ-016,Projeto de Arquitetura I,,3,4
+ARQ-017,História da Arte – Arquitetura Tardia,,3,4
+ARQ-018,Introdução ao Cálculo,,3,4
+ARQ-019,Desenho Computacional na Construção Civil,,3,4
+ARQ-020,Gestão da Inovação,,3,2
+ARQ-021,Sociologia Urbano-Ambiental,,3,2
+ARQ-022,Geometria Descritiva,,3,2
+ARQ-023,Projetos e Atividades de Extensão I,,3,3
+ARQ-024,Geologia Geral,,4,2
+ARQ-025,Projeto de Arquitetura II,,4,4
+ARQ-026,História das Cidades,,4,2
+ARQ-027,Instalações Elétricas,,4,4
+ARQ-028,Instalações Hidráulicas,,4,4
+ARQ-029,Direitos Humanos I,,4,2
+ARQ-030,Projetos e Atividades de Extensão II,,4,3
+ARQ-031,História e Cultura Afro-Brasileira,,5,4
+ARQ-032,Mecânica dos Solos I,,5,4
+ARQ-033,Projeto de Arquitetura III,,5,4
+ARQ-034,Conforto Ambiental I,,5,4
+ARQ-035,Teoria da Arquitetura e Urbanismo,,5,2
+ARQ-036,Mecânica dos Materiais,,5,2
+ARQ-037,Projetos e Atividades de Extensão III,,5,3
+ARQ-038,Materiais de Construção Civil,,6,4
+ARQ-039,Teoria das Estruturas I,,6,4
+ARQ-040,Projeto de Arquitetura IV,,6,4
+ARQ-041,Urbanismo I,,6,4
+ARQ-042,Conforto Ambiental II,,6,4
+ARQ-043,Projetos e Atividades de Extensão IV,,6,3
+ARQ-044,Tecnologia da Construção Civil,,7,4
+ARQ-045,Arquitetura de Interiores I,,7,4
+ARQ-046,Paisagismo I,,7,4
+ARQ-047,Urbanismo II,,7,4
+ARQ-048,Projeto Integrado,,7,4
+ARQ-049,Sistema Estrutural I,,7,4
+ARQ-050,Projetos e Atividades de Extensão V,,7,3
+ARQ-051,Arquitetura de Interiores II,,8,4
+ARQ-052,Urbanismo III,,8,4
+ARQ-053,Patrimônio I,,8,4
+ARQ-054,Sistema Estrutural II,,8,4
+ARQ-055,Laboratório de Materiais de Construção Civil,,8,2
+ARQ-056,Paisagismo II,,8,4
+ARQ-057,Projetos e Atividades de Extensão VI,,8,3
+ARQ-058,Linguagem e Redação I,,9,4
+ARQ-059,Fundações e Contenções de Encostas,,9,4
+ARQ-060,Programação e Controle de Obras,,9,4
+ARQ-061,Gerência de Projetos,,9,2
+ARQ-062,Metodologia Científica no TCC,,9,2
+ARQ-063,Patrimônio II,,9,2
+ARQ-064,Tópicos Especiais de Arquitetura e Urbanismo,,9,2
+ARQ-065,Projetos e Atividades de Extensão VII,,9,3
+ARQ-066,Direito Ambiental,,10,2
+ARQ-067,Ética Profissional em Arquitetura,,10,2
+ARQ-068,Interculturalidade,,10,4
+ARQ-069,Ergonomia e Desenho Universal,,10,2
+ARQ-070,Trabalho de Conclusão de Curso,,10,1
+ARQ-071,Projetos e Atividades de Extensão VIII,,10,3
+ARQ-072,Estágio Supervisionado,,10,4
