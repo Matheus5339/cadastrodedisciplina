@@ -1,0 +1,180 @@
+## 0. nota normativa
+
+   este arquivo (instrucoes-figurinhas.txt) e a REGRA SUPERIOR do projeto do album
+   de figurinhas. ele adapta o antigo instrucoes.txt (que tratava de "controle de
+   disciplinas") para o dominio correto do trabalho do professor, descrito nos
+   documentos "Trabalho Algum 2026-01" (pdf/rtf/txt) em docs/referencias-professor/.
+   nenhuma acao pode contraria-lo. o instrucoes.txt original permanece apenas como
+   referencia historica.
+
+## 1. objetivo
+
+   fazer um programa para simular um album de figurinhas virtual.
+   o sistema deve permitir gerenciar usuarios, o unico album da aplicacao e as suas
+   figurinhas, de acordo com o perfil do usuario (Administrador, Autor, Colecionador).
+
+## 2. requisitos
+
+   . tela de login comum a todos os usuarios: pede NOME e SENHA e identifica o perfil.
+   . Administrador: responsavel unicamente pelo gerenciamento dos usuarios.
+       - inserir, remover, alterar e consultar usuarios
+       - filtrar usuarios por parte do nome digitado
+       - no cadastro/edicao: nome, senha e perfil (todos obrigatorios)
+       - zerar a senha de um usuario, gerando uma senha padrao
+   . Autor: responsavel por criar/gerenciar o UNICO album da aplicacao.
+       - editar o album: nome, numero de paginas e capa (imagem)
+       - inserir, remover, alterar, consultar e filtrar figurinhas
+       - botao "limpar": remove todas as figurinhas do album (com confirmacao)
+   . figurinha: nome, numero (no album), descricao, pagina, tag (hash md5 da imagem)
+       e foto (imagem da figurinha). a tag e preenchida automaticamente com o md5 da imagem.
+   . Colecionador: usuario do album.
+       - visualizar as paginas do album e as figurinhas de cada pagina
+       - duplo clique numa figurinha mostra todos os dados e a imagem
+       - adquirir uma figurinha informando a sua tag
+   . qualquer usuario pode trocar o proprio login (nome) e a propria senha, mas NAO o perfil.
+   . telas de splash (abertura) e sobre.
+   . importacao/exportacao de figurinhas em arquivo TEXTO e em arquivo BINARIO.
+   . as imagens (foto da figurinha e capa do album) sao armazenadas no banco de dados.
+
+## 3. modelo de dados
+
+   usuario
+     id : inteiro
+     nome : string        // tambem e o login (unico)
+     senha : string       // armazenada como hash (ver item 6)
+     perfil : enum        // Administrador | Autor | Colecionador
+
+   album
+     id : inteiro
+     nome : string
+     paginas : inteiro
+     capa : imagem
+
+   figurinha
+     id : inteiro
+     idAlbum : inteiro
+     numero : inteiro
+     nome : string
+     pagina : inteiro
+     descricao : string
+     tag : string         // hash md5 da imagem (unico)
+     imagem : imagem
+
+   figurinhaAdquirida
+     id : inteiro
+     idUsuario : inteiro  // colecionador
+     idFigurinha : inteiro
+
+## 4. perfis e controle de acesso
+
+   Administrador - so gerencia usuarios (nao acessa album/figurinhas)
+   Autor         - cria/edita o album e as figurinhas (nao gerencia usuarios)
+   Colecionador  - visualiza o album e adquire figurinhas
+   o perfil e determinado no login e validado no backend a partir do token.
+
+## 5. tecnologias
+
+   para o frontend:
+       . React: 19.2.6
+       . Vite: 8.0.14
+       . Tailwind: 4.3.0
+       . shadcn: 3.2.1
+       . typescript: 6.0.2
+       . Node.js: 24.16.0
+
+   para o backend:
+       . .NET 10 (C#)
+
+   para a persistencia:
+       . sqlite 3.53.1 (banco embarcado, nao precisa ser instalado)
+
+## 6. seguranca
+
+   senhas devem usar Argon2id. MD5 e SHA-256 simples sao PROIBIDOS para armazenar senhas.
+   o hash MD5 e usado SOMENTE para calcular a tag (conteudo da imagem da figurinha),
+   nunca para senha. autenticacao por JWT; segredos nunca ficam no repositorio.
+
+## 7. frontend
+
+   no frontend a arquitetura de diretorios deve ser:
+
+src/
+├── app/                 // composicao principal: App, providers e setup global
+├── assets/              // arquivos estaticos: imagens, icones, fontes e logos
+├── components/          // componentes reutilizaveis sem regra de negocio
+│   ├── ui/              // componentes do shadcn/ui
+│   ├── layout/          // header, sidebar, navbar, footer
+│   ├── forms/           // campos e componentes genericos de formulario
+│   ├── feedback/        // loading, empty state, error state, alerts e dialogs
+│   └── navigation/      // breadcrumb, paginacao, tabs e navegacao visual
+├── config/              // configuracoes globais: env, constantes e URLs base
+├── core/                // nucleo transversal
+│   ├── auth/            // sessao, usuario logado, login, logout e tokens
+│   ├── security/        // sanitizacao e storage seguro
+│   ├── permissions/     // roles, permissoes e PermissionGate
+│   ├── http/            // cliente HTTP base, interceptors e erros
+│   ├── errors/          // tratamento e padronizacao de erros
+│   └── session/         // expiracao, timeout e renovacao
+├── features/            // modulos por funcionalidade/dominio
+│   ├── auth/            // telas e fluxos de autenticacao
+│   ├── usuarios/        // gestao de usuarios (Administrador)
+│   ├── album/           // album e figurinhas (Autor)
+│   └── colecao/         // album do colecionador e aquisicao por tag
+├── hooks/               // hooks globais e genericos
+├── lib/                 // utilitarios: utils, formatters, cn
+├── pages/               // paginas globais: Splash, Sobre, NotFound, Unauthorized
+├── routes/              // rotas, protecao de rotas e paths globais
+├── services/            // servicos globais
+├── stores/              // estados globais de UI
+├── styles/              // estilos globais e tema
+├── types/               // tipos globais compartilhados
+├── main.tsx             // ponto de entrada
+└── vite-env.d.ts        // tipos do Vite
+
+## 8. backend
+
+   no backend a arquitetura de diretorios deve ser em camadas:
+
+src/Backend/
+├── Api/                 // controllers, contracts, middlewares, filtros, Program
+├── Application/         // casos de uso (Features), DTOs, validadores, mapeamentos, interfaces
+├── Domain/              // entidades, enums, regras puras, interfaces de repositorio
+├── Infrastructure/      // EF Core + SQLite, repositorios, JWT, Argon2id, persistencia
+├── Shared/              // kernel (Result/erros), constantes, extensoes, helpers
+└── Tests/               // testes unitarios e de integracao
+
+   regras: nao colocar regra de negocio em controllers; o Domain nao referencia
+   EF Core/HTTP; nao achatar as camadas.
+
+## 9. persistencia
+
+   usar sqlite para os dados do item 3 (modelo de dados), com EF Core e migrations.
+   o banco e criado em runtime; nunca e versionado.
+
+## 10. avaliacao (rubrica do professor — 18 pontos, nota final = minimo(10, nota))
+
+   (adm) inserir, remover, editar usuarios .......... 2
+   (autor) gerenciar album, inserir/remover/editar figurinhas ... 2
+   (colecionador) visualizar e adicionar figurinha .. 2
+   listar e filtrar usuarios ........................ 1
+   listar e filtrar figurinhas ...................... 1
+   calcular e usar a tag (hash md5) ................. 1
+   tela de splash e sobre ........................... 1
+   tela de login .................................... 1
+   usar banco de dados .............................. 2
+   arquivo texto .................................... 1
+   arquivo binario .................................. 1
+   fotos no banco ................................... 1
+   telas personalizadas e icones .................... 1
+   uso de controles personalizados (user control) ... 1
+
+## 11. entrega
+
+   enviar por email para mozar.silva@gmail.com
+   assunto: trab ucp P3 2026 01
+   data de entrega: 15 de junho de 2026
+   conteudo do email:
+     . rgu e nome de todos os participantes
+     . zip com o codigo fonte do projeto (sem executaveis)
+     . login e senha de acesso
+   observacoes: grupos de no maximo 3 pessoas; backend em C#; persistencia sqlite.
