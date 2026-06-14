@@ -1,4 +1,4 @@
-# Controle de Disciplinas — UCP (Projeto Novo)
+# Álbum de Figurinhas — UCP
 
 <p align="center">
   <img alt=".NET 10"      src="https://img.shields.io/badge/.NET-10-512BD4?logo=dotnet&logoColor=white">
@@ -8,22 +8,36 @@
   <img alt="TypeScript 6" src="https://img.shields.io/badge/TypeScript-6.0-3178C6?logo=typescript&logoColor=white">
   <img alt="Tailwind 4"   src="https://img.shields.io/badge/Tailwind-4.3-06B6D4?logo=tailwindcss&logoColor=white">
   <img alt="SQLite"       src="https://img.shields.io/badge/SQLite-3.53-003B57?logo=sqlite&logoColor=white">
-  <img alt="Testes"       src="https://img.shields.io/badge/testes-57%2F57%20aprovados-3FB950">
+  <img alt="Testes"       src="https://img.shields.io/badge/backend-26%2F26-3FB950">
 </p>
 
-Sistema completo (frontend + backend + SQLite) para controlar as disciplinas cursadas por alunos do curso de Engenharia da Computação da UCP, com autenticação, autorização, isolamento por aluno e cálculo do CR.
+Sistema para simular um **álbum de figurinhas virtual** (trabalho de Programação III — UCP, P3 2026/01),
+com três perfis de acesso, autenticação, tag MD5 das imagens e armazenamento das fotos no banco.
 
-> **Status:** Fases 0–4 concluídas. Backend com **57/57 testes aprovados**, frontend com typecheck limpo e integração validada fim a fim. Instruções de execução e entrega em [`docs/ENTREGA.md`](./docs/ENTREGA.md).
+> **Status:** backend **26/26 testes**; frontend com typecheck/lint/testes limpos e integração validada
+> fim a fim. Instruções de execução e entrega em [`docs/ENTREGA.md`](./docs/ENTREGA.md).
 
-## Funcionalidades
+## Fonte normativa
 
-- 🔐 **Autenticação** com Argon2id + JWT de curta duração e refresh token com rotação/revogação
-- 👤 **Isolamento por aluno** — cada usuário acessa somente as próprias disciplinas e histórico
-- 📚 **CRUD de disciplinas** com filtros por nome, professor, ano e semestre
-- 🧮 **Cálculo do CR** ponderado por créditos
-- 🗂️ **Importação de CSV** de disciplinas na inicialização (caminho configurável)
-- 🖼️ **Foto do aluno** armazenada como BLOB (limite de 2 MB)
-- ❤️ **Health check** (`/health`) e **Swagger** (somente em desenvolvimento)
+O arquivo [`instrucoes-figurinhas.txt`](./instrucoes-figurinhas.txt) é a **regra superior** deste projeto.
+(O `instrucoes.txt` original — domínio de "disciplinas" — permanece apenas como referência histórica;
+ver a decisão do pivot em [`DECISOES.md`](./DECISOES.md) D19/D20.)
+
+## Perfis e funcionalidades
+
+- **Administrador** — gerencia os usuários: inserir, remover, editar, **filtrar** e **zerar a senha** (padrão `123456`).
+- **Autor** — cria/edita o **único álbum** (nome, páginas, capa) e as **figurinhas**: inserir, remover, editar,
+  filtrar e limpar todas. A **tag** de cada figurinha é o **hash MD5** da imagem (calculado automaticamente).
+  Inclui **exportar/importar** figurinhas em arquivo **texto** e **binário**.
+- **Colecionador** — visualiza as páginas do álbum e suas figurinhas (duplo clique mostra os detalhes) e
+  **adquire figurinhas** informando a **tag**.
+
+Todos podem trocar o próprio login e senha (não o perfil). Telas de **splash** e **sobre** incluídas.
+
+## Tecnologias
+
+- **Backend:** .NET 10 (C#), EF Core + SQLite, Clean Architecture, JWT + refresh token httpOnly, Argon2id.
+- **Frontend:** React 19.2.6, Vite 8.0.14, Tailwind 4.3.0, shadcn 3.2.1, TypeScript 6.0.2, Node.js 24.16.0.
 
 ## Execução rápida
 
@@ -38,63 +52,16 @@ npm install
 npm run dev
 ```
 
-Credenciais de demonstração e checklist completo em [`docs/ENTREGA.md`](./docs/ENTREGA.md).
-
-## Fonte normativa
-
-O arquivo [`instrucoes.txt`](./instrucoes.txt) é a regra superior deste projeto. Ordem de precedência completa em [`docs/REGRAS-COMPLEMENTARES.md`](./docs/REGRAS-COMPLEMENTARES.md).
-
-## Tecnologias
-
-- **Backend:** .NET 10 (C#), Entity Framework Core, SQLite, JWT Bearer + refresh token, Argon2id
-- **Frontend:** React 19.2.6, Vite 8.0.14, Tailwind 4.3.0, shadcn 3.2.1, TypeScript 6.0.2, Node.js 24.16.0
-
-## Estrutura planejada
-
-```
-controle-disciplinas-ucp-novo/
-├── instrucoes.txt              # normativo (somente leitura)
-├── CLAUDE.md                   # governança do agente
-├── README.md / TAREFAS.md / RASTREAMENTO.md / DECISOES.md / PENDENCIAS.md
-├── .claude/                    # regras + hook PreToolUse de governança
-├── docs/                       # análise de referências, matriz de requisitos, entrega
-└── src/
-    ├── Backend/
-    │   ├── Api/                # controllers, contracts, middlewares, Program.cs
-    │   ├── Application/        # casos de uso, DTOs, validadores, interfaces
-    │   ├── Domain/             # entidades, value objects, regras puras
-    │   ├── Infrastructure/     # EF Core, SQLite, JWT, Argon2id, CSV, foto
-    │   ├── Shared/             # Result, erros, constantes, helpers
-    │   └── Tests/              # unitários + integração
-    └── Frontend/               # projeto Vite (árvore interna conforme instrucoes.txt §5)
-```
-
-## Execução (após implementação)
-
-```bash
-# Backend (requer SDK .NET 10)
-cd src/Backend
-dotnet run --project Api
-
-# Frontend (requer Node.js 24.x)
-cd src/Frontend
-npm install
-npm run dev
-```
-
-Endpoints de apoio: `/health` (health check) e `/swagger` (somente em desenvolvimento).
+Acesse **http://localhost:5173**. Usuários iniciais (senha `123456`): **`admin`**, **`autor`**, **`colecionador`**.
 
 ## Segurança
 
-- Senhas com **Argon2id** (MD5 e SHA-256 simples proibidos)
-- JWT de curta duração + refresh token com rotação e revogação
-- Segredos via variáveis de ambiente / user secrets — **nunca no repositório**
-- CORS restritivo, validação de entrada, isolamento por aluno via token
+- Senhas com **Argon2id** (MD5/SHA-256 simples proibidos para senhas). O **MD5** é usado **somente** para a tag da imagem.
+- JWT de curta duração + **refresh token em cookie httpOnly** com rotação/revogação.
+- Autorização por perfil; segredos via variáveis de ambiente / user secrets — nunca no repositório.
 
 ## Documentação
 
-- [`docs/ANALISE-DE-REFERENCIAS.md`](./docs/ANALISE-DE-REFERENCIAS.md) — análise das fontes e conflitos
-- [`docs/MATRIZ-DE-REQUISITOS.md`](./docs/MATRIZ-DE-REQUISITOS.md) — requisitos rastreáveis
-- [`DECISOES.md`](./DECISOES.md) — decisões com justificativa
-- [`PENDENCIAS.md`](./PENDENCIAS.md) — pendências que exigem decisão humana
-- [`RASTREAMENTO.md`](./RASTREAMENTO.md) — registro cronológico das ações
+- [`instrucoes-figurinhas.txt`](./instrucoes-figurinhas.txt) — normativo do projeto
+- [`docs/ENTREGA.md`](./docs/ENTREGA.md) — execução, credenciais e entrega
+- [`DECISOES.md`](./DECISOES.md) · [`PENDENCIAS.md`](./PENDENCIAS.md) · [`RASTREAMENTO.md`](./RASTREAMENTO.md)
