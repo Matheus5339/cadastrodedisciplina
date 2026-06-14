@@ -22,13 +22,13 @@ public sealed class UsuariosController(IUsuarioService usuarios) : ControllerBas
     [HttpPost]
     public async Task<ActionResult<UsuarioDto>> Criar(CriarUsuarioRequest request, CancellationToken ct)
     {
-        var dto = await usuarios.CriarAsync(request.Nome, request.Senha, request.Perfil, ct);
+        var dto = await usuarios.CriarAsync(request.Login, request.Senha, request.Perfil, ct);
         return StatusCode(StatusCodes.Status201Created, dto);
     }
 
     [HttpPut("{id:int}")]
     public Task<UsuarioDto> Atualizar(int id, AtualizarUsuarioRequest request, CancellationToken ct) =>
-        usuarios.AtualizarAsync(id, request.Nome, request.Perfil, ct);
+        usuarios.AtualizarAsync(id, request.Login, request.Perfil, ct);
 
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> Remover(int id, CancellationToken ct)

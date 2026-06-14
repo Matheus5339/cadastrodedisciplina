@@ -6,7 +6,7 @@ namespace ControleDisciplinas.Application.Mappings;
 public static class Mappers
 {
     public static UsuarioDto ToDto(this Usuario u) =>
-        new(u.Id, u.Nome, u.Perfil);
+        new(u.Id, u.Login, u.Perfil);
 
     public static AlbumDto ToDto(this Album a) =>
         new(a.Id, a.Nome, a.Paginas, a.Capa is { Length: > 0 });

@@ -10,7 +10,7 @@ namespace ControleDisciplinas.Application.Features.Auth;
 
 public interface IAuthService
 {
-    Task<AuthResultDto> LoginAsync(string nome, string senha, CancellationToken ct = default);
+    Task<AuthResultDto> LoginAsync(string login, string senha, CancellationToken ct = default);
     Task<AuthResultDto> RefreshAsync(string refreshToken, CancellationToken ct = default);
     Task LogoutAsync(string refreshToken, CancellationToken ct = default);
 }
@@ -23,11 +23,11 @@ public sealed class AuthService(
     IUnitOfWork uow,
     ILogger<AuthService> logger) : IAuthService
 {
-    public async Task<AuthResultDto> LoginAsync(string nome, string senha, CancellationToken ct = default)
+    public async Task<AuthResultDto> LoginAsync(string login, string senha, CancellationToken ct = default)
     {
-        var usuario = await usuarios.ObterPorNomeAsync(nome.Trim(), ct);
+        var usuario = await usuarios.ObterPorLoginAsync(login.Trim(), ct);
         if (usuario is null || !hasher.Verificar(senha, usuario.PasswordHash))
-            throw new NaoAutorizadoException("Nome ou senha inválidos.");
+            throw new NaoAutorizadoException("Login ou senha inválidos.");
 
         return await EmitirTokensAsync(usuario, ct);
     }

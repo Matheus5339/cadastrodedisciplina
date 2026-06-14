@@ -36,7 +36,7 @@ public sealed class JwtTokenService : IJwtTokenService
         var claims = new List<Claim>
         {
             new(JwtRegisteredClaimNames.Sub, usuario.Id.ToString()),
-            new(JwtRegisteredClaimNames.Name, usuario.Nome),
+            new(JwtRegisteredClaimNames.Name, usuario.Login),
             new(ClaimTypes.Role, usuario.Perfil.ToString()), // perfil → autorização por papel
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
         };

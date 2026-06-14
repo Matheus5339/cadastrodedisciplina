@@ -9,11 +9,11 @@ public sealed class UsuarioRepository(AppDbContext db) : IUsuarioRepository
     public Task<Usuario?> ObterPorIdAsync(int id, CancellationToken ct = default) =>
         db.Usuarios.FirstOrDefaultAsync(u => u.Id == id, ct);
 
-    public Task<Usuario?> ObterPorNomeAsync(string nome, CancellationToken ct = default) =>
-        db.Usuarios.FirstOrDefaultAsync(u => u.Nome == nome, ct);
+    public Task<Usuario?> ObterPorLoginAsync(string login, CancellationToken ct = default) =>
+        db.Usuarios.FirstOrDefaultAsync(u => u.Login == login, ct);
 
-    public Task<bool> ExisteNomeAsync(string nome, int? ignorarId = null, CancellationToken ct = default) =>
-        db.Usuarios.AnyAsync(u => u.Nome == nome && (ignorarId == null || u.Id != ignorarId), ct);
+    public Task<bool> ExisteLoginAsync(string login, int? ignorarId = null, CancellationToken ct = default) =>
+        db.Usuarios.AnyAsync(u => u.Login == login && (ignorarId == null || u.Id != ignorarId), ct);
 
     public Task<int> ContarAsync(CancellationToken ct = default) => db.Usuarios.CountAsync(ct);
 
@@ -23,9 +23,9 @@ public sealed class UsuarioRepository(AppDbContext db) : IUsuarioRepository
         if (!string.IsNullOrWhiteSpace(filtro))
         {
             var f = $"%{filtro.Trim()}%";
-            query = query.Where(u => EF.Functions.Like(u.Nome, f));
+            query = query.Where(u => EF.Functions.Like(u.Login, f));
         }
-        return await query.OrderBy(u => u.Nome).ToListAsync(ct);
+        return await query.OrderBy(u => u.Login).ToListAsync(ct);
     }
 
     public async Task AdicionarAsync(Usuario usuario, CancellationToken ct = default) =>

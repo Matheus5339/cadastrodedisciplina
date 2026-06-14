@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ControleDisciplinas.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260614011731_InicialAlbum")]
+    [Migration("20260614022827_InicialAlbum")]
     partial class InicialAlbum
     {
         /// <inheritdoc />
@@ -164,9 +164,9 @@ namespace ControleDisciplinas.Infrastructure.Migrations
                     b.Property<DateTime>("CreatedAtUtc")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Nome")
+                    b.Property<string>("Login")
                         .IsRequired()
-                        .HasMaxLength(120)
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("PasswordHash")
@@ -179,7 +179,7 @@ namespace ControleDisciplinas.Infrastructure.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Nome")
+                    b.HasIndex("Login")
                         .IsUnique();
 
                     b.ToTable("Usuarios", (string)null);

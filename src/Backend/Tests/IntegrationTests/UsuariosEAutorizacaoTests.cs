@@ -19,17 +19,17 @@ public class UsuariosEAutorizacaoTests(ApiFactory factory) : IClassFixture<ApiFa
 
         // criar
         var criar = await admin.PostAsJsonAsync("/api/usuarios",
-            new { nome = "Pedro", senha = "Pedro@123", perfil = "Colecionador" });
+            new { login = "Pedro", senha = "Pedro@123", perfil = "Colecionador" });
         Assert.Equal(HttpStatusCode.Created, criar.StatusCode);
         var pedro = (await criar.Content.ReadFromJsonAsync<UsuarioDto>(ApiFactory.Json))!;
 
         // filtrar por "Ped"
         var filtrados = (await admin.GetFromJsonAsync<List<UsuarioDto>>("/api/usuarios?filtro=Ped", ApiFactory.Json))!;
         Assert.Single(filtrados);
-        Assert.Equal("Pedro", filtrados[0].Nome);
+        Assert.Equal("Pedro", filtrados[0].Login);
 
         // atualizar
-        var atualizar = await admin.PutAsJsonAsync($"/api/usuarios/{pedro.Id}", new { nome = "Pedro Souza", perfil = "Autor" });
+        var atualizar = await admin.PutAsJsonAsync($"/api/usuarios/{pedro.Id}", new { login = "PedroSouza", perfil = "Autor" });
         Assert.Equal(HttpStatusCode.OK, atualizar.StatusCode);
 
         // resetar senha → senha padrão
@@ -39,7 +39,7 @@ public class UsuariosEAutorizacaoTests(ApiFactory factory) : IClassFixture<ApiFa
         Assert.Equal("123456", corpo!["senha"]);
 
         // o novo login com a senha padrão funciona
-        var loginPadrao = await factory.CreateClient().PostAsJsonAsync("/api/auth/login", new { nome = "Pedro Souza", senha = "123456" });
+        var loginPadrao = await factory.CreateClient().PostAsJsonAsync("/api/auth/login", new { login = "PedroSouza", senha = "123456" });
         Assert.Equal(HttpStatusCode.OK, loginPadrao.StatusCode);
 
         // remover

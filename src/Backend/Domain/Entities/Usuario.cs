@@ -5,37 +5,37 @@ using ControleDisciplinas.Shared.Kernel;
 namespace ControleDisciplinas.Domain.Entities;
 
 /// <summary>
-/// Usuário do sistema com perfil de acesso. O login é feito pelo <see cref="Nome"/>
-/// + senha (assignment §login: "a tela de login deverá pedir o nome e a senha").
+/// Usuário do sistema com perfil de acesso. O login é feito pelo campo
+/// <see cref="Login"/> + senha (PDF — FrmLogin/FrmUsuario usam "Login").
 /// </summary>
 public class Usuario : EntityBase
 {
-    public string Nome { get; private set; } = null!;
+    public string Login { get; private set; } = null!;
     public string PasswordHash { get; private set; } = null!;
     public Perfil Perfil { get; private set; }
     public DateTime CreatedAtUtc { get; private set; }
 
     private Usuario() { } // EF Core
 
-    public Usuario(string nome, string passwordHash, Perfil perfil)
+    public Usuario(string login, string passwordHash, Perfil perfil)
     {
-        Nome = ValidarNome(nome);
+        Login = ValidarLogin(login);
         DefinirPasswordHash(passwordHash);
         Perfil = perfil;
         CreatedAtUtc = DateTime.UtcNow;
     }
 
-    /// <summary>Edição completa pelo administrador (FrmUsuario): nome e perfil.</summary>
-    public void Atualizar(string nome, Perfil perfil)
+    /// <summary>Edição completa pelo administrador (FrmUsuario): login e perfil.</summary>
+    public void Atualizar(string login, Perfil perfil)
     {
-        Nome = ValidarNome(nome);
+        Login = ValidarLogin(login);
         Perfil = perfil;
     }
 
-    /// <summary>Troca do próprio nome — o perfil não muda (PDF §7).</summary>
-    public void AtualizarProprioNome(string nome)
+    /// <summary>Troca do próprio login — o perfil não muda (PDF §7).</summary>
+    public void AtualizarProprioLogin(string login)
     {
-        Nome = ValidarNome(nome);
+        Login = ValidarLogin(login);
     }
 
     public void DefinirPasswordHash(string passwordHash)
@@ -45,11 +45,11 @@ public class Usuario : EntityBase
         PasswordHash = passwordHash;
     }
 
-    private static string ValidarNome(string nome)
+    private static string ValidarLogin(string login)
     {
-        var v = nome?.Trim();
-        if (string.IsNullOrEmpty(v) || v.Length < 3 || v.Length > 120)
-            throw new ValidacaoException("Nome é obrigatório (3 a 120 caracteres).");
+        var v = login?.Trim();
+        if (string.IsNullOrEmpty(v) || v.Length < 3 || v.Length > 50)
+            throw new ValidacaoException("Login é obrigatório (3 a 50 caracteres).");
         return v;
     }
 }

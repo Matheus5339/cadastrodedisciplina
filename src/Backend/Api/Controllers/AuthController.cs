@@ -14,12 +14,12 @@ namespace ControleDisciplinas.Api.Controllers;
 [EnableRateLimiting(RateLimitPolicies.Auth)] // anti brute-force
 public sealed class AuthController(IAuthService auth, IJwtTokenService tokens) : ControllerBase
 {
-    /// <summary>Login por nome + senha (assignment §login).</summary>
+    /// <summary>Login por login + senha (PDF — FrmLogin).</summary>
     [HttpPost("login")]
     [AllowAnonymous]
     public async Task<ActionResult<AuthResponseDto>> Login(LoginRequest request, CancellationToken ct)
     {
-        var resultado = await auth.LoginAsync(request.Nome, request.Senha, ct);
+        var resultado = await auth.LoginAsync(request.Login, request.Senha, ct);
         EmitirCookie(resultado.RefreshToken);
         return AuthResponseDto.De(resultado);
     }

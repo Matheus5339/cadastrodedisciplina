@@ -18,7 +18,7 @@ public sealed class ContaController(IUsuarioService usuarios, ICurrentUserServic
 
     [HttpPut("me")]
     public Task<UsuarioDto> AtualizarMeusDados(AtualizarContaRequest request, CancellationToken ct) =>
-        usuarios.AtualizarProprioAsync(request.Nome, ct);
+        usuarios.AtualizarProprioAsync(request.Login, ct);
 
     [HttpPost("me/senha")]
     public async Task<IActionResult> TrocarSenha(TrocarSenhaRequest request, CancellationToken ct)

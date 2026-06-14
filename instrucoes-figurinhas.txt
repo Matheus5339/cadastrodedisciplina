@@ -15,11 +15,12 @@
 
 ## 2. requisitos
 
-   . tela de login comum a todos os usuarios: pede NOME e SENHA e identifica o perfil.
+   . tela de login comum a todos os usuarios: pede LOGIN e SENHA e identifica o perfil
+     (conforme o PDF — FrmLogin/FrmUsuario usam o campo "Login").
    . Administrador: responsavel unicamente pelo gerenciamento dos usuarios.
        - inserir, remover, alterar e consultar usuarios
-       - filtrar usuarios por parte do nome digitado
-       - no cadastro/edicao: nome, senha e perfil (todos obrigatorios)
+       - filtrar usuarios por parte do login digitado
+       - no cadastro/edicao: login, senha e perfil (todos obrigatorios)
        - zerar a senha de um usuario, gerando uma senha padrao
    . Autor: responsavel por criar/gerenciar o UNICO album da aplicacao.
        - editar o album: nome, numero de paginas e capa (imagem)
@@ -40,7 +41,7 @@
 
    usuario
      id : inteiro
-     nome : string        // tambem e o login (unico)
+     login : string       // credencial de acesso (unico) — campo "Login" do PDF
      senha : string       // armazenada como hash (ver item 6)
      perfil : enum        // Administrador | Autor | Colecionador
 

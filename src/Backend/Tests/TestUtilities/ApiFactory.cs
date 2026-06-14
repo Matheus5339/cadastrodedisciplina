@@ -76,11 +76,11 @@ public sealed class ApiFactory : WebApplicationFactory<Program>, IAsyncLifetime
         await _connection.DisposeAsync();
     }
 
-    /// <summary>Faz login pelo nome e devolve um client com o Bearer já configurado.</summary>
-    public async Task<HttpClient> ClienteAsync(string nome)
+    /// <summary>Faz login e devolve um client com o Bearer já configurado.</summary>
+    public async Task<HttpClient> ClienteAsync(string login)
     {
         var client = CreateClient();
-        var resp = await client.PostAsJsonAsync("/api/auth/login", new { nome, senha = Senha });
+        var resp = await client.PostAsJsonAsync("/api/auth/login", new { login, senha = Senha });
         resp.EnsureSuccessStatusCode();
         var auth = (await resp.Content.ReadFromJsonAsync<AuthResponseDto>(Json))!;
         client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", auth.AccessToken);

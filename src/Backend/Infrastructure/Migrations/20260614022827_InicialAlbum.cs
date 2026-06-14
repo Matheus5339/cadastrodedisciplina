@@ -33,7 +33,7 @@ namespace ControleDisciplinas.Infrastructure.Migrations
                 {
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
-                    Nome = table.Column<string>(type: "TEXT", maxLength: 120, nullable: false),
+                    Login = table.Column<string>(type: "TEXT", maxLength: 50, nullable: false),
                     PasswordHash = table.Column<string>(type: "TEXT", maxLength: 512, nullable: false),
                     Perfil = table.Column<int>(type: "INTEGER", nullable: false),
                     CreatedAtUtc = table.Column<DateTime>(type: "TEXT", nullable: false)
@@ -155,9 +155,9 @@ namespace ControleDisciplinas.Infrastructure.Migrations
                 column: "UsuarioId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Usuarios_Nome",
+                name: "IX_Usuarios_Login",
                 table: "Usuarios",
-                column: "Nome",
+                column: "Login",
                 unique: true);
         }
 

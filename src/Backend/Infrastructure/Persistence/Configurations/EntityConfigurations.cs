@@ -10,12 +10,12 @@ public sealed class UsuarioConfiguration : IEntityTypeConfiguration<Usuario>
     {
         b.ToTable("Usuarios");
         b.HasKey(u => u.Id);
-        b.Property(u => u.Nome).HasMaxLength(120).IsRequired();
+        b.Property(u => u.Login).HasMaxLength(50).IsRequired();
         b.Property(u => u.PasswordHash).HasMaxLength(512).IsRequired();
         b.Property(u => u.Perfil).HasConversion<int>();
 
-        // o nome é a credencial de login (assignment) — único
-        b.HasIndex(u => u.Nome).IsUnique();
+        // o login é a credencial (PDF) — único
+        b.HasIndex(u => u.Login).IsUnique();
     }
 }
 

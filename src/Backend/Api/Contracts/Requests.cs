@@ -7,22 +7,22 @@ namespace ControleDisciplinas.Api.Contracts;
 // Atributos diretamente nos parâmetros do construtor: exigência da validação de records no .NET 10.
 
 public sealed record LoginRequest(
-    [Required] string Nome,
+    [Required] string Login,
     [Required] string Senha);
 
 // Refresh e logout não recebem corpo: o refresh token vem do cookie httpOnly.
 
 public sealed record CriarUsuarioRequest(
-    [Required, MinLength(3), MaxLength(120)] string Nome,
+    [Required, MinLength(3), MaxLength(50)] string Login,
     [Required, MinLength(8), MaxLength(128)] string Senha,
     [Required] Perfil Perfil);
 
 public sealed record AtualizarUsuarioRequest(
-    [Required, MinLength(3), MaxLength(120)] string Nome,
+    [Required, MinLength(3), MaxLength(50)] string Login,
     [Required] Perfil Perfil);
 
 public sealed record AtualizarContaRequest(
-    [Required, MinLength(3), MaxLength(120)] string Nome);
+    [Required, MinLength(3), MaxLength(50)] string Login);
 
 public sealed record TrocarSenhaRequest(
     [Required, MinLength(8), MaxLength(128)] string NovaSenha);

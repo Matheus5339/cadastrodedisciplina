@@ -18,7 +18,7 @@ public sealed record AuthResponseDto(
     public static AuthResponseDto De(AuthResultDto r) => new(r.AccessToken, r.AccessTokenExpiresAtUtc, r.Usuario);
 }
 
-public sealed record UsuarioDto(int Id, string Nome, Perfil Perfil);
+public sealed record UsuarioDto(int Id, string Login, Perfil Perfil);
 
 public sealed record AlbumDto(int Id, string Nome, int Paginas, bool PossuiCapa);
 

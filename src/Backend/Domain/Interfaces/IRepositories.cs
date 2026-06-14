@@ -5,10 +5,10 @@ namespace ControleDisciplinas.Domain.Interfaces;
 public interface IUsuarioRepository
 {
     Task<Usuario?> ObterPorIdAsync(int id, CancellationToken ct = default);
-    Task<Usuario?> ObterPorNomeAsync(string nome, CancellationToken ct = default);
-    Task<bool> ExisteNomeAsync(string nome, int? ignorarId = null, CancellationToken ct = default);
+    Task<Usuario?> ObterPorLoginAsync(string login, CancellationToken ct = default);
+    Task<bool> ExisteLoginAsync(string login, int? ignorarId = null, CancellationToken ct = default);
     Task<int> ContarAsync(CancellationToken ct = default);
-    /// <summary>Lista usuários, filtrando por parte do nome digitado (PDF §6 — campo F).</summary>
+    /// <summary>Lista usuários, filtrando por parte do login digitado (PDF §6 — campo F).</summary>
     Task<IReadOnlyList<Usuario>> ListarAsync(string? filtro, CancellationToken ct = default);
     Task AdicionarAsync(Usuario usuario, CancellationToken ct = default);
     void Remover(Usuario usuario);

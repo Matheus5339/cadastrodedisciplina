@@ -13,12 +13,12 @@ public interface IUsuarioService
 {
     Task<IReadOnlyList<UsuarioDto>> ListarAsync(string? filtro, CancellationToken ct = default);
     Task<UsuarioDto> ObterAsync(int id, CancellationToken ct = default);
-    Task<UsuarioDto> CriarAsync(string nome, string senha, Perfil perfil, CancellationToken ct = default);
-    Task<UsuarioDto> AtualizarAsync(int id, string nome, Perfil perfil, CancellationToken ct = default);
+    Task<UsuarioDto> CriarAsync(string login, string senha, Perfil perfil, CancellationToken ct = default);
+    Task<UsuarioDto> AtualizarAsync(int id, string login, Perfil perfil, CancellationToken ct = default);
     Task RemoverAsync(int id, CancellationToken ct = default);
     /// <summary>Admin zera a senha do usuário para um padrão e devolve a senha gerada (assignment §adm).</summary>
     Task<string> ResetarSenhaAsync(int id, CancellationToken ct = default);
-    Task<UsuarioDto> AtualizarProprioAsync(string nome, CancellationToken ct = default);
+    Task<UsuarioDto> AtualizarProprioAsync(string login, CancellationToken ct = default);
     Task TrocarSenhaAsync(string novaSenha, CancellationToken ct = default);
 }
 
@@ -41,26 +41,26 @@ public sealed class UsuarioService(
         return u.ToDto();
     }
 
-    public async Task<UsuarioDto> CriarAsync(string nome, string senha, Perfil perfil, CancellationToken ct = default)
+    public async Task<UsuarioDto> CriarAsync(string login, string senha, Perfil perfil, CancellationToken ct = default)
     {
         SenhaValidator.Validar(senha);
-        var usuario = new Usuario(nome, hasher.Hash(senha), perfil);
+        var usuario = new Usuario(login, hasher.Hash(senha), perfil);
 
-        if (await usuarios.ExisteNomeAsync(usuario.Nome, ct: ct))
-            throw new ConflitoException("Já existe um usuário com este nome.");
+        if (await usuarios.ExisteLoginAsync(usuario.Login, ct: ct))
+            throw new ConflitoException("Já existe um usuário com este login.");
 
         await usuarios.AdicionarAsync(usuario, ct);
         await uow.SaveChangesAsync(ct);
         return usuario.ToDto();
     }
 
-    public async Task<UsuarioDto> AtualizarAsync(int id, string nome, Perfil perfil, CancellationToken ct = default)
+    public async Task<UsuarioDto> AtualizarAsync(int id, string login, Perfil perfil, CancellationToken ct = default)
     {
         var usuario = await usuarios.ObterPorIdAsync(id, ct) ?? throw new NaoEncontradoException("Usuário não encontrado.");
-        if (await usuarios.ExisteNomeAsync(nome.Trim(), id, ct))
-            throw new ConflitoException("Já existe um usuário com este nome.");
+        if (await usuarios.ExisteLoginAsync(login.Trim(), id, ct))
+            throw new ConflitoException("Já existe um usuário com este login.");
 
-        usuario.Atualizar(nome, perfil);
+        usuario.Atualizar(login, perfil);
         await uow.SaveChangesAsync(ct);
         return usuario.ToDto();
     }
@@ -85,13 +85,13 @@ public sealed class UsuarioService(
         return SenhaPadrao;
     }
 
-    public async Task<UsuarioDto> AtualizarProprioAsync(string nome, CancellationToken ct = default)
+    public async Task<UsuarioDto> AtualizarProprioAsync(string login, CancellationToken ct = default)
     {
         var usuario = await usuarios.ObterPorIdAsync(atual.UsuarioId, ct) ?? throw new NaoEncontradoException("Usuário não encontrado.");
-        if (await usuarios.ExisteNomeAsync(nome.Trim(), usuario.Id, ct))
-            throw new ConflitoException("Já existe um usuário com este nome.");
+        if (await usuarios.ExisteLoginAsync(login.Trim(), usuario.Id, ct))
+            throw new ConflitoException("Já existe um usuário com este login.");
 
-        usuario.AtualizarProprioNome(nome); // o perfil não muda (PDF §7)
+        usuario.AtualizarProprioLogin(login); // o perfil não muda (PDF §7)
         await uow.SaveChangesAsync(ct);
         return usuario.ToDto();
     }
