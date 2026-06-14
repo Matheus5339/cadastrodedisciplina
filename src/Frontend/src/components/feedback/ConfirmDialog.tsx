@@ -11,7 +11,7 @@ interface ConfirmDialogProps {
   onCancelar: () => void;
 }
 
-/** Confirmação de ações destrutivas (ex.: exclusão de disciplina). */
+/** Confirmação de ações destrutivas (ex.: exclusão de figurinha). */
 export function ConfirmDialog({
   aberto,
   titulo,
