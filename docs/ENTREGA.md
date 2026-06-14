@@ -77,7 +77,7 @@ npm run test           # Vitest
 ## 7. Estrutura de diretórios
 
 ```
-controle-disciplinas-ucp-novo/
+album-figurinhas-ucp/
 ├── instrucoes-figurinhas.txt   # normativo (regra superior)
 ├── docs/                       # entrega + referências do professor
 └── src/
@@ -112,19 +112,12 @@ controle-disciplinas-ucp-novo/
 
 ## 9. Gerar o ZIP de entrega (sem executáveis)
 
-No PowerShell, a partir da pasta **pai** de `controle-disciplinas-ucp-novo`:
+A forma mais simples e confiável é usar o **`git archive`**, que empacota apenas os
+arquivos versionados — portanto já exclui `bin/obj/node_modules/dist`, bancos `*.db`
+e segredos (todos ignorados pelo Git). A partir da pasta `album-figurinhas-ucp/`:
 
-```powershell
-$origem = "controle-disciplinas-ucp-novo"
-$destino = "album-figurinhas-entrega.zip"
-$excluir = @("bin", "obj", "node_modules", "dist", "test-results", ".vs", ".git", "data")
-
-$temp = Join-Path $env:TEMP "entrega-album"
-Remove-Item $temp -Recurse -Force -ErrorAction SilentlyContinue
-robocopy $origem $temp /E /XD $excluir /XF *.db *.db-shm *.db-wal appsettings.Development.json *.exe *.dll *.pdb | Out-Null
-Compress-Archive -Path "$temp\*" -DestinationPath $destino -Force
-Remove-Item $temp -Recurse -Force
-Write-Host "ZIP gerado: $destino"
+```bash
+git archive --format=zip -o ../album-figurinhas-entrega.zip HEAD
 ```
 
 O ZIP resultante contém somente código-fonte, documentação e configurações de exemplo.
