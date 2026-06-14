@@ -1,7 +1,7 @@
-using ControleDisciplinas.Domain.Exceptions;
-using ControleDisciplinas.Shared.Kernel;
+using AlbumFigurinhas.Domain.Exceptions;
+using AlbumFigurinhas.Shared.Kernel;
 
-namespace ControleDisciplinas.Domain.Entities;
+namespace AlbumFigurinhas.Domain.Entities;
 
 /// <summary>
 /// Figurinha do álbum (PDF §9 — FrmFigurinha). A <see cref="Tag"/> é o hash MD5 da

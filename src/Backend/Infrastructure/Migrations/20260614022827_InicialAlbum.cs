@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace ControleDisciplinas.Infrastructure.Migrations
+namespace AlbumFigurinhas.Infrastructure.Migrations
 {
     /// <inheritdoc />
     public partial class InicialAlbum : Migration

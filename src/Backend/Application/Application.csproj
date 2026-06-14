@@ -4,8 +4,8 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>ControleDisciplinas.Application</RootNamespace>
-    <AssemblyName>ControleDisciplinas.Application</AssemblyName>
+    <RootNamespace>AlbumFigurinhas.Application</RootNamespace>
+    <AssemblyName>AlbumFigurinhas.Application</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

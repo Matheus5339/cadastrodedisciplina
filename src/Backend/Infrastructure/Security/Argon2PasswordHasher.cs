@@ -1,8 +1,8 @@
-using ControleDisciplinas.Application.Interfaces;
+using AlbumFigurinhas.Application.Interfaces;
 using Isopoh.Cryptography.Argon2;
 using Microsoft.Extensions.Options;
 
-namespace ControleDisciplinas.Infrastructure.Security;
+namespace AlbumFigurinhas.Infrastructure.Security;
 
 /// <summary>
 /// Hash de senha com Argon2id (decisão D8). MD5 e SHA-256 simples são proibidos

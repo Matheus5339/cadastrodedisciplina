@@ -1,12 +1,12 @@
 using System.Security.Cryptography;
-using ControleDisciplinas.Application.DTOs;
-using ControleDisciplinas.Application.Mappings;
-using ControleDisciplinas.Domain.Entities;
-using ControleDisciplinas.Domain.Exceptions;
-using ControleDisciplinas.Domain.Interfaces;
-using ControleDisciplinas.Shared.Constants;
+using AlbumFigurinhas.Application.DTOs;
+using AlbumFigurinhas.Application.Mappings;
+using AlbumFigurinhas.Domain.Entities;
+using AlbumFigurinhas.Domain.Exceptions;
+using AlbumFigurinhas.Domain.Interfaces;
+using AlbumFigurinhas.Shared.Constants;
 
-namespace ControleDisciplinas.Application.Features.Figurinhas;
+namespace AlbumFigurinhas.Application.Features.Figurinhas;
 
 public interface IFigurinhaService
 {
@@ -28,7 +28,8 @@ public sealed class FigurinhaService(
     public async Task<IReadOnlyList<FigurinhaDto>> ListarAsync(string? texto, int? pagina, CancellationToken ct = default)
     {
         var album = await ObterAlbumAsync(ct);
-        var lista = await figurinhas.ListarAsync(album.Id, new FigurinhaFiltro(texto, pagina), ct);
+        // listagem leve: projeção sem a imagem (BLOB) — só metadados.
+        var lista = await figurinhas.ListarResumoAsync(album.Id, new FigurinhaFiltro(texto, pagina), ct);
         return lista.Select(f => f.ToDto()).ToList();
     }
 
@@ -44,7 +45,8 @@ public sealed class FigurinhaService(
     public async Task<FigurinhaDto> CriarAsync(int numero, string nome, int pagina, string? descricao, byte[] imagem, string contentType, CancellationToken ct = default)
     {
         var album = await ObterAlbumAsync(ct);
-        ValidarPaginaEImagem(pagina, album.Paginas, contentType);
+        ValidarPagina(pagina, album.Paginas);
+        var tipoReal = ValidarImagem(imagem); // assinatura dos bytes, não o header do cliente
 
         if (await figurinhas.ExisteNumeroAsync(album.Id, numero, ct: ct))
             throw new ConflitoException($"Já existe uma figurinha com o número {numero} no álbum.");
@@ -54,7 +56,7 @@ public sealed class FigurinhaService(
             throw new ConflitoException("Já existe uma figurinha com esta mesma imagem (tag duplicada).");
 
         var figurinha = new Figurinha(album.Id, numero, nome, pagina, descricao);
-        figurinha.DefinirImagem(imagem, contentType, tag, FotoConstants.TamanhoMaximoBytes);
+        figurinha.DefinirImagem(imagem, tipoReal, tag, FotoConstants.TamanhoMaximoBytes);
 
         await figurinhas.AdicionarAsync(figurinha, ct);
         await uow.SaveChangesAsync(ct);
@@ -69,18 +71,17 @@ public sealed class FigurinhaService(
         if (await figurinhas.ExisteNumeroAsync(album.Id, numero, id, ct))
             throw new ConflitoException($"Já existe uma figurinha com o número {numero} no álbum.");
 
-        if (pagina > album.Paginas)
-            throw new ValidacaoException($"A página deve estar entre 1 e {album.Paginas}.");
+        ValidarPagina(pagina, album.Paginas);
 
         figurinha.Atualizar(numero, nome, pagina, descricao);
 
         if (imagem is { Length: > 0 })
         {
-            ValidarPaginaEImagem(pagina, album.Paginas, contentType);
+            var tipoReal = ValidarImagem(imagem);
             var tag = CalcularTag(imagem);
             if (await figurinhas.ExisteTagAsync(tag, id, ct))
                 throw new ConflitoException("Já existe uma figurinha com esta mesma imagem (tag duplicada).");
-            figurinha.DefinirImagem(imagem, contentType!, tag, FotoConstants.TamanhoMaximoBytes);
+            figurinha.DefinirImagem(imagem, tipoReal, tag, FotoConstants.TamanhoMaximoBytes);
         }
 
         await uow.SaveChangesAsync(ct);
@@ -112,12 +113,23 @@ public sealed class FigurinhaService(
     private static string CalcularTag(byte[] imagem) =>
         Convert.ToHexString(MD5.HashData(imagem)).ToLowerInvariant();
 
-    private static void ValidarPaginaEImagem(int pagina, int totalPaginas, string? contentType)
+    private static void ValidarPagina(int pagina, int totalPaginas)
     {
-        if (pagina > totalPaginas)
+        if (pagina < 1 || pagina > totalPaginas)
             throw new ValidacaoException($"A página deve estar entre 1 e {totalPaginas}.");
-        if (!FotoConstants.TiposPermitidos.ContainsKey(contentType ?? string.Empty))
-            throw new ValidacaoException("Tipo de imagem não permitido (use JPEG, PNG ou WebP).");
+    }
+
+    /// <summary>
+    /// Valida a imagem pela ASSINATURA real dos bytes (magic numbers), e não pelo
+    /// Content-Type informado pelo cliente (que pode ser forjado). Retorna o tipo
+    /// detectado, que passa a ser a fonte autoritativa para armazenamento.
+    /// </summary>
+    private static string ValidarImagem(byte[] imagem)
+    {
+        var tipo = FotoConstants.DetectarContentType(imagem);
+        if (tipo is null)
+            throw new ValidacaoException("Arquivo não é uma imagem válida (use JPEG, PNG ou WebP).");
+        return tipo;
     }
 
     private async Task<Domain.Entities.Album> ObterAlbumAsync(CancellationToken ct) =>

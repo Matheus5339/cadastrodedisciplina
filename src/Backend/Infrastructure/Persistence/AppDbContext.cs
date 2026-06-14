@@ -1,8 +1,8 @@
-using ControleDisciplinas.Domain.Entities;
-using ControleDisciplinas.Domain.Interfaces;
+using AlbumFigurinhas.Domain.Entities;
+using AlbumFigurinhas.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace ControleDisciplinas.Infrastructure.Persistence;
+namespace AlbumFigurinhas.Infrastructure.Persistence;
 
 public class AppDbContext(DbContextOptions<AppDbContext> options) : DbContext(options), IUnitOfWork
 {

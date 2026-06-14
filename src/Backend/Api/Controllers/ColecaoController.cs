@@ -1,10 +1,10 @@
-using ControleDisciplinas.Api.Contracts;
-using ControleDisciplinas.Application.DTOs;
-using ControleDisciplinas.Application.Features.Colecao;
+using AlbumFigurinhas.Api.Contracts;
+using AlbumFigurinhas.Application.DTOs;
+using AlbumFigurinhas.Application.Features.Colecao;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ControleDisciplinas.Api.Controllers;
+namespace AlbumFigurinhas.Api.Controllers;
 
 /// <summary>Coleção do colecionador: visualização do álbum e aquisição por tag (PDF §11/§12).</summary>
 [ApiController]

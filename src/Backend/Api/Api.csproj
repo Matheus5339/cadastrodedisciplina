@@ -4,9 +4,9 @@
     <TargetFramework>net10.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <RootNamespace>ControleDisciplinas.Api</RootNamespace>
-    <AssemblyName>ControleDisciplinas.Api</AssemblyName>
-    <UserSecretsId>controle-disciplinas-ucp-novo</UserSecretsId>
+    <RootNamespace>AlbumFigurinhas.Api</RootNamespace>
+    <AssemblyName>AlbumFigurinhas.Api</AssemblyName>
+    <UserSecretsId>album-figurinhas-ucp-novo</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

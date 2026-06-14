@@ -1,6 +1,6 @@
-using ControleDisciplinas.Shared.Kernel;
+using AlbumFigurinhas.Shared.Kernel;
 
-namespace ControleDisciplinas.Domain.Entities;
+namespace AlbumFigurinhas.Domain.Entities;
 
 /// <summary>
 /// Tabela técnica: refresh token persistido apenas como hash, com suporte a

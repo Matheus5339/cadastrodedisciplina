@@ -1,10 +1,10 @@
 using System.Security.Claims;
-using ControleDisciplinas.Application.Interfaces;
-using ControleDisciplinas.Domain.Enums;
-using ControleDisciplinas.Domain.Exceptions;
+using AlbumFigurinhas.Application.Interfaces;
+using AlbumFigurinhas.Domain.Enums;
+using AlbumFigurinhas.Domain.Exceptions;
 using Microsoft.AspNetCore.Http;
 
-namespace ControleDisciplinas.Infrastructure.Auth;
+namespace AlbumFigurinhas.Infrastructure.Auth;
 
 /// <summary>
 /// Identifica o usuário autenticado exclusivamente pelos claims do JWT

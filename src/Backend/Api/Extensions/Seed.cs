@@ -1,10 +1,10 @@
-using ControleDisciplinas.Application.Interfaces;
-using ControleDisciplinas.Domain.Entities;
-using ControleDisciplinas.Domain.Enums;
-using ControleDisciplinas.Infrastructure.Persistence;
+using AlbumFigurinhas.Application.Interfaces;
+using AlbumFigurinhas.Domain.Entities;
+using AlbumFigurinhas.Domain.Enums;
+using AlbumFigurinhas.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-namespace ControleDisciplinas.Api.Extensions;
+namespace AlbumFigurinhas.Api.Extensions;
 
 /// <summary>Dados iniciais: um usuário de cada perfil e o álbum único da aplicação.</summary>
 public static class Seed

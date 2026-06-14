@@ -1,11 +1,11 @@
-using ControleDisciplinas.Application.DTOs;
-using ControleDisciplinas.Application.Interfaces;
-using ControleDisciplinas.Application.Mappings;
-using ControleDisciplinas.Domain.Entities;
-using ControleDisciplinas.Domain.Exceptions;
-using ControleDisciplinas.Domain.Interfaces;
+using AlbumFigurinhas.Application.DTOs;
+using AlbumFigurinhas.Application.Interfaces;
+using AlbumFigurinhas.Application.Mappings;
+using AlbumFigurinhas.Domain.Entities;
+using AlbumFigurinhas.Domain.Exceptions;
+using AlbumFigurinhas.Domain.Interfaces;
 
-namespace ControleDisciplinas.Application.Features.Colecao;
+namespace AlbumFigurinhas.Application.Features.Colecao;
 
 public interface IColecaoService
 {
@@ -48,7 +48,8 @@ public sealed class ColecaoService(
     public async Task<AlbumColecionadorDto> MeuAlbumAsync(CancellationToken ct = default)
     {
         var album = await albuns.ObterAsync(ct) ?? throw new NaoEncontradoException("Álbum não encontrado.");
-        var catalogo = await figurinhas.ListarAsync(album.Id, new FigurinhaFiltro(null, null), ct);
+        // projeção leve: o álbum do colecionador não precisa dos bytes das imagens.
+        var catalogo = await figurinhas.ListarResumoAsync(album.Id, new FigurinhaFiltro(null, null), ct);
         var minhas = (await adquiridas.ListarDoUsuarioAsync(atual.UsuarioId, ct))
             .Select(a => a.FigurinhaId)
             .ToHashSet();

@@ -1,4 +1,4 @@
-namespace ControleDisciplinas.Shared.Extensions;
+namespace AlbumFigurinhas.Shared.Extensions;
 
 public static class StringExtensions
 {

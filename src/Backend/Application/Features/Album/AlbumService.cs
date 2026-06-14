@@ -1,11 +1,11 @@
-using ControleDisciplinas.Application.DTOs;
-using ControleDisciplinas.Application.Mappings;
-using ControleDisciplinas.Domain.Entities;
-using ControleDisciplinas.Domain.Exceptions;
-using ControleDisciplinas.Domain.Interfaces;
-using ControleDisciplinas.Shared.Constants;
+using AlbumFigurinhas.Application.DTOs;
+using AlbumFigurinhas.Application.Mappings;
+using AlbumFigurinhas.Domain.Entities;
+using AlbumFigurinhas.Domain.Exceptions;
+using AlbumFigurinhas.Domain.Interfaces;
+using AlbumFigurinhas.Shared.Constants;
 
-namespace ControleDisciplinas.Application.Features.Album;
+namespace AlbumFigurinhas.Application.Features.Album;
 
 public interface IAlbumService
 {
@@ -30,11 +30,12 @@ public sealed class AlbumService(IAlbumRepository albuns, IUnitOfWork uow) : IAl
 
     public async Task DefinirCapaAsync(byte[] conteudo, string contentType, CancellationToken ct = default)
     {
-        if (!FotoConstants.TiposPermitidos.ContainsKey(contentType ?? string.Empty))
-            throw new ValidacaoException("Tipo de imagem não permitido (use JPEG, PNG ou WebP).");
+        // valida pela ASSINATURA real dos bytes (não pelo header do cliente)
+        var tipoReal = FotoConstants.DetectarContentType(conteudo)
+            ?? throw new ValidacaoException("Arquivo não é uma imagem válida (use JPEG, PNG ou WebP).");
 
         var album = await ObterEntidadeAsync(ct);
-        album.DefinirCapa(conteudo, contentType!, FotoConstants.TamanhoMaximoBytes);
+        album.DefinirCapa(conteudo, tipoReal, FotoConstants.TamanhoMaximoBytes);
         await uow.SaveChangesAsync(ct);
     }
 

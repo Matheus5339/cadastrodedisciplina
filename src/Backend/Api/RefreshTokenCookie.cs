@@ -1,4 +1,4 @@
-namespace ControleDisciplinas.Api;
+namespace AlbumFigurinhas.Api;
 
 /// <summary>
 /// Cookie httpOnly que transporta o refresh token (P1 — não é acessível via JS,

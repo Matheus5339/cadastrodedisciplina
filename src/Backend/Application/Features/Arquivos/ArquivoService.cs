@@ -1,9 +1,9 @@
 using System.Text;
-using ControleDisciplinas.Application.Features.Figurinhas;
-using ControleDisciplinas.Domain.Exceptions;
-using ControleDisciplinas.Domain.Interfaces;
+using AlbumFigurinhas.Application.Features.Figurinhas;
+using AlbumFigurinhas.Domain.Exceptions;
+using AlbumFigurinhas.Domain.Interfaces;
 
-namespace ControleDisciplinas.Application.Features.Arquivos;
+namespace AlbumFigurinhas.Application.Features.Arquivos;
 
 /// <summary>
 /// Importação/exportação de figurinhas em arquivo TEXTO e BINÁRIO

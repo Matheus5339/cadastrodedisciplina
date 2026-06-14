@@ -1,6 +1,6 @@
 using System.Diagnostics;
 
-namespace ControleDisciplinas.Api.Middlewares;
+namespace AlbumFigurinhas.Api.Middlewares;
 
 /// <summary>Log estruturado de cada requisição (método, rota, status, duração).</summary>
 public sealed class RequestLoggingMiddleware(RequestDelegate next, ILogger<RequestLoggingMiddleware> logger)

@@ -1,4 +1,4 @@
-namespace ControleDisciplinas.Domain.Exceptions;
+namespace AlbumFigurinhas.Domain.Exceptions;
 
 /// <summary>Base das exceções de domínio/aplicação mapeadas pelo middleware da API.</summary>
 public abstract class DomainException(string mensagem) : Exception(mensagem);

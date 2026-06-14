@@ -1,8 +1,8 @@
 using System.Text.Json;
-using ControleDisciplinas.Domain.Exceptions;
-using ControleDisciplinas.Shared.Kernel;
+using AlbumFigurinhas.Domain.Exceptions;
+using AlbumFigurinhas.Shared.Kernel;
 
-namespace ControleDisciplinas.Api.Middlewares;
+namespace AlbumFigurinhas.Api.Middlewares;
 
 /// <summary>Tratamento global de exceções com resposta padronizada (segurança 8).</summary>
 public sealed class ExceptionHandlingMiddleware(RequestDelegate next, ILogger<ExceptionHandlingMiddleware> logger)

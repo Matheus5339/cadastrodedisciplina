@@ -1,4 +1,4 @@
-namespace ControleDisciplinas.Domain.Enums;
+namespace AlbumFigurinhas.Domain.Enums;
 
 /// <summary>Perfis de acesso do sistema (PDF §5 — FrmLogin).</summary>
 public enum Perfil

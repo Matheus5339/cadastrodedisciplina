@@ -1,8 +1,8 @@
-using ControleDisciplinas.Domain.Entities;
-using ControleDisciplinas.Domain.Interfaces;
+using AlbumFigurinhas.Domain.Entities;
+using AlbumFigurinhas.Domain.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
-namespace ControleDisciplinas.Infrastructure.Persistence.Repositories;
+namespace AlbumFigurinhas.Infrastructure.Persistence.Repositories;
 
 public sealed class UsuarioRepository(AppDbContext db) : IUsuarioRepository
 {
@@ -57,7 +57,20 @@ public sealed class FigurinhaRepository(AppDbContext db) : IFigurinhaRepository
     public Task<bool> ExisteNumeroAsync(int albumId, int numero, int? ignorarId = null, CancellationToken ct = default) =>
         db.Figurinhas.AnyAsync(f => f.AlbumId == albumId && f.Numero == numero && (ignorarId == null || f.Id != ignorarId), ct);
 
-    public async Task<IReadOnlyList<Figurinha>> ListarAsync(int albumId, FigurinhaFiltro filtro, CancellationToken ct = default)
+    public async Task<IReadOnlyList<Figurinha>> ListarAsync(int albumId, FigurinhaFiltro filtro, CancellationToken ct = default) =>
+        await Filtrar(albumId, filtro).OrderBy(f => f.Numero).ToListAsync(ct);
+
+    public async Task<IReadOnlyList<FigurinhaResumo>> ListarResumoAsync(int albumId, FigurinhaFiltro filtro, CancellationToken ct = default) =>
+        await Filtrar(albumId, filtro)
+            .OrderBy(f => f.Numero)
+            // projeta SEM a coluna Imagem (BLOB): EF traduz "tem imagem" para
+            // "Imagem IS NOT NULL AND length(Imagem) > 0", sem materializar os bytes.
+            .Select(f => new FigurinhaResumo(
+                f.Id, f.Numero, f.Nome, f.Pagina, f.Descricao, f.Tag,
+                f.Imagem != null && f.Imagem.Length > 0))
+            .ToListAsync(ct);
+
+    private IQueryable<Figurinha> Filtrar(int albumId, FigurinhaFiltro filtro)
     {
         var query = db.Figurinhas.AsNoTracking().Where(f => f.AlbumId == albumId);
 
@@ -69,7 +82,7 @@ public sealed class FigurinhaRepository(AppDbContext db) : IFigurinhaRepository
         if (filtro.Pagina is int pagina)
             query = query.Where(f => f.Pagina == pagina);
 
-        return await query.OrderBy(f => f.Numero).ToListAsync(ct);
+        return query;
     }
 
     public async Task AdicionarAsync(Figurinha figurinha, CancellationToken ct = default) =>

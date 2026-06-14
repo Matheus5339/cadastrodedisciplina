@@ -1,8 +1,8 @@
 using System.ComponentModel.DataAnnotations;
-using ControleDisciplinas.Domain.Enums;
+using AlbumFigurinhas.Domain.Enums;
 using Microsoft.AspNetCore.Http;
 
-namespace ControleDisciplinas.Api.Contracts;
+namespace AlbumFigurinhas.Api.Contracts;
 
 // Atributos diretamente nos parâmetros do construtor: exigência da validação de records no .NET 10.
 

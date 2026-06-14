@@ -1,12 +1,12 @@
-using ControleDisciplinas.Application.DTOs;
-using ControleDisciplinas.Application.Interfaces;
-using ControleDisciplinas.Application.Mappings;
-using ControleDisciplinas.Domain.Entities;
-using ControleDisciplinas.Domain.Exceptions;
-using ControleDisciplinas.Domain.Interfaces;
+using AlbumFigurinhas.Application.DTOs;
+using AlbumFigurinhas.Application.Interfaces;
+using AlbumFigurinhas.Application.Mappings;
+using AlbumFigurinhas.Domain.Entities;
+using AlbumFigurinhas.Domain.Exceptions;
+using AlbumFigurinhas.Domain.Interfaces;
 using Microsoft.Extensions.Logging;
 
-namespace ControleDisciplinas.Application.Features.Auth;
+namespace AlbumFigurinhas.Application.Features.Auth;
 
 public interface IAuthService
 {

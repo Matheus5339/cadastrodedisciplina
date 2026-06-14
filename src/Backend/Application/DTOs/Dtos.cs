@@ -1,6 +1,6 @@
-using ControleDisciplinas.Domain.Enums;
+using AlbumFigurinhas.Domain.Enums;
 
-namespace ControleDisciplinas.Application.DTOs;
+namespace AlbumFigurinhas.Application.DTOs;
 
 /// <summary>Resultado interno da autenticação (inclui o refresh token bruto para o cookie).</summary>
 public sealed record AuthResultDto(

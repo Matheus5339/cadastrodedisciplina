@@ -1,6 +1,6 @@
-using ControleDisciplinas.Shared.Kernel;
+using AlbumFigurinhas.Shared.Kernel;
 
-namespace ControleDisciplinas.Domain.Entities;
+namespace AlbumFigurinhas.Domain.Entities;
 
 /// <summary>
 /// Figurinha adquirida por um colecionador (PDF §12 — FrmNovaFigurinha).

@@ -1,4 +1,4 @@
-namespace ControleDisciplinas.Api;
+namespace AlbumFigurinhas.Api;
 
 /// <summary>Nomes das políticas de rate limiting (P0).</summary>
 public static class RateLimitPolicies

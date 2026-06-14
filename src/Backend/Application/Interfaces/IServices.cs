@@ -1,7 +1,7 @@
-using ControleDisciplinas.Domain.Entities;
-using ControleDisciplinas.Domain.Enums;
+using AlbumFigurinhas.Domain.Entities;
+using AlbumFigurinhas.Domain.Enums;
 
-namespace ControleDisciplinas.Application.Interfaces;
+namespace AlbumFigurinhas.Application.Interfaces;
 
 /// <summary>Hash de senha — implementação obrigatória: Argon2id.</summary>
 public interface IPasswordHasher

@@ -1,9 +1,9 @@
-using ControleDisciplinas.Domain.Entities;
-using ControleDisciplinas.Domain.Enums;
-using ControleDisciplinas.Domain.Exceptions;
+using AlbumFigurinhas.Domain.Entities;
+using AlbumFigurinhas.Domain.Enums;
+using AlbumFigurinhas.Domain.Exceptions;
 using Xunit;
 
-namespace ControleDisciplinas.Tests.UnitTests;
+namespace AlbumFigurinhas.Tests.UnitTests;
 
 public class UsuarioDominioTests
 {

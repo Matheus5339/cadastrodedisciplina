@@ -1,8 +1,8 @@
-using ControleDisciplinas.Infrastructure.Security;
+using AlbumFigurinhas.Infrastructure.Security;
 using Microsoft.Extensions.Options;
 using Xunit;
 
-namespace ControleDisciplinas.Tests.UnitTests;
+namespace AlbumFigurinhas.Tests.UnitTests;
 
 public class Argon2PasswordHasherTests
 {

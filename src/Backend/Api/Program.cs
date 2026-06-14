@@ -1,10 +1,10 @@
 using System.Threading.RateLimiting;
-using ControleDisciplinas.Api;
-using ControleDisciplinas.Api.Extensions;
-using ControleDisciplinas.Api.Middlewares;
-using ControleDisciplinas.Application;
-using ControleDisciplinas.Infrastructure;
-using ControleDisciplinas.Infrastructure.Persistence;
+using AlbumFigurinhas.Api;
+using AlbumFigurinhas.Api.Extensions;
+using AlbumFigurinhas.Api.Middlewares;
+using AlbumFigurinhas.Application;
+using AlbumFigurinhas.Infrastructure;
+using AlbumFigurinhas.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);

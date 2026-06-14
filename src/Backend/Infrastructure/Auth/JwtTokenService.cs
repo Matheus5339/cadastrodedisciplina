@@ -2,12 +2,12 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using System.Text;
-using ControleDisciplinas.Application.Interfaces;
-using ControleDisciplinas.Domain.Entities;
+using AlbumFigurinhas.Application.Interfaces;
+using AlbumFigurinhas.Domain.Entities;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
-namespace ControleDisciplinas.Infrastructure.Auth;
+namespace AlbumFigurinhas.Infrastructure.Auth;
 
 public sealed class JwtTokenService : IJwtTokenService
 {
