@@ -1,6 +1,6 @@
-using ControleDisciplinas.Domain.Exceptions;
+using AlbumFigurinhas.Domain.Exceptions;
 
-namespace ControleDisciplinas.Application.Validators;
+namespace AlbumFigurinhas.Application.Validators;
 
 /// <summary>Política mínima de senha (decisão D11 — validações nativas).</summary>
 public static class SenhaValidator

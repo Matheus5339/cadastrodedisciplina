@@ -1,11 +1,11 @@
 using System.Net;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
-using ControleDisciplinas.Application.DTOs;
-using ControleDisciplinas.Tests.TestUtilities;
+using AlbumFigurinhas.Application.DTOs;
+using AlbumFigurinhas.Tests.TestUtilities;
 using Xunit;
 
-namespace ControleDisciplinas.Tests.IntegrationTests;
+namespace AlbumFigurinhas.Tests.IntegrationTests;
 
 public class ArquivoTests(ApiFactory factory) : IClassFixture<ApiFactory>
 {
@@ -27,6 +27,9 @@ public class ArquivoTests(ApiFactory factory) : IClassFixture<ApiFactory>
     public async Task ExportarBinario_E_ImportarDeVolta()
     {
         var autor = await factory.ClienteAutorAsync();
+        // isolamento: a fixture (álbum/banco) é compartilhada entre os testes da classe;
+        // começa de um estado limpo para a contagem ser determinística.
+        await autor.PostAsync("/api/figurinhas/limpar", null);
         await autor.PostAsync("/api/figurinhas", ApiFactory.FormFigurinha(10, "A", 1, null, 10));
         await autor.PostAsync("/api/figurinhas", ApiFactory.FormFigurinha(11, "B", 1, null, 11));
 

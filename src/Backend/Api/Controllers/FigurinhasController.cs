@@ -1,11 +1,11 @@
-using ControleDisciplinas.Api.Contracts;
-using ControleDisciplinas.Application.DTOs;
-using ControleDisciplinas.Application.Features.Figurinhas;
-using ControleDisciplinas.Domain.Exceptions;
+using AlbumFigurinhas.Api.Contracts;
+using AlbumFigurinhas.Application.DTOs;
+using AlbumFigurinhas.Application.Features.Figurinhas;
+using AlbumFigurinhas.Domain.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ControleDisciplinas.Api.Controllers;
+namespace AlbumFigurinhas.Api.Controllers;
 
 /// <summary>Figurinhas do álbum (PDF §8/§9). Leitura por qualquer perfil; escrita só do Autor.</summary>
 [ApiController]

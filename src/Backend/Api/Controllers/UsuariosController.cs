@@ -1,10 +1,10 @@
-using ControleDisciplinas.Api.Contracts;
-using ControleDisciplinas.Application.DTOs;
-using ControleDisciplinas.Application.Features.Usuarios;
+using AlbumFigurinhas.Api.Contracts;
+using AlbumFigurinhas.Application.DTOs;
+using AlbumFigurinhas.Application.Features.Usuarios;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ControleDisciplinas.Api.Controllers;
+namespace AlbumFigurinhas.Api.Controllers;
 
 /// <summary>Gestão de usuários — acesso exclusivo do Administrador (PDF §6/§7).</summary>
 [ApiController]

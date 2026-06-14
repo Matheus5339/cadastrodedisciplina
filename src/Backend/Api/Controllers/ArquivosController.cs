@@ -1,8 +1,8 @@
-using ControleDisciplinas.Application.Features.Arquivos;
+using AlbumFigurinhas.Application.Features.Arquivos;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ControleDisciplinas.Api.Controllers;
+namespace AlbumFigurinhas.Api.Controllers;
 
 /// <summary>
 /// Exportação/importação de figurinhas em arquivo TEXTO e BINÁRIO

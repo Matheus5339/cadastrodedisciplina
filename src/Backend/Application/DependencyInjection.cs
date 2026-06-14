@@ -1,12 +1,12 @@
-using ControleDisciplinas.Application.Features.Album;
-using ControleDisciplinas.Application.Features.Arquivos;
-using ControleDisciplinas.Application.Features.Auth;
-using ControleDisciplinas.Application.Features.Colecao;
-using ControleDisciplinas.Application.Features.Figurinhas;
-using ControleDisciplinas.Application.Features.Usuarios;
+using AlbumFigurinhas.Application.Features.Album;
+using AlbumFigurinhas.Application.Features.Arquivos;
+using AlbumFigurinhas.Application.Features.Auth;
+using AlbumFigurinhas.Application.Features.Colecao;
+using AlbumFigurinhas.Application.Features.Figurinhas;
+using AlbumFigurinhas.Application.Features.Usuarios;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ControleDisciplinas.Application;
+namespace AlbumFigurinhas.Application;
 
 public static class DependencyInjection
 {

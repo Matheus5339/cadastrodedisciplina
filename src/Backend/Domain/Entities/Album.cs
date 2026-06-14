@@ -1,7 +1,7 @@
-using ControleDisciplinas.Domain.Exceptions;
-using ControleDisciplinas.Shared.Kernel;
+using AlbumFigurinhas.Domain.Exceptions;
+using AlbumFigurinhas.Shared.Kernel;
 
-namespace ControleDisciplinas.Domain.Entities;
+namespace AlbumFigurinhas.Domain.Entities;
 
 /// <summary>Álbum único da aplicação, editado pelo Autor (PDF §8 — FrmAutoria).</summary>
 public class Album : EntityBase

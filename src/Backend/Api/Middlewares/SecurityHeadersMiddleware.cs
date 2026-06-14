@@ -1,4 +1,4 @@
-namespace ControleDisciplinas.Api.Middlewares;
+namespace AlbumFigurinhas.Api.Middlewares;
 
 /// <summary>
 /// Cabeçalhos de segurança HTTP (P0 — hardening). Como a API serve apenas JSON,

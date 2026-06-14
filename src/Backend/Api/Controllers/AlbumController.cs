@@ -1,10 +1,10 @@
-using ControleDisciplinas.Api.Contracts;
-using ControleDisciplinas.Application.DTOs;
-using ControleDisciplinas.Application.Features.Album;
+using AlbumFigurinhas.Api.Contracts;
+using AlbumFigurinhas.Application.DTOs;
+using AlbumFigurinhas.Application.Features.Album;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ControleDisciplinas.Api.Controllers;
+namespace AlbumFigurinhas.Api.Controllers;
 
 /// <summary>Álbum único da aplicação (PDF §8 — FrmAutoria / capa).</summary>
 [ApiController]

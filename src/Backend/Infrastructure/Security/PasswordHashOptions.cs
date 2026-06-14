@@ -1,4 +1,4 @@
-namespace ControleDisciplinas.Infrastructure.Security;
+namespace AlbumFigurinhas.Infrastructure.Security;
 
 /// <summary>Parâmetros do Argon2id. O Pepper, se usado, vem de configuração não versionada.</summary>
 public sealed class PasswordHashOptions

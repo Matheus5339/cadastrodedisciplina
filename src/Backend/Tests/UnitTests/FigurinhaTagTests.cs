@@ -2,7 +2,7 @@ using System.Security.Cryptography;
 using System.Text;
 using Xunit;
 
-namespace ControleDisciplinas.Tests.UnitTests;
+namespace AlbumFigurinhas.Tests.UnitTests;
 
 /// <summary>Verifica o cálculo da tag (hash MD5 da imagem) — item da rubrica.</summary>
 public class FigurinhaTagTests

@@ -1,4 +1,4 @@
-namespace ControleDisciplinas.Shared.Kernel;
+namespace AlbumFigurinhas.Shared.Kernel;
 
 /// <summary>Resultado paginado genérico para listagens.</summary>
 public sealed record PaginatedResult<T>(IReadOnlyList<T> Itens, int Total, int Pagina, int TamanhoPagina)

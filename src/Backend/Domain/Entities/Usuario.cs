@@ -1,8 +1,8 @@
-using ControleDisciplinas.Domain.Enums;
-using ControleDisciplinas.Domain.Exceptions;
-using ControleDisciplinas.Shared.Kernel;
+using AlbumFigurinhas.Domain.Enums;
+using AlbumFigurinhas.Domain.Exceptions;
+using AlbumFigurinhas.Shared.Kernel;
 
-namespace ControleDisciplinas.Domain.Entities;
+namespace AlbumFigurinhas.Domain.Entities;
 
 /// <summary>
 /// Usuário do sistema com perfil de acesso. O login é feito pelo campo

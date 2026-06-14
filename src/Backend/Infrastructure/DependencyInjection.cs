@@ -1,14 +1,14 @@
-using ControleDisciplinas.Application.Interfaces;
-using ControleDisciplinas.Domain.Interfaces;
-using ControleDisciplinas.Infrastructure.Auth;
-using ControleDisciplinas.Infrastructure.Persistence;
-using ControleDisciplinas.Infrastructure.Persistence.Repositories;
-using ControleDisciplinas.Infrastructure.Security;
+using AlbumFigurinhas.Application.Interfaces;
+using AlbumFigurinhas.Domain.Interfaces;
+using AlbumFigurinhas.Infrastructure.Auth;
+using AlbumFigurinhas.Infrastructure.Persistence;
+using AlbumFigurinhas.Infrastructure.Persistence.Repositories;
+using AlbumFigurinhas.Infrastructure.Security;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace ControleDisciplinas.Infrastructure;
+namespace AlbumFigurinhas.Infrastructure;
 
 public static class DependencyInjection
 {

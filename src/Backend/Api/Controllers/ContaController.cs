@@ -1,11 +1,11 @@
-using ControleDisciplinas.Api.Contracts;
-using ControleDisciplinas.Application.DTOs;
-using ControleDisciplinas.Application.Features.Usuarios;
-using ControleDisciplinas.Application.Interfaces;
+using AlbumFigurinhas.Api.Contracts;
+using AlbumFigurinhas.Application.DTOs;
+using AlbumFigurinhas.Application.Features.Usuarios;
+using AlbumFigurinhas.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace ControleDisciplinas.Api.Controllers;
+namespace AlbumFigurinhas.Api.Controllers;
 
 /// <summary>Conta do próprio usuário autenticado: dados, troca de nome e de senha (PDF §7 / menu "Trocar senha").</summary>
 [ApiController]

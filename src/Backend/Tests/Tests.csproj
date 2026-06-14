@@ -5,8 +5,8 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
-    <RootNamespace>ControleDisciplinas.Tests</RootNamespace>
-    <AssemblyName>ControleDisciplinas.Tests</AssemblyName>
+    <RootNamespace>AlbumFigurinhas.Tests</RootNamespace>
+    <AssemblyName>AlbumFigurinhas.Tests</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>

@@ -2,12 +2,12 @@ using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using ControleDisciplinas.Api;
-using ControleDisciplinas.Application.DTOs;
-using ControleDisciplinas.Application.Interfaces;
-using ControleDisciplinas.Domain.Entities;
-using ControleDisciplinas.Domain.Enums;
-using ControleDisciplinas.Infrastructure.Persistence;
+using AlbumFigurinhas.Api;
+using AlbumFigurinhas.Application.DTOs;
+using AlbumFigurinhas.Application.Interfaces;
+using AlbumFigurinhas.Domain.Entities;
+using AlbumFigurinhas.Domain.Enums;
+using AlbumFigurinhas.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Microsoft.Data.Sqlite;
@@ -15,7 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace ControleDisciplinas.Tests.TestUtilities;
+namespace AlbumFigurinhas.Tests.TestUtilities;
 
 /// <summary>
 /// Sobe a API real em memória (ambiente "Testing") com SQLite in-memory compartilhado.

@@ -1,13 +1,13 @@
-using ControleDisciplinas.Api.Contracts;
-using ControleDisciplinas.Application.DTOs;
-using ControleDisciplinas.Application.Features.Auth;
-using ControleDisciplinas.Application.Interfaces;
-using ControleDisciplinas.Domain.Exceptions;
+using AlbumFigurinhas.Api.Contracts;
+using AlbumFigurinhas.Application.DTOs;
+using AlbumFigurinhas.Application.Features.Auth;
+using AlbumFigurinhas.Application.Interfaces;
+using AlbumFigurinhas.Domain.Exceptions;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.RateLimiting;
 
-namespace ControleDisciplinas.Api.Controllers;
+namespace AlbumFigurinhas.Api.Controllers;
 
 [ApiController]
 [Route("api/auth")]

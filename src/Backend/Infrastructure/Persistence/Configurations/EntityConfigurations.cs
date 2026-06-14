@@ -1,8 +1,8 @@
-using ControleDisciplinas.Domain.Entities;
+using AlbumFigurinhas.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace ControleDisciplinas.Infrastructure.Persistence.Configurations;
+namespace AlbumFigurinhas.Infrastructure.Persistence.Configurations;
 
 public sealed class UsuarioConfiguration : IEntityTypeConfiguration<Usuario>
 {

@@ -4,8 +4,8 @@ import { EmptyState } from "@/components/feedback/EmptyState";
 
 describe("EmptyState", () => {
   it("mostra o título e a descrição", () => {
-    render(<EmptyState titulo="Nenhuma disciplina" descricao="Cadastre a primeira" />);
-    expect(screen.getByText("Nenhuma disciplina")).toBeInTheDocument();
+    render(<EmptyState titulo="Nenhuma figurinha" descricao="Cadastre a primeira" />);
+    expect(screen.getByText("Nenhuma figurinha")).toBeInTheDocument();
     expect(screen.getByText("Cadastre a primeira")).toBeInTheDocument();
   });
 

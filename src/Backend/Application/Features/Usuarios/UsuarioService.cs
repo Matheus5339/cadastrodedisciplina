@@ -1,13 +1,13 @@
-using ControleDisciplinas.Application.DTOs;
-using ControleDisciplinas.Application.Interfaces;
-using ControleDisciplinas.Application.Mappings;
-using ControleDisciplinas.Application.Validators;
-using ControleDisciplinas.Domain.Entities;
-using ControleDisciplinas.Domain.Enums;
-using ControleDisciplinas.Domain.Exceptions;
-using ControleDisciplinas.Domain.Interfaces;
+using AlbumFigurinhas.Application.DTOs;
+using AlbumFigurinhas.Application.Interfaces;
+using AlbumFigurinhas.Application.Mappings;
+using AlbumFigurinhas.Application.Validators;
+using AlbumFigurinhas.Domain.Entities;
+using AlbumFigurinhas.Domain.Enums;
+using AlbumFigurinhas.Domain.Exceptions;
+using AlbumFigurinhas.Domain.Interfaces;
 
-namespace ControleDisciplinas.Application.Features.Usuarios;
+namespace AlbumFigurinhas.Application.Features.Usuarios;
 
 public interface IUsuarioService
 {

@@ -1,8 +1,8 @@
-using ControleDisciplinas.Domain.Entities;
-using ControleDisciplinas.Domain.Exceptions;
+using AlbumFigurinhas.Domain.Entities;
+using AlbumFigurinhas.Domain.Exceptions;
 using Xunit;
 
-namespace ControleDisciplinas.Tests.UnitTests;
+namespace AlbumFigurinhas.Tests.UnitTests;
 
 public class AlbumDominioTests
 {

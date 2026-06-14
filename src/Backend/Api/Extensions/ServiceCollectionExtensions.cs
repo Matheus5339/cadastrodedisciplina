@@ -1,10 +1,10 @@
 using System.Text;
-using ControleDisciplinas.Infrastructure.Auth;
+using AlbumFigurinhas.Infrastructure.Auth;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 
-namespace ControleDisciplinas.Api.Extensions;
+namespace AlbumFigurinhas.Api.Extensions;
 
 public static class ServiceCollectionExtensions
 {
@@ -60,9 +60,9 @@ public static class ServiceCollectionExtensions
         {
             options.SwaggerDoc("v1", new OpenApiInfo
             {
-                Title = "Controle de Disciplinas UCP",
+                Title = "Álbum de Figurinhas UCP",
                 Version = "v1",
-                Description = "API de controle de disciplinas cursadas — Engenharia da Computação, UCP.",
+                Description = "API do álbum de figurinhas virtual — UCP.",
             });
 
             options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

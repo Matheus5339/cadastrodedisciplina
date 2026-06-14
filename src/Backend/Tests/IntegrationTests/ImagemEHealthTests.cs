@@ -1,10 +1,10 @@
 using System.Net;
 using System.Net.Http.Json;
-using ControleDisciplinas.Application.DTOs;
-using ControleDisciplinas.Tests.TestUtilities;
+using AlbumFigurinhas.Application.DTOs;
+using AlbumFigurinhas.Tests.TestUtilities;
 using Xunit;
 
-namespace ControleDisciplinas.Tests.IntegrationTests;
+namespace AlbumFigurinhas.Tests.IntegrationTests;
 
 public class ImagemEHealthTests(ApiFactory factory) : IClassFixture<ApiFactory>
 {
