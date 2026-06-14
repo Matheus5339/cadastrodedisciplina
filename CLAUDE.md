@@ -1,21 +1,13 @@
 @./instrucoes-figurinhas.txt
-@./docs/REGRAS-COMPLEMENTARES.md
 
 # Álbum de Figurinhas — UCP (Projeto)
 
 Sistema para simular um álbum de figurinhas virtual, conforme o trabalho do professor
 (documentos "Trabalho Algum 2026-01" em `docs/referencias-professor/`).
 
-> **Pivot documentado (D19):** o projeto começou como "controle de disciplinas" (`instrucoes.txt`),
-> mas o documento do professor descreve um **álbum de figurinhas**. Por decisão do usuário, o domínio
-> foi migrado. O normativo vigente passou a ser **`instrucoes-figurinhas.txt`**.
-
 ## Fonte normativa
 
-- **`instrucoes-figurinhas.txt`** (raiz deste projeto) é a **regra superior** do projeto das figurinhas. Nenhuma ação pode contrariá-lo.
-- `instrucoes.txt` (original) permanece **apenas como referência histórica** (domínio antigo de disciplinas) e não pode ser modificado.
-- `docs/REGRAS-COMPLEMENTARES.md` define a governança operacional.
-- `.claude/rules/governanca.md` define regras de execução para o Claude Code.
+- **`instrucoes-figurinhas.txt`** (raiz deste projeto) é a **regra superior** do projeto. Nenhuma ação pode contrariá-lo.
 
 ## Resumo técnico
 

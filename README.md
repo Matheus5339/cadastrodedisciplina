@@ -20,8 +20,6 @@ com três perfis de acesso, autenticação, tag MD5 das imagens e armazenamento 
 ## Fonte normativa
 
 O arquivo [`instrucoes-figurinhas.txt`](./instrucoes-figurinhas.txt) é a **regra superior** deste projeto.
-(O `instrucoes.txt` original — domínio de "disciplinas" — permanece apenas como referência histórica;
-ver a decisão do pivot em [`DECISOES.md`](./DECISOES.md) D19/D20.)
 
 ## Perfis e funcionalidades
 
