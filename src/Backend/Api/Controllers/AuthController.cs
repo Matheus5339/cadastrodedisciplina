@@ -11,29 +11,19 @@ namespace ControleDisciplinas.Api.Controllers;
 
 [ApiController]
 [Route("api/auth")]
-[EnableRateLimiting(RateLimitPolicies.Auth)] // P0: anti brute-force nos endpoints de autenticação
+[EnableRateLimiting(RateLimitPolicies.Auth)] // anti brute-force
 public sealed class AuthController(IAuthService auth, IJwtTokenService tokens) : ControllerBase
 {
-    [HttpPost("register")]
-    [AllowAnonymous]
-    [ProducesResponseType<AuthResponseDto>(StatusCodes.Status201Created)]
-    public async Task<ActionResult<AuthResponseDto>> Register(RegisterRequest request, CancellationToken ct)
-    {
-        var resultado = await auth.RegistrarAsync(request.Rgu, request.Cpf, request.Email, request.Nome, request.Senha, ct);
-        EmitirCookie(resultado.RefreshToken);
-        return StatusCode(StatusCodes.Status201Created, AuthResponseDto.De(resultado));
-    }
-
+    /// <summary>Login por login + senha (PDF — FrmLogin).</summary>
     [HttpPost("login")]
     [AllowAnonymous]
     public async Task<ActionResult<AuthResponseDto>> Login(LoginRequest request, CancellationToken ct)
     {
-        var resultado = await auth.LoginAsync(request.Email, request.Senha, ct);
+        var resultado = await auth.LoginAsync(request.Login, request.Senha, ct);
         EmitirCookie(resultado.RefreshToken);
         return AuthResponseDto.De(resultado);
     }
 
-    /// <summary>Renova a sessão usando o refresh token do cookie httpOnly (sem corpo).</summary>
     [HttpPost("refresh")]
     [AllowAnonymous]
     public async Task<ActionResult<AuthResponseDto>> Refresh(CancellationToken ct)

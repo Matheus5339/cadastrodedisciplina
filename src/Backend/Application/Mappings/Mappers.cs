@@ -5,21 +5,15 @@ namespace ControleDisciplinas.Application.Mappings;
 
 public static class Mappers
 {
-    public static AlunoDto ToDto(this Aluno a) =>
-        new(a.Id, a.Rgu, a.Cpf, a.Email, a.Nome, a.Foto is { Length: > 0 });
+    public static UsuarioDto ToDto(this Usuario u) =>
+        new(u.Id, u.Login, u.Perfil);
 
-    public static DisciplinaDto ToDto(this Disciplina d) =>
-        new(d.Id, d.Codigo, d.Nome, d.Professor, d.Periodo, d.Creditos);
+    public static AlbumDto ToDto(this Album a) =>
+        new(a.Id, a.Nome, a.Paginas, a.Capa is { Length: > 0 });
 
-    public static HistoricoDto ToDto(this Historico h) =>
-        new(h.Id,
-            h.DisciplinaId,
-            h.Disciplina?.Codigo ?? string.Empty,
-            h.Disciplina?.Nome ?? string.Empty,
-            h.Disciplina?.Professor,
-            h.Disciplina?.Creditos ?? 0,
-            h.Ano,
-            h.Semestre,
-            h.Periodo,
-            h.MediaFinal);
+    public static FigurinhaDto ToDto(this Figurinha f) =>
+        new(f.Id, f.Numero, f.Nome, f.Pagina, f.Descricao, f.Tag, f.Imagem is { Length: > 0 });
+
+    public static FigurinhaAlbumDto ToAlbumDto(this Figurinha f, bool adquirida) =>
+        new(f.Id, f.Numero, f.Nome, f.Pagina, f.Tag, f.Imagem is { Length: > 0 }, adquirida);
 }

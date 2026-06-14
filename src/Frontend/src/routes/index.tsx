@@ -1,23 +1,28 @@
 import { createBrowserRouter } from "react-router-dom";
 import { AppLayout } from "@/components/layout/AppLayout";
-import { authRoutes } from "@/features/auth/routes";
-import { disciplinasRoutes } from "@/features/disciplinas/routes";
-import { historicoRoutes } from "@/features/historico/routes";
-import { DashboardPage } from "@/features/dashboard/pages/DashboardPage";
-import { PerfilPage } from "@/features/profile/pages/PerfilPage";
+import { LoginPage } from "@/features/auth/pages/LoginPage";
+import { UsuariosPage } from "@/features/usuarios/pages/UsuariosPage";
+import { AutoriaPage } from "@/features/album/pages/AutoriaPage";
+import { AlbumPage } from "@/features/colecao/pages/AlbumPage";
+import { NovaFigurinhaPage } from "@/features/colecao/pages/NovaFigurinhaPage";
+import { ContaPage } from "@/features/conta/pages/ContaPage";
+import { SplashPage } from "@/pages/SplashPage";
+import { SobrePage } from "@/pages/SobrePage";
 import { ErrorPage } from "@/pages/ErrorPage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
 import { UnauthorizedPage } from "@/pages/UnauthorizedPage";
-import { ProtectedRoute, PublicOnlyRoute } from "@/routes/ProtectedRoute";
+import { ProtectedRoute, PublicOnlyRoute, RoleRoute } from "@/routes/ProtectedRoute";
 import { paths } from "@/routes/paths";
 
 export const router = createBrowserRouter([
   {
     errorElement: <ErrorPage />,
     children: [
+      { path: paths.splash, element: <SplashPage /> },
+      { path: paths.sobre, element: <SobrePage /> },
       {
         element: <PublicOnlyRoute />,
-        children: authRoutes,
+        children: [{ path: paths.login, element: <LoginPage /> }],
       },
       {
         element: <ProtectedRoute />,
@@ -25,10 +30,22 @@ export const router = createBrowserRouter([
           {
             element: <AppLayout />,
             children: [
-              { path: paths.dashboard, element: <DashboardPage /> },
-              ...disciplinasRoutes,
-              ...historicoRoutes,
-              { path: paths.perfil, element: <PerfilPage /> },
+              {
+                element: <RoleRoute perfil="Administrador" />,
+                children: [{ path: paths.usuarios, element: <UsuariosPage /> }],
+              },
+              {
+                element: <RoleRoute perfil="Autor" />,
+                children: [{ path: paths.autoria, element: <AutoriaPage /> }],
+              },
+              {
+                element: <RoleRoute perfil="Colecionador" />,
+                children: [
+                  { path: paths.album, element: <AlbumPage /> },
+                  { path: paths.novaFigurinha, element: <NovaFigurinhaPage /> },
+                ],
+              },
+              { path: paths.conta, element: <ContaPage /> },
             ],
           },
         ],

@@ -1,6 +1,7 @@
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useSessao } from "@/core/session/useSessao";
-import { paths } from "@/routes/paths";
+import { paths, rotaInicial } from "@/routes/paths";
+import type { Perfil } from "@/types/api";
 
 /** Rota protegida: redireciona não autenticados para o login. */
 export function ProtectedRoute() {
@@ -13,11 +14,20 @@ export function ProtectedRoute() {
   return <Outlet />;
 }
 
-/** Rota pública exclusiva (login/cadastro): autenticado vai para o painel. */
+/** Rota pública exclusiva (login): autenticado vai para a tela inicial do seu perfil. */
 export function PublicOnlyRoute() {
-  const { autenticado } = useSessao();
+  const { autenticado, perfil } = useSessao();
   if (autenticado) {
-    return <Navigate to={paths.dashboard} replace />;
+    return <Navigate to={rotaInicial(perfil)} replace />;
+  }
+  return <Outlet />;
+}
+
+/** Restringe a rota a um perfil específico. */
+export function RoleRoute({ perfil }: { perfil: Perfil }) {
+  const { perfil: atual } = useSessao();
+  if (atual !== perfil) {
+    return <Navigate to={paths.naoAutorizado} replace />;
   }
   return <Outlet />;
 }

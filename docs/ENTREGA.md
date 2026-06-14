@@ -1,120 +1,125 @@
-# Entrega Acadêmica — Controle de Disciplinas UCP
+# Entrega Acadêmica — Álbum de Figurinhas (UCP, P3 2026/01)
 
 ## 1. Participantes
 
 | Nome | RGU |
 | :--- | :--- |
-| _(preencher)_ | _(preencher)_ |
-| _(preencher)_ | _(preencher)_ |
+| Matheus de Oliveira Pereira | 12310743 |
+| Asafe da Silva Ferreira | 12310486 |
 
-## 2. E-mail de entrega
+> Grupos de no máximo 3 pessoas (regra do enunciado).
 
-- **Destinatário:** _(preencher conforme orientação do professor)_
-- **Assunto:** _(preencher conforme orientação do professor — ex.: "Trabalho 2026-01 — Controle de Disciplinas — <nomes>")_
+## 2. E-mail de entrega (conforme `instrucoes-figurinhas.txt` §11)
 
-## 3. Credenciais de demonstração
+- **Destinatário:** `mozar.silva@gmail.com`
+- **Assunto:** `trab ucp P3 2026 01`
+- **Data de entrega:** 15 de junho de 2026
+- **Conteúdo do e-mail:**
+  - RGU e nome de todos os participantes
+  - ZIP com o **código-fonte** do projeto (**sem executáveis**)
+  - **Login e senha** de acesso (ver abaixo)
 
-O aluno de demonstração é criado automaticamente na primeira execução em ambiente de desenvolvimento (configuração `Seed:DemoAluno: true` no `appsettings.Development.json`):
+## 3. Credenciais de acesso (seed inicial)
 
-| Campo | Valor |
+Criados automaticamente na primeira execução. Senha de todos: **`123456`**.
+
+| Login | Perfil |
 | :--- | :--- |
-| E-mail | `demo@ucp.edu.br` |
-| Senha | `Demo@123456` |
-| RGU | `2026100001` |
+| `admin` | Administrador |
+| `autor` | Autor |
+| `colecionador` | Colecionador |
 
-Também é possível criar uma conta nova pela tela de cadastro (qualquer e-mail válido).
+O administrador pode **zerar a senha** de qualquer usuário (volta para `123456`).
 
 ## 4. Como executar
 
 ### Pré-requisitos
-
-- SDK **.NET 10**
-- **Node.js 24.x** (testado com 24.16.0)
+- SDK **.NET 10** · **Node.js 24.x**
 
 ### Backend
-
 ```bash
 cd src/Backend/Api
-# 1) criar a configuração local de desenvolvimento (NÃO versionada):
-#    copie appsettings.Development.example.json para appsettings.Development.json
-#    e defina Jwt:Secret com um valor aleatório de 32+ caracteres.
+# crie a config local (NÃO versionada): copie appsettings.Development.example.json
+# para appsettings.Development.json e defina Jwt:Secret (32+ caracteres aleatórios).
 cd ..
 dotnet run --project Api
 ```
-
-A API sobe em `http://localhost:5080` com:
-- `/health` — health check;
-- `/swagger` — documentação (somente em desenvolvimento);
-- migrations aplicadas e CSV de disciplinas importado automaticamente na inicialização.
-
-**CSV:** o importador procura, no diretório configurado (`CsvImport:Directory`, padrão `data/`), os nomes `disciplinas.csv`, `discipolinas.csv` e `disciplinas-ecomp-ucp.csv` (nesta ordem), ou usa o caminho explícito `CsvImport:Path`. Coloque seu CSV (cabeçalho `codigo,nome,professor,periodo,creditos`) em `src/Backend/Api/data/` ou aponte o `Path`.
+A API sobe em `http://localhost:5080` com `/health` e `/swagger` (somente em desenvolvimento);
+migrations aplicadas e usuários/álbum iniciais criados no primeiro start.
 
 ### Frontend
-
 ```bash
 cd src/Frontend
 npm install
 npm run dev
 ```
-
 Acesse `http://localhost:5173` (o Vite faz proxy de `/api` para o backend).
 
 ## 5. Como testar
 
 ```bash
 cd src/Backend
-dotnet test            # 57 testes (unitários + integração)
+dotnet test            # 26 testes (unitários + integração)
 
 cd ../Frontend
-npm run typecheck      # checagem de tipos (tsc --noEmit)
+npm run typecheck      # checagem de tipos
+npm run lint           # ESLint
+npm run test           # Vitest
 ```
 
-## 6. Estrutura de diretórios
+## 6. Roteiro de demonstração
+
+1. **autor** → Autoria: edite o álbum, envie uma capa, crie figurinhas (a **tag MD5** é gerada da imagem). Anote as tags.
+2. **autor** → exporte as figurinhas em **texto** e em **binário**; teste **importar binário**.
+3. **colecionador** → "Adquirir figurinha": informe uma tag, veja o preview e insira; a figurinha aparece no **álbum** (duplo clique mostra os detalhes).
+4. **admin** → Usuários: crie/edite/remova/filtre e **zere a senha** de um usuário.
+
+## 7. Estrutura de diretórios
 
 ```
 controle-disciplinas-ucp-novo/
-├── instrucoes.txt            # arquivo normativo (somente leitura)
-├── CLAUDE.md                 # governança de agente
-├── README.md / TAREFAS.md / RASTREAMENTO.md / DECISOES.md / PENDENCIAS.md
-├── docs/                     # análise de referências, matriz de requisitos, entrega
+├── instrucoes-figurinhas.txt   # normativo (regra superior)
+├── docs/                       # entrega + referências do professor
 └── src/
-    ├── Backend/              # .NET 10, Clean Architecture
-    │   ├── Api/              # controllers, contracts, middlewares, filtros, Program
-    │   ├── Application/      # casos de uso, DTOs, validadores, mapeamentos
-    │   ├── Domain/           # entidades, value objects, CrCalculator, exceções
-    │   ├── Infrastructure/   # EF Core+SQLite, migrations, JWT, Argon2id, CSV
-    │   ├── Shared/           # kernel, constantes, extensões, helpers
-    │   └── Tests/            # 57 testes (xunit + WebApplicationFactory)
-    └── Frontend/             # React 19 + Vite 8 + TS 6 + Tailwind 4 + shadcn
-        └── src/              # árvore conforme instrucoes.txt §5
+    ├── Backend/                # .NET 10, Clean Architecture
+    │   ├── Api/                # controllers, contracts, middlewares, Program
+    │   ├── Application/        # casos de uso (Auth, Usuarios, Album, Figurinhas, Colecao, Arquivos)
+    │   ├── Domain/             # Usuario, Album, Figurinha, FigurinhaAdquirida, enums
+    │   ├── Infrastructure/     # EF Core+SQLite, repositórios, JWT, Argon2id
+    │   ├── Shared/             # kernel, constantes, helpers
+    │   └── Tests/              # 26 testes
+    └── Frontend/               # React 19 + Vite 8 + TS 6 + Tailwind 4 + shadcn
+        └── src/                # features: auth, usuarios, album, colecao, conta
 ```
 
-## 7. Decisões relevantes
+## 8. Checklist da rubrica (18 pts; nota final = mínimo(10, nota))
 
-Ver `DECISOES.md` (D1–D14). Destaques: .NET 10 (precedência do normativo); Argon2id para senhas; JWT 15 min + refresh token 7 dias com rotação/revogação; CR = média ponderada por créditos (confirmada); CSV com caminho configurável e aliases documentados; disciplina como catálogo global com histórico isolado por aluno.
+- [x] (adm) inserir/remover/editar usuários
+- [x] (autor) gerenciar álbum, inserir/remover/editar figurinhas
+- [x] (colecionador) visualizar e adicionar figurinha
+- [x] listar e filtrar usuários
+- [x] listar e filtrar figurinhas
+- [x] calcular e usar a tag (hash MD5)
+- [x] tela de splash e sobre
+- [x] tela de login
+- [x] usar banco de dados (SQLite)
+- [x] arquivo texto
+- [x] arquivo binário
+- [x] fotos no banco (BLOB)
+- [x] telas personalizadas e ícones
+- [x] uso de controles personalizados (componentes reutilizáveis)
+- [x] Nomes e RGUs preenchidos (seção 1)
 
-## 8. Checklist final de entrega
-
-- [ ] Nomes e RGUs preenchidos acima
-- [ ] Assunto/destinatário do e-mail preenchidos
-- [x] Sem `bin/`, `obj/`, `node_modules/`, `dist/`, `test-results/` no ZIP (exclusões no script abaixo)
-- [x] Sem executáveis no ZIP
-- [x] Sem banco local (`*.db`) no ZIP
-- [x] Sem segredos/tokens no ZIP (`appsettings.Development.json` excluído; só o `.example` é entregue)
-- [x] Credenciais de demonstração documentadas
-- [x] Instruções de execução e teste documentadas
-- [x] Build e testes executados de verdade (resultados em `RASTREAMENTO.md`)
-
-## 9. Gerar o ZIP de entrega
+## 9. Gerar o ZIP de entrega (sem executáveis)
 
 No PowerShell, a partir da pasta **pai** de `controle-disciplinas-ucp-novo`:
 
 ```powershell
 $origem = "controle-disciplinas-ucp-novo"
-$destino = "controle-disciplinas-ucp-entrega.zip"
-$excluir = @("bin", "obj", "node_modules", "dist", "test-results", ".vs", "data")
+$destino = "album-figurinhas-entrega.zip"
+$excluir = @("bin", "obj", "node_modules", "dist", "test-results", ".vs", ".git", "data")
 
-$temp = Join-Path $env:TEMP "entrega-cdu"
+$temp = Join-Path $env:TEMP "entrega-album"
 Remove-Item $temp -Recurse -Force -ErrorAction SilentlyContinue
 robocopy $origem $temp /E /XD $excluir /XF *.db *.db-shm *.db-wal appsettings.Development.json *.exe *.dll *.pdb | Out-Null
 Compress-Archive -Path "$temp\*" -DestinationPath $destino -Force

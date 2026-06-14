@@ -3,7 +3,6 @@ using ControleDisciplinas.Api;
 using ControleDisciplinas.Api.Extensions;
 using ControleDisciplinas.Api.Middlewares;
 using ControleDisciplinas.Application;
-using ControleDisciplinas.Application.Interfaces;
 using ControleDisciplinas.Infrastructure;
 using ControleDisciplinas.Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +17,9 @@ if (builder.Environment.IsDevelopment())
 else
     builder.Logging.AddJsonConsole(o => { o.IncludeScopes = true; o.UseUtcTimestamp = true; });
 
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddJsonOptions(o => o.JsonSerializerOptions.Converters.Add(
+        new System.Text.Json.Serialization.JsonStringEnumConverter()));
 builder.Services.AddApplication();
 builder.Services.AddInfrastructure(builder.Configuration);
 builder.Services.AddJwtAuthentication(builder.Configuration);
@@ -99,13 +100,7 @@ if (!app.Environment.IsEnvironment("Testing"))
 
     db.Database.Migrate();
 
-    var importador = scope.ServiceProvider.GetRequiredService<ICsvImportService>();
-    var resultado = await importador.ImportarAsync();
-    if (resultado.Executada)
-        app.Logger.LogInformation("CSV importado: {Arquivo} (+{Importados}, ={Ignorados}, !{Invalidas})",
-            resultado.Arquivo, resultado.Importados, resultado.Ignorados, resultado.LinhasInvalidas);
-
-    await DemoSeed.ExecutarAsync(scope.ServiceProvider, app.Configuration, app.Environment, app.Logger);
+    await Seed.ExecutarAsync(scope.ServiceProvider, app.Logger);
 }
 
 app.Run();

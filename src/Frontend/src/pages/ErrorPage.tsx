@@ -21,7 +21,7 @@ export function ErrorPage() {
           Recarregar
         </Button>
         <Button variant="ghost">
-          <Link to={paths.dashboard}>Voltar ao painel</Link>
+          <Link to={paths.splash}>Voltar ao início</Link>
         </Button>
       </div>
     </div>
