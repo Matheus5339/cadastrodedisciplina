@@ -31,7 +31,7 @@ export function SplashPage() {
           </Link>
         </div>
       </div>
-      <p className="absolute bottom-6 text-xs text-white/60">UCP · Trabalho P3 2026/01</p>
+      <p className="absolute bottom-6 text-xs text-white/60">UCP · Programação Orientada a Objeto</p>
     </div>
   );
 }
