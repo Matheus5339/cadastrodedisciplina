@@ -1,8 +1,9 @@
 using ControleDisciplinas.Domain.Entities;
+using ControleDisciplinas.Domain.Enums;
 
 namespace ControleDisciplinas.Application.Interfaces;
 
-/// <summary>Hash de senha — implementação obrigatória: Argon2id (decisão D8).</summary>
+/// <summary>Hash de senha — implementação obrigatória: Argon2id.</summary>
 public interface IPasswordHasher
 {
     string Hash(string senha);
@@ -11,22 +12,15 @@ public interface IPasswordHasher
 
 public interface IJwtTokenService
 {
-    (string Token, DateTime ExpiresAtUtc) GerarAccessToken(Aluno aluno);
+    (string Token, DateTime ExpiresAtUtc) GerarAccessToken(Usuario usuario);
     string GerarRefreshToken();
     string HashRefreshToken(string refreshToken);
     int RefreshTokenDias { get; }
 }
 
-/// <summary>Aluno autenticado, extraído exclusivamente do token JWT (regra de segurança 12/13).</summary>
+/// <summary>Usuário autenticado, extraído exclusivamente do token JWT.</summary>
 public interface ICurrentUserService
 {
-    int AlunoId { get; }
-}
-
-public sealed record ResultadoImportacaoCsv(bool Executada, string? Arquivo, int Importados, int Ignorados, int LinhasInvalidas, string? Motivo);
-
-public interface ICsvImportService
-{
-    /// <summary>Importa o catálogo de disciplinas a partir de CSV. Chamado somente na inicialização.</summary>
-    Task<ResultadoImportacaoCsv> ImportarAsync(CancellationToken ct = default);
+    int UsuarioId { get; }
+    Perfil Perfil { get; }
 }

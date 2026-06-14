@@ -2,52 +2,51 @@ using ControleDisciplinas.Domain.Entities;
 
 namespace ControleDisciplinas.Domain.Interfaces;
 
-public interface IAlunoRepository
+public interface IUsuarioRepository
 {
-    Task<Aluno?> ObterPorIdAsync(int id, CancellationToken ct = default);
-    Task<Aluno?> ObterPorEmailAsync(string email, CancellationToken ct = default);
-    Task<bool> ExisteEmailAsync(string email, int? ignorarId = null, CancellationToken ct = default);
-    Task<bool> ExisteCpfAsync(string cpf, int? ignorarId = null, CancellationToken ct = default);
-    Task<bool> ExisteRguAsync(string rgu, int? ignorarId = null, CancellationToken ct = default);
-    Task AdicionarAsync(Aluno aluno, CancellationToken ct = default);
+    Task<Usuario?> ObterPorIdAsync(int id, CancellationToken ct = default);
+    Task<Usuario?> ObterPorNomeAsync(string nome, CancellationToken ct = default);
+    Task<bool> ExisteNomeAsync(string nome, int? ignorarId = null, CancellationToken ct = default);
+    Task<int> ContarAsync(CancellationToken ct = default);
+    /// <summary>Lista usuários, filtrando por parte do nome digitado (PDF §6 — campo F).</summary>
+    Task<IReadOnlyList<Usuario>> ListarAsync(string? filtro, CancellationToken ct = default);
+    Task AdicionarAsync(Usuario usuario, CancellationToken ct = default);
+    void Remover(Usuario usuario);
 }
 
-public sealed record DisciplinaFiltro(string? Nome, string? Professor, int? Ano, int? Semestre, int? AlunoIdParaAnoSemestre);
-
-public interface IDisciplinaRepository
+public interface IAlbumRepository
 {
-    Task<Disciplina?> ObterPorIdAsync(int id, CancellationToken ct = default);
-    Task<Disciplina?> ObterPorCodigoAsync(string codigo, CancellationToken ct = default);
-    Task<bool> ExisteCodigoAsync(string codigo, int? ignorarId = null, CancellationToken ct = default);
-    Task<IReadOnlyList<Disciplina>> ListarAsync(DisciplinaFiltro filtro, CancellationToken ct = default);
-    Task<IReadOnlyList<string>> ListarCodigosAsync(CancellationToken ct = default);
-    Task<bool> PossuiHistoricoAsync(int disciplinaId, CancellationToken ct = default);
-    Task AdicionarAsync(Disciplina disciplina, CancellationToken ct = default);
-    void Remover(Disciplina disciplina);
+    /// <summary>Obtém o álbum único da aplicação (ou null se ainda não existe).</summary>
+    Task<Album?> ObterAsync(CancellationToken ct = default);
+    Task AdicionarAsync(Album album, CancellationToken ct = default);
 }
 
-public sealed record HistoricoFiltro(int AlunoId, int? Ano, int? Semestre, string? NomeDisciplina, string? Professor);
+public sealed record FigurinhaFiltro(string? Texto, int? Pagina);
 
-public interface IHistoricoRepository
+public interface IFigurinhaRepository
 {
-    Task<Historico?> ObterPorIdAsync(int id, int alunoId, CancellationToken ct = default);
-    Task<IReadOnlyList<Historico>> ListarAsync(HistoricoFiltro filtro, CancellationToken ct = default);
-    Task<bool> ExisteLancamentoAsync(int alunoId, int disciplinaId, int ano, int semestre, int? ignorarId = null, CancellationToken ct = default);
-    Task<IReadOnlyList<(decimal MediaFinal, int Creditos)>> ObterNotasComCreditosAsync(int alunoId, CancellationToken ct = default);
-    Task AdicionarAsync(Historico historico, CancellationToken ct = default);
-    void Remover(Historico historico);
+    Task<Figurinha?> ObterPorIdAsync(int id, CancellationToken ct = default);
+    Task<Figurinha?> ObterPorTagAsync(string tag, CancellationToken ct = default);
+    Task<bool> ExisteTagAsync(string tag, int? ignorarId = null, CancellationToken ct = default);
+    Task<bool> ExisteNumeroAsync(int albumId, int numero, int? ignorarId = null, CancellationToken ct = default);
+    Task<IReadOnlyList<Figurinha>> ListarAsync(int albumId, FigurinhaFiltro filtro, CancellationToken ct = default);
+    Task AdicionarAsync(Figurinha figurinha, CancellationToken ct = default);
+    void Remover(Figurinha figurinha);
+    Task RemoverTodasAsync(int albumId, CancellationToken ct = default);
+}
+
+public interface IFigurinhaAdquiridaRepository
+{
+    Task<bool> ExisteAsync(int usuarioId, int figurinhaId, CancellationToken ct = default);
+    Task<IReadOnlyList<FigurinhaAdquirida>> ListarDoUsuarioAsync(int usuarioId, CancellationToken ct = default);
+    Task AdicionarAsync(FigurinhaAdquirida adquirida, CancellationToken ct = default);
 }
 
 public interface IRefreshTokenRepository
 {
     Task<RefreshToken?> ObterPorHashAsync(string tokenHash, CancellationToken ct = default);
     Task AdicionarAsync(RefreshToken token, CancellationToken ct = default);
-    Task RevogarTodosDoAlunoAsync(int alunoId, CancellationToken ct = default);
-}
-
-public interface IImportLogRepository
-{
-    Task AdicionarAsync(ImportLog log, CancellationToken ct = default);
+    Task RevogarTodosDoUsuarioAsync(int usuarioId, CancellationToken ct = default);
 }
 
 public interface IUnitOfWork

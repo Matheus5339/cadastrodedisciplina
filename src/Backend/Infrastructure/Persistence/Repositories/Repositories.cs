@@ -4,129 +4,96 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ControleDisciplinas.Infrastructure.Persistence.Repositories;
 
-public sealed class AlunoRepository(AppDbContext db) : IAlunoRepository
+public sealed class UsuarioRepository(AppDbContext db) : IUsuarioRepository
 {
-    public Task<Aluno?> ObterPorIdAsync(int id, CancellationToken ct = default) =>
-        db.Alunos.FirstOrDefaultAsync(a => a.Id == id, ct);
+    public Task<Usuario?> ObterPorIdAsync(int id, CancellationToken ct = default) =>
+        db.Usuarios.FirstOrDefaultAsync(u => u.Id == id, ct);
 
-    public Task<Aluno?> ObterPorEmailAsync(string email, CancellationToken ct = default) =>
-        db.Alunos.FirstOrDefaultAsync(a => a.Email == email, ct);
+    public Task<Usuario?> ObterPorNomeAsync(string nome, CancellationToken ct = default) =>
+        db.Usuarios.FirstOrDefaultAsync(u => u.Nome == nome, ct);
 
-    public Task<bool> ExisteEmailAsync(string email, int? ignorarId = null, CancellationToken ct = default) =>
-        db.Alunos.AnyAsync(a => a.Email == email && (ignorarId == null || a.Id != ignorarId), ct);
+    public Task<bool> ExisteNomeAsync(string nome, int? ignorarId = null, CancellationToken ct = default) =>
+        db.Usuarios.AnyAsync(u => u.Nome == nome && (ignorarId == null || u.Id != ignorarId), ct);
 
-    public Task<bool> ExisteCpfAsync(string cpf, int? ignorarId = null, CancellationToken ct = default) =>
-        db.Alunos.AnyAsync(a => a.Cpf == cpf && (ignorarId == null || a.Id != ignorarId), ct);
+    public Task<int> ContarAsync(CancellationToken ct = default) => db.Usuarios.CountAsync(ct);
 
-    public Task<bool> ExisteRguAsync(string rgu, int? ignorarId = null, CancellationToken ct = default) =>
-        db.Alunos.AnyAsync(a => a.Rgu == rgu && (ignorarId == null || a.Id != ignorarId), ct);
+    public async Task<IReadOnlyList<Usuario>> ListarAsync(string? filtro, CancellationToken ct = default)
+    {
+        var query = db.Usuarios.AsNoTracking().AsQueryable();
+        if (!string.IsNullOrWhiteSpace(filtro))
+        {
+            var f = $"%{filtro.Trim()}%";
+            query = query.Where(u => EF.Functions.Like(u.Nome, f));
+        }
+        return await query.OrderBy(u => u.Nome).ToListAsync(ct);
+    }
 
-    public async Task AdicionarAsync(Aluno aluno, CancellationToken ct = default) =>
-        await db.Alunos.AddAsync(aluno, ct);
+    public async Task AdicionarAsync(Usuario usuario, CancellationToken ct = default) =>
+        await db.Usuarios.AddAsync(usuario, ct);
+
+    public void Remover(Usuario usuario) => db.Usuarios.Remove(usuario);
 }
 
-public sealed class DisciplinaRepository(AppDbContext db) : IDisciplinaRepository
+public sealed class AlbumRepository(AppDbContext db) : IAlbumRepository
 {
-    public Task<Disciplina?> ObterPorIdAsync(int id, CancellationToken ct = default) =>
-        db.Disciplinas.FirstOrDefaultAsync(d => d.Id == id, ct);
+    public Task<Album?> ObterAsync(CancellationToken ct = default) =>
+        db.Albuns.OrderBy(a => a.Id).FirstOrDefaultAsync(ct);
 
-    public Task<Disciplina?> ObterPorCodigoAsync(string codigo, CancellationToken ct = default) =>
-        db.Disciplinas.FirstOrDefaultAsync(d => d.Codigo == codigo, ct);
-
-    public Task<bool> ExisteCodigoAsync(string codigo, int? ignorarId = null, CancellationToken ct = default) =>
-        db.Disciplinas.AnyAsync(d => d.Codigo == codigo && (ignorarId == null || d.Id != ignorarId), ct);
-
-    public async Task<IReadOnlyList<Disciplina>> ListarAsync(DisciplinaFiltro filtro, CancellationToken ct = default)
-    {
-        var query = db.Disciplinas.AsNoTracking().AsQueryable();
-
-        if (!string.IsNullOrWhiteSpace(filtro.Nome))
-        {
-            var nome = $"%{filtro.Nome.Trim()}%";
-            query = query.Where(d => EF.Functions.Like(d.Nome, nome) || EF.Functions.Like(d.Codigo, nome));
-        }
-
-        if (!string.IsNullOrWhiteSpace(filtro.Professor))
-        {
-            var prof = $"%{filtro.Professor.Trim()}%";
-            query = query.Where(d => d.Professor != null && EF.Functions.Like(d.Professor, prof));
-        }
-
-        // ano/semestre filtram pelas disciplinas cursadas pelo aluno autenticado (decisão D10)
-        if (filtro.AlunoIdParaAnoSemestre is int alunoId)
-        {
-            query = query.Where(d => db.Historicos.Any(h =>
-                h.DisciplinaId == d.Id &&
-                h.AlunoId == alunoId &&
-                (filtro.Ano == null || h.Ano == filtro.Ano) &&
-                (filtro.Semestre == null || h.Semestre == filtro.Semestre)));
-        }
-
-        return await query.OrderBy(d => d.Periodo).ThenBy(d => d.Codigo).ToListAsync(ct);
-    }
-
-    public async Task<IReadOnlyList<string>> ListarCodigosAsync(CancellationToken ct = default) =>
-        await db.Disciplinas.AsNoTracking().Select(d => d.Codigo).ToListAsync(ct);
-
-    public Task<bool> PossuiHistoricoAsync(int disciplinaId, CancellationToken ct = default) =>
-        db.Historicos.AnyAsync(h => h.DisciplinaId == disciplinaId, ct);
-
-    public async Task AdicionarAsync(Disciplina disciplina, CancellationToken ct = default) =>
-        await db.Disciplinas.AddAsync(disciplina, ct);
-
-    public void Remover(Disciplina disciplina) => db.Disciplinas.Remove(disciplina);
+    public async Task AdicionarAsync(Album album, CancellationToken ct = default) =>
+        await db.Albuns.AddAsync(album, ct);
 }
 
-public sealed class HistoricoRepository(AppDbContext db) : IHistoricoRepository
+public sealed class FigurinhaRepository(AppDbContext db) : IFigurinhaRepository
 {
-    public Task<Historico?> ObterPorIdAsync(int id, int alunoId, CancellationToken ct = default) =>
-        db.Historicos.Include(h => h.Disciplina)
-            .FirstOrDefaultAsync(h => h.Id == id && h.AlunoId == alunoId, ct);
+    public Task<Figurinha?> ObterPorIdAsync(int id, CancellationToken ct = default) =>
+        db.Figurinhas.FirstOrDefaultAsync(f => f.Id == id, ct);
 
-    public async Task<IReadOnlyList<Historico>> ListarAsync(HistoricoFiltro filtro, CancellationToken ct = default)
+    public Task<Figurinha?> ObterPorTagAsync(string tag, CancellationToken ct = default) =>
+        db.Figurinhas.FirstOrDefaultAsync(f => f.Tag == tag, ct);
+
+    public Task<bool> ExisteTagAsync(string tag, int? ignorarId = null, CancellationToken ct = default) =>
+        db.Figurinhas.AnyAsync(f => f.Tag == tag && (ignorarId == null || f.Id != ignorarId), ct);
+
+    public Task<bool> ExisteNumeroAsync(int albumId, int numero, int? ignorarId = null, CancellationToken ct = default) =>
+        db.Figurinhas.AnyAsync(f => f.AlbumId == albumId && f.Numero == numero && (ignorarId == null || f.Id != ignorarId), ct);
+
+    public async Task<IReadOnlyList<Figurinha>> ListarAsync(int albumId, FigurinhaFiltro filtro, CancellationToken ct = default)
     {
-        var query = db.Historicos.AsNoTracking()
-            .Include(h => h.Disciplina)
-            .Where(h => h.AlunoId == filtro.AlunoId);
+        var query = db.Figurinhas.AsNoTracking().Where(f => f.AlbumId == albumId);
 
-        if (filtro.Ano is not null)
-            query = query.Where(h => h.Ano == filtro.Ano);
-        if (filtro.Semestre is not null)
-            query = query.Where(h => h.Semestre == filtro.Semestre);
-        if (!string.IsNullOrWhiteSpace(filtro.NomeDisciplina))
+        if (!string.IsNullOrWhiteSpace(filtro.Texto))
         {
-            var nome = $"%{filtro.NomeDisciplina.Trim()}%";
-            query = query.Where(h => EF.Functions.Like(h.Disciplina!.Nome, nome) || EF.Functions.Like(h.Disciplina!.Codigo, nome));
+            var t = $"%{filtro.Texto.Trim()}%";
+            query = query.Where(f => EF.Functions.Like(f.Nome, t) || EF.Functions.Like(f.Tag, t));
         }
-        if (!string.IsNullOrWhiteSpace(filtro.Professor))
-        {
-            var prof = $"%{filtro.Professor.Trim()}%";
-            query = query.Where(h => h.Disciplina!.Professor != null && EF.Functions.Like(h.Disciplina!.Professor, prof));
-        }
+        if (filtro.Pagina is int pagina)
+            query = query.Where(f => f.Pagina == pagina);
 
-        return await query
-            .OrderByDescending(h => h.Ano).ThenByDescending(h => h.Semestre).ThenBy(h => h.Disciplina!.Nome)
-            .ToListAsync(ct);
+        return await query.OrderBy(f => f.Numero).ToListAsync(ct);
     }
 
-    public Task<bool> ExisteLancamentoAsync(int alunoId, int disciplinaId, int ano, int semestre, int? ignorarId = null, CancellationToken ct = default) =>
-        db.Historicos.AnyAsync(h =>
-            h.AlunoId == alunoId && h.DisciplinaId == disciplinaId && h.Ano == ano && h.Semestre == semestre &&
-            (ignorarId == null || h.Id != ignorarId), ct);
+    public async Task AdicionarAsync(Figurinha figurinha, CancellationToken ct = default) =>
+        await db.Figurinhas.AddAsync(figurinha, ct);
 
-    public async Task<IReadOnlyList<(decimal MediaFinal, int Creditos)>> ObterNotasComCreditosAsync(int alunoId, CancellationToken ct = default)
+    public void Remover(Figurinha figurinha) => db.Figurinhas.Remove(figurinha);
+
+    public async Task RemoverTodasAsync(int albumId, CancellationToken ct = default)
     {
-        var linhas = await db.Historicos.AsNoTracking()
-            .Where(h => h.AlunoId == alunoId)
-            .Select(h => new { h.MediaFinal, h.Disciplina!.Creditos })
-            .ToListAsync(ct);
-        return linhas.Select(l => (l.MediaFinal, l.Creditos)).ToList();
+        var todas = await db.Figurinhas.Where(f => f.AlbumId == albumId).ToListAsync(ct);
+        db.Figurinhas.RemoveRange(todas);
     }
+}
 
-    public async Task AdicionarAsync(Historico historico, CancellationToken ct = default) =>
-        await db.Historicos.AddAsync(historico, ct);
+public sealed class FigurinhaAdquiridaRepository(AppDbContext db) : IFigurinhaAdquiridaRepository
+{
+    public Task<bool> ExisteAsync(int usuarioId, int figurinhaId, CancellationToken ct = default) =>
+        db.FigurinhasAdquiridas.AnyAsync(a => a.UsuarioId == usuarioId && a.FigurinhaId == figurinhaId, ct);
 
-    public void Remover(Historico historico) => db.Historicos.Remove(historico);
+    public async Task<IReadOnlyList<FigurinhaAdquirida>> ListarDoUsuarioAsync(int usuarioId, CancellationToken ct = default) =>
+        await db.FigurinhasAdquiridas.AsNoTracking().Where(a => a.UsuarioId == usuarioId).ToListAsync(ct);
+
+    public async Task AdicionarAsync(FigurinhaAdquirida adquirida, CancellationToken ct = default) =>
+        await db.FigurinhasAdquiridas.AddAsync(adquirida, ct);
 }
 
 public sealed class RefreshTokenRepository(AppDbContext db) : IRefreshTokenRepository
@@ -137,18 +104,12 @@ public sealed class RefreshTokenRepository(AppDbContext db) : IRefreshTokenRepos
     public async Task AdicionarAsync(RefreshToken token, CancellationToken ct = default) =>
         await db.RefreshTokens.AddAsync(token, ct);
 
-    public async Task RevogarTodosDoAlunoAsync(int alunoId, CancellationToken ct = default)
+    public async Task RevogarTodosDoUsuarioAsync(int usuarioId, CancellationToken ct = default)
     {
         var ativos = await db.RefreshTokens
-            .Where(t => t.AlunoId == alunoId && t.RevokedAtUtc == null)
+            .Where(t => t.UsuarioId == usuarioId && t.RevokedAtUtc == null)
             .ToListAsync(ct);
         foreach (var token in ativos)
             token.Revogar();
     }
-}
-
-public sealed class ImportLogRepository(AppDbContext db) : IImportLogRepository
-{
-    public async Task AdicionarAsync(ImportLog log, CancellationToken ct = default) =>
-        await db.ImportLogs.AddAsync(log, ct);
 }

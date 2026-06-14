@@ -1,17 +1,46 @@
-# Documentos do professor — AUSENTES
+# Documentos do professor — análise
 
-Os arquivos abaixo, citados como referência acadêmica complementar no roteiro (`leia.txt` §3), **não foram encontrados** no diretório `C:\Users\Matheus\Downloads\cadastrodedisciplina` (busca recursiva em 2026-06-11):
+## Situação atualizada (2026-06-13)
 
-- `Trabalho Algum 2026-01.pdf`
+O documento **`Trabalho Algum 2026-01.pdf`** foi **fornecido pelo usuário** e está
+arquivado nesta pasta. (Antes estava ausente — ver histórico abaixo.)
+
+### ⚠️ Conteúdo do documento: outro domínio
+
+O PDF (versão 1.0.2.1, 25/05/2026) descreve um **álbum de figurinhas virtual** —
+**não** um controle de disciplinas. Resumo do que o documento especifica:
+
+- **Resumo (§1):** "Sistema para simular um album de figurinhas virtual."
+- **Perfis:** Administrador (gerencia usuários), Autor (cria/edita álbum), Colecionador (visualiza/adquire figurinhas).
+- **Telas:** FrmLogin, FrmUsuarios, FrmUsuario, FrmAutoria, FrmFigurinha, FrmAlbum (capa + páginas), FrmNovaFigurinha.
+- **Figurinhas/álbum:** álbum único com capa e páginas; figurinhas com `tag = hash MD5 da imagem`; aquisição de figurinha por tag.
+
+### Divergência e precedência
+
+Isso **diverge integralmente** do `instrucoes.txt` (controle de disciplinas), que é a
+**fonte normativa superior** (ordem de precedência em `docs/REGRAS-COMPLEMENTARES.md`:
+1. `instrucoes.txt`; 2. README original; 3. documentos do professor; 4. implementações anteriores).
+
+Conforme a **regra 3** das Regras Complementares — "funcionalidades específicas de
+outros domínios (ex.: álbum de figurinhas) **não podem ser transportadas**" — o álbum
+de figurinhas **não** foi (nem deve ser) implantado sobre o projeto de disciplinas.
+
+> **Ação humana necessária:** o documento do professor que será **avaliado** descreve
+> um sistema diferente do `instrucoes.txt`. Essa divergência precisa ser esclarecida
+> com o professor / decidida pelo usuário (ver `PENDENCIAS.md` P3). O projeto atual
+> segue o `instrucoes.txt`, conforme reafirmado pelo usuário.
+
+---
+
+## Histórico (2026-06-11)
+
+Na primeira sessão os arquivos abaixo **não foram encontrados** (busca recursiva):
+
+- `Trabalho Algum 2026-01.pdf` *(fornecido depois — ver acima)*
 - `Trabalho Algum 2026-01.rtf.doc`
 - `Trabalho Algum 2026-01.txt`
 
-Nenhum ZIP de implementações anteriores foi encontrado.
-
-Consequências:
-
-1. Nenhum requisito específico do "álbum de figurinhas" foi lido — e, portanto, nenhum foi transportado.
-2. Os requisitos genéricos compatíveis (banco embarcado, camadas, login, CRUD, filtros, ícones, entrega só de código-fonte, credenciais de teste) foram herdados via `leia.txt` §3.
-3. Pendência registrada em `PENDENCIAS.md` (P2): o usuário pode fornecer os documentos ou autorizar prosseguir sem eles.
-
-Se os documentos forem fornecidos, devem ser colocados nesta pasta e a análise (`docs/ANALISE-DE-REFERENCIAS.md`) deve ser atualizada.
+Nenhum ZIP de implementações anteriores foi encontrado. À época, nenhum requisito
+específico do "álbum de figurinhas" foi lido, e os requisitos genéricos compatíveis
+(banco embarcado, camadas, login, CRUD, filtros, entrega só de código) foram herdados
+via `leia.txt` §3.

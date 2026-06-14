@@ -28,16 +28,16 @@ public sealed class JwtTokenService : IJwtTokenService
 
     public int RefreshTokenDias => _opt.RefreshTokenDias;
 
-    public (string Token, DateTime ExpiresAtUtc) GerarAccessToken(Aluno aluno)
+    public (string Token, DateTime ExpiresAtUtc) GerarAccessToken(Usuario usuario)
     {
         var agora = DateTime.UtcNow;
         var expira = agora.AddMinutes(_opt.AccessTokenMinutos);
 
         var claims = new List<Claim>
         {
-            new(JwtRegisteredClaimNames.Sub, aluno.Id.ToString()),
-            new(JwtRegisteredClaimNames.Email, aluno.Email),
-            new(JwtRegisteredClaimNames.Name, aluno.Nome),
+            new(JwtRegisteredClaimNames.Sub, usuario.Id.ToString()),
+            new(JwtRegisteredClaimNames.Name, usuario.Nome),
+            new(ClaimTypes.Role, usuario.Perfil.ToString()), // perfil → autorização por papel
             new(JwtRegisteredClaimNames.Jti, Guid.NewGuid().ToString("N")),
         };
 
@@ -52,15 +52,9 @@ public sealed class JwtTokenService : IJwtTokenService
         return (new JwtSecurityTokenHandler().WriteToken(token), expira);
     }
 
-    public string GerarRefreshToken()
-    {
-        // 64 bytes aleatórios — token opaco, nunca armazenado em claro
-        return Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
-    }
+    public string GerarRefreshToken() =>
+        Convert.ToBase64String(RandomNumberGenerator.GetBytes(64));
 
-    public string HashRefreshToken(string refreshToken)
-    {
-        // SHA-256 aqui é hash de TOKEN opaco de alta entropia, não de senha (decisão D8)
-        return Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(refreshToken)));
-    }
+    public string HashRefreshToken(string refreshToken) =>
+        Convert.ToHexString(SHA256.HashData(Encoding.UTF8.GetBytes(refreshToken)));
 }

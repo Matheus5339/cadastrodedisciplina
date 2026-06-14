@@ -1,52 +1,47 @@
+using ControleDisciplinas.Domain.Enums;
+
 namespace ControleDisciplinas.Application.DTOs;
 
-/// <summary>
-/// Resultado interno da autenticação. Inclui o refresh token bruto, que o
-/// controller usa para emitir o cookie httpOnly — nunca vai no corpo da resposta.
-/// </summary>
+/// <summary>Resultado interno da autenticação (inclui o refresh token bruto para o cookie).</summary>
 public sealed record AuthResultDto(
     string AccessToken,
     DateTime AccessTokenExpiresAtUtc,
     string RefreshToken,
-    AlunoDto Aluno);
+    UsuarioDto Usuario);
 
 /// <summary>Corpo retornado ao cliente: sem o refresh token (que viaja em cookie httpOnly).</summary>
 public sealed record AuthResponseDto(
     string AccessToken,
     DateTime AccessTokenExpiresAtUtc,
-    AlunoDto Aluno)
+    UsuarioDto Usuario)
 {
-    public static AuthResponseDto De(AuthResultDto r) => new(r.AccessToken, r.AccessTokenExpiresAtUtc, r.Aluno);
+    public static AuthResponseDto De(AuthResultDto r) => new(r.AccessToken, r.AccessTokenExpiresAtUtc, r.Usuario);
 }
 
-public sealed record AlunoDto(
+public sealed record UsuarioDto(int Id, string Nome, Perfil Perfil);
+
+public sealed record AlbumDto(int Id, string Nome, int Paginas, bool PossuiCapa);
+
+public sealed record FigurinhaDto(
     int Id,
-    string Rgu,
-    string Cpf,
-    string Email,
+    int Numero,
     string Nome,
-    bool PossuiFoto);
+    int Pagina,
+    string? Descricao,
+    string Tag,
+    bool PossuiImagem);
 
-public sealed record FotoDto(byte[] Conteudo, string ContentType);
-
-public sealed record DisciplinaDto(
+/// <summary>Figurinha na visão do colecionador, com a marca de adquirida ou não.</summary>
+public sealed record FigurinhaAlbumDto(
     int Id,
-    string Codigo,
+    int Numero,
     string Nome,
-    string? Professor,
-    int Periodo,
-    int Creditos);
+    int Pagina,
+    string Tag,
+    bool PossuiImagem,
+    bool Adquirida);
 
-public sealed record HistoricoDto(
-    int Id,
-    int DisciplinaId,
-    string DisciplinaCodigo,
-    string DisciplinaNome,
-    string? DisciplinaProfessor,
-    int Creditos,
-    int Ano,
-    int Semestre,
-    int Periodo,
-    decimal MediaFinal);
+/// <summary>Visão do álbum para o colecionador: álbum + figurinhas por página.</summary>
+public sealed record AlbumColecionadorDto(AlbumDto Album, IReadOnlyList<FigurinhaAlbumDto> Figurinhas);
 
-public sealed record CrDto(decimal? Cr, int TotalCreditos, int TotalDisciplinas);
+public sealed record ImagemDto(byte[] Conteudo, string ContentType);
