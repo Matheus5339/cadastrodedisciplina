@@ -4,9 +4,8 @@
 
 | Nome | RGU |
 | :--- | :--- |
-| _(preencher)_ | _(preencher)_ |
-| _(preencher)_ | _(preencher)_ |
-| _(preencher)_ | _(preencher)_ |
+| Matheus de Oliveira Pereira | 12310743 |
+| Asafe da Silva Ferreira | 12310486 |
 
 > Grupos de no máximo 3 pessoas (regra do enunciado).
 
@@ -109,7 +108,7 @@ controle-disciplinas-ucp-novo/
 - [x] fotos no banco (BLOB)
 - [x] telas personalizadas e ícones
 - [x] uso de controles personalizados (componentes reutilizáveis)
-- [ ] Nomes e RGUs preenchidos (seção 1)
+- [x] Nomes e RGUs preenchidos (seção 1)
 
 ## 9. Gerar o ZIP de entrega (sem executáveis)
 
