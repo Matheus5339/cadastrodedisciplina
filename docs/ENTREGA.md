@@ -1,4 +1,4 @@
-# Entrega Acadêmica — Álbum de Figurinhas (UCP, P3 2026/01)
+# Entrega Acadêmica — Álbum de Figurinhas (UCP — Programação Orientada a Objeto)
 
 ## 1. Participantes
 

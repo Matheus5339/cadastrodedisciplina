@@ -18,7 +18,7 @@ export function SobrePage() {
         <CardContent className="space-y-4 text-sm text-muted-foreground">
           <p>
             Sistema para simular um álbum de figurinhas virtual, desenvolvido para o trabalho de
-            Programação III da UCP (P3 2026/01).
+            Programação Orientada a Objeto da UCP.
           </p>
           <div>
             <p className="font-medium text-foreground">Perfis</p>

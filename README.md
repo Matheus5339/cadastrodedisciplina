@@ -11,7 +11,7 @@
   <img alt="Testes"       src="https://img.shields.io/badge/backend-26%2F26-3FB950">
 </p>
 
-Sistema para simular um **álbum de figurinhas virtual** (trabalho de Programação III — UCP, P3 2026/01),
+Sistema para simular um **álbum de figurinhas virtual** (trabalho de Programação Orientada a Objeto — UCP),
 com três perfis de acesso, autenticação, tag MD5 das imagens e armazenamento das fotos no banco.
 
 > **Status:** backend **26/26 testes**; frontend com typecheck/lint/testes limpos e integração validada
