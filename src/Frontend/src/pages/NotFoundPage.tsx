@@ -10,7 +10,7 @@ export function NotFoundPage() {
       <h1 className="text-3xl font-bold">404</h1>
       <p className="text-muted-foreground">A página que você procura não existe.</p>
       <Button variant="outline">
-        <Link to={paths.dashboard}>Voltar ao painel</Link>
+        <Link to={paths.splash}>Voltar ao início</Link>
       </Button>
     </div>
   );

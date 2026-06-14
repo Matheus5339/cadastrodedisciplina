@@ -1,9 +1,8 @@
 import { useAuthStore } from "@/core/auth/auth-store";
 
-/** Acesso à sessão atual (aluno logado e estado de autenticação). */
+/** Acesso à sessão atual (usuário logado, perfil e estado de autenticação). */
 export function useSessao() {
-  const aluno = useAuthStore((s) => s.aluno);
+  const usuario = useAuthStore((s) => s.usuario);
   const autenticado = useAuthStore((s) => s.accessToken !== null);
-  const fotoVersao = useAuthStore((s) => s.fotoVersao);
-  return { aluno, autenticado, fotoVersao };
+  return { usuario, perfil: usuario?.perfil ?? null, autenticado };
 }

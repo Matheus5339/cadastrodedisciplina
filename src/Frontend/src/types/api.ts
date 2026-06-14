@@ -1,47 +1,50 @@
-/** Tipos espelhando os DTOs da API. */
+/** Tipos espelhando os DTOs da API (álbum de figurinhas). */
 
-export interface AlunoDto {
+export type Perfil = "Administrador" | "Autor" | "Colecionador";
+
+export interface UsuarioDto {
   id: number;
-  rgu: string;
-  cpf: string;
-  email: string;
-  nome: string;
-  possuiFoto: boolean;
+  login: string;
+  perfil: Perfil;
 }
 
 export interface AuthResultDto {
   accessToken: string;
   accessTokenExpiresAtUtc: string;
-  aluno: AlunoDto;
-  // O refresh token não vem no corpo: viaja em cookie httpOnly gerenciado pelo navegador.
+  usuario: UsuarioDto;
+  // o refresh token viaja em cookie httpOnly
 }
 
-export interface DisciplinaDto {
+export interface AlbumDto {
   id: number;
-  codigo: string;
   nome: string;
-  professor: string | null;
-  periodo: number;
-  creditos: number;
+  paginas: number;
+  possuiCapa: boolean;
 }
 
-export interface HistoricoDto {
+export interface FigurinhaDto {
   id: number;
-  disciplinaId: number;
-  disciplinaCodigo: string;
-  disciplinaNome: string;
-  disciplinaProfessor: string | null;
-  creditos: number;
-  ano: number;
-  semestre: number;
-  periodo: number;
-  mediaFinal: number;
+  numero: number;
+  nome: string;
+  pagina: number;
+  descricao: string | null;
+  tag: string;
+  possuiImagem: boolean;
 }
 
-export interface CrDto {
-  cr: number | null;
-  totalCreditos: number;
-  totalDisciplinas: number;
+export interface FigurinhaAlbumDto {
+  id: number;
+  numero: number;
+  nome: string;
+  pagina: number;
+  tag: string;
+  possuiImagem: boolean;
+  adquirida: boolean;
+}
+
+export interface AlbumColecionadorDto {
+  album: AlbumDto;
+  figurinhas: FigurinhaAlbumDto[];
 }
 
 export interface ApiErrorBody {

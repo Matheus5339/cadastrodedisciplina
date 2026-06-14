@@ -11,7 +11,7 @@ import { useAuthStore } from "@/core/auth/auth-store";
 import { obterMensagemDeErro } from "@/core/errors/api-error";
 import { authApi } from "@/features/auth/services/auth-api";
 import { loginSchema, type LoginFormData } from "@/features/auth/schemas/auth-schemas";
-import { paths } from "@/routes/paths";
+import { rotaInicial } from "@/routes/paths";
 
 export function LoginForm() {
   const navigate = useNavigate();
@@ -28,9 +28,9 @@ export function LoginForm() {
   async function onSubmit(dados: LoginFormData) {
     setErro(null);
     try {
-      const auth = await authApi.login(dados.email, dados.senha);
+      const auth = await authApi.login(dados.login, dados.senha);
       aplicarSessao(auth);
-      navigate(paths.dashboard);
+      navigate(rotaInicial(auth.usuario.perfil), { replace: true });
     } catch (e) {
       setErro(obterMensagemDeErro(e));
     }
@@ -43,8 +43,8 @@ export function LoginForm() {
       )}
       {erro && <Alert variant="destructive">{erro}</Alert>}
 
-      <FormField id="email" label="E-mail" erro={errors.email?.message}>
-        <Input id="email" type="email" autoComplete="email" placeholder="voce@ucp.edu.br" {...register("email")} />
+      <FormField id="login" label="Login" erro={errors.login?.message}>
+        <Input id="login" autoComplete="username" placeholder="seu login" {...register("login")} />
       </FormField>
 
       <FormField id="senha" label="Senha" erro={errors.senha?.message}>
