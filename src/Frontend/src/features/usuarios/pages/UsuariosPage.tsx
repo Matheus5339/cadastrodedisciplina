@@ -12,6 +12,7 @@ import { usuariosApi } from "@/features/usuarios/services/usuarios-api";
 import { obterMensagemDeErro } from "@/core/errors/api-error";
 import { notificarErro, notificarSucesso } from "@/services/notification";
 import { useDebounce } from "@/hooks/useDebounce";
+import { cn } from "@/lib/utils";
 import type { UsuarioDto } from "@/types/api";
 
 export function UsuariosPage() {
@@ -20,6 +21,7 @@ export function UsuariosPage() {
   const [lista, setLista] = useState<UsuarioDto[]>([]);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState<string | null>(null);
+  const [sel, setSel] = useState<UsuarioDto | null>(null);
   const [form, setForm] = useState<{ aberto: boolean; usuario: UsuarioDto | null }>({ aberto: false, usuario: null });
   const [removendo, setRemovendo] = useState<UsuarioDto | null>(null);
   const [excluindo, setExcluindo] = useState(false);
@@ -28,7 +30,9 @@ export function UsuariosPage() {
     setCarregando(true);
     setErro(null);
     try {
-      setLista(await usuariosApi.listar(filtroDeb || undefined));
+      const dados = await usuariosApi.listar(filtroDeb || undefined);
+      setLista(dados);
+      setSel((s) => (s && dados.some((u) => u.id === s.id) ? s : null));
     } catch (e) {
       setErro(obterMensagemDeErro(e));
     } finally {
@@ -48,6 +52,7 @@ export function UsuariosPage() {
       await usuariosApi.remover(removendo.id);
       notificarSucesso("Usuário removido.");
       setRemovendo(null);
+      setSel(null);
       void carregar();
     } catch (e) {
       notificarErro(obterMensagemDeErro(e));
@@ -66,69 +71,66 @@ export function UsuariosPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <div>
-          <h1 className="text-2xl font-semibold">Usuários</h1>
-          <p className="text-sm text-muted-foreground">Gerencie os usuários do sistema.</p>
+    <div className="mx-auto max-w-3xl space-y-3">
+      <div className="rounded-xl border border-border bg-card shadow-sm">
+        <div className="border-b border-border px-4 py-2.5">
+          <h1 className="text-base font-semibold">Usuários</h1>
         </div>
-        <Button onClick={() => setForm({ aberto: true, usuario: null })}>
-          <Plus className="h-4 w-4" /> Novo usuário
-        </Button>
-      </div>
 
-      <div className="relative max-w-sm">
-        <Search className="absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-muted-foreground" />
-        <Input
-          className="pl-9"
-          placeholder="Filtrar por login..."
-          value={filtro}
-          onChange={(e) => setFiltro(e.target.value)}
-        />
-      </div>
+        {/* toolbar (PDF §6): + inserir · − excluir · E editar · (zerar senha) · filtro + F */}
+        <div className="flex flex-wrap items-center gap-2 border-b border-border px-3 py-2">
+          <div className="flex items-center gap-1">
+            <Button size="icon" className="h-8 w-8" title="Inserir usuário" onClick={() => setForm({ aberto: true, usuario: null })}>
+              <Plus className="h-4 w-4" />
+            </Button>
+            <Button variant="outline" size="icon" className="h-8 w-8" title="Excluir selecionado" disabled={!sel} onClick={() => sel && setRemovendo(sel)}>
+              <Trash2 className="h-4 w-4 text-destructive" />
+            </Button>
+            <Button variant="outline" size="icon" className="h-8 w-8" title="Editar selecionado" disabled={!sel} onClick={() => sel && setForm({ aberto: true, usuario: sel })}>
+              <Pencil className="h-4 w-4" />
+            </Button>
+            <Button variant="outline" size="icon" className="h-8 w-8" title="Zerar senha do selecionado" disabled={!sel} onClick={() => sel && resetarSenha(sel)}>
+              <KeyRound className="h-4 w-4" />
+            </Button>
+          </div>
+          <div className="ml-auto flex items-center gap-1">
+            <Input placeholder="filtrar por login..." value={filtro} onChange={(e) => setFiltro(e.target.value)} className="h-8 w-48" />
+            <Button variant="outline" size="icon" className="h-8 w-8" title="Filtrar">
+              <Search className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
 
-      {carregando ? (
-        <Loading mensagem="Carregando usuários..." />
-      ) : erro ? (
-        <ErrorState mensagem={erro} onTentarNovamente={carregar} />
-      ) : lista.length === 0 ? (
-        <EmptyState titulo="Nenhum usuário" descricao="Crie o primeiro usuário no botão acima." />
-      ) : (
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Login</TableHead>
-              <TableHead>Perfil</TableHead>
-              <TableHead className="text-right">Ações</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {lista.map((u) => (
-              <TableRow key={u.id}>
-                <TableCell className="font-medium">{u.login}</TableCell>
-                <TableCell>
-                  <span className="rounded-full bg-accent px-2.5 py-0.5 text-xs font-medium text-accent-foreground">
-                    {u.perfil}
-                  </span>
-                </TableCell>
-                <TableCell>
-                  <div className="flex justify-end gap-1">
-                    <Button variant="ghost" size="sm" onClick={() => resetarSenha(u)} title="Zerar senha">
-                      <KeyRound className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="sm" onClick={() => setForm({ aberto: true, usuario: u })} title="Editar">
-                      <Pencil className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="sm" onClick={() => setRemovendo(u)} title="Remover">
-                      <Trash2 className="h-4 w-4 text-destructive" />
-                    </Button>
-                  </div>
-                </TableCell>
+        {carregando ? (
+          <div className="p-4"><Loading mensagem="Carregando usuários..." /></div>
+        ) : erro ? (
+          <div className="p-4"><ErrorState mensagem={erro} onTentarNovamente={carregar} /></div>
+        ) : lista.length === 0 ? (
+          <div className="p-4"><EmptyState titulo="Nenhum usuário" descricao="Use o botão + para criar o primeiro." /></div>
+        ) : (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead>Login</TableHead>
+                <TableHead>Perfil</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      )}
+            </TableHeader>
+            <TableBody>
+              {lista.map((u) => (
+                <TableRow
+                  key={u.id}
+                  onClick={() => setSel(u)}
+                  onDoubleClick={() => setForm({ aberto: true, usuario: u })}
+                  className={cn("cursor-pointer", sel?.id === u.id && "bg-accent/60")}
+                >
+                  <TableCell className="font-medium">{u.login}</TableCell>
+                  <TableCell>{u.perfil}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
+      </div>
 
       {form.aberto && (
         <UsuarioFormDialog

@@ -51,10 +51,15 @@ export function LoginForm() {
         <Input id="senha" type="password" autoComplete="current-password" {...register("senha")} />
       </FormField>
 
-      <Button type="submit" className="w-full" disabled={isSubmitting}>
-        <LogIn className="h-4 w-4" />
-        {isSubmitting ? "Entrando..." : "Entrar"}
-      </Button>
+      <div className="flex gap-2">
+        <Button type="submit" className="flex-1" disabled={isSubmitting}>
+          <LogIn className="h-4 w-4" />
+          {isSubmitting ? "Entrando..." : "Ok"}
+        </Button>
+        <Button type="button" variant="outline" className="flex-1" onClick={() => navigate("/")}>
+          Sair
+        </Button>
+      </div>
     </form>
   );
 }

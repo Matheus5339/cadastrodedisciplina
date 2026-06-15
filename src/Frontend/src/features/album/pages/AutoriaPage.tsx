@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { Download, Eraser, FileText, Image as ImageIcon, Pencil, Plus, Trash2, Upload } from "lucide-react";
+import { Download, Eraser, FileText, Pencil, Plus, Search, Trash2, Upload } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { ConfirmDialog } from "@/components/feedback/ConfirmDialog";
 import { EmptyState } from "@/components/feedback/EmptyState";
@@ -13,6 +12,7 @@ import { albumApi, arquivosApi, figurinhasApi } from "@/features/album/services/
 import { obterMensagemDeErro } from "@/core/errors/api-error";
 import { notificarErro, notificarSucesso } from "@/services/notification";
 import { useDebounce } from "@/hooks/useDebounce";
+import { cn } from "@/lib/utils";
 import type { AlbumDto, FigurinhaDto } from "@/types/api";
 
 function baixar(blob: Blob, nome: string) {
@@ -28,11 +28,14 @@ export function AutoriaPage() {
   const [album, setAlbum] = useState<AlbumDto | null>(null);
   const [nome, setNome] = useState("");
   const [paginas, setPaginas] = useState(1);
+  const [capaNome, setCapaNome] = useState("");
   const [capaVersao, setCapaVersao] = useState(0);
+  const capaRef = useRef<HTMLInputElement>(null);
 
   const [filtro, setFiltro] = useState("");
   const filtroDeb = useDebounce(filtro, 300);
   const [figs, setFigs] = useState<FigurinhaDto[]>([]);
+  const [sel, setSel] = useState<FigurinhaDto | null>(null);
   const [carregando, setCarregando] = useState(true);
   const [form, setForm] = useState<{ aberto: boolean; figurinha: FigurinhaDto | null }>({ aberto: false, figurinha: null });
   const [removendo, setRemovendo] = useState<FigurinhaDto | null>(null);
@@ -45,6 +48,7 @@ export function AutoriaPage() {
       setAlbum(a);
       setNome(a.nome);
       setPaginas(a.paginas);
+      setCapaNome(a.possuiCapa ? "capa atual" : "");
     } catch (e) {
       notificarErro(obterMensagemDeErro(e));
     }
@@ -53,7 +57,9 @@ export function AutoriaPage() {
   async function carregarFigs() {
     setCarregando(true);
     try {
-      setFigs(await figurinhasApi.listar(filtroDeb || undefined));
+      const dados = await figurinhasApi.listar(filtroDeb || undefined);
+      setFigs(dados);
+      setSel((s) => (s && dados.some((f) => f.id === s.id) ? s : null));
     } catch (e) {
       notificarErro(obterMensagemDeErro(e));
     } finally {
@@ -83,6 +89,7 @@ export function AutoriaPage() {
     if (!arquivo) return;
     try {
       await albumApi.enviarCapa(arquivo);
+      setCapaNome(arquivo.name);
       setCapaVersao((v) => v + 1);
       setAlbum((a) => (a ? { ...a, possuiCapa: true } : a));
       notificarSucesso("Capa atualizada.");
@@ -97,6 +104,7 @@ export function AutoriaPage() {
       await figurinhasApi.remover(removendo.id);
       notificarSucesso("Figurinha removida.");
       setRemovendo(null);
+      setSel(null);
       void carregarFigs();
     } catch (e) {
       notificarErro(obterMensagemDeErro(e));
@@ -137,112 +145,119 @@ export function AutoriaPage() {
   }
 
   return (
-    <div className="space-y-6">
-      <h1 className="text-2xl font-semibold">Autoria do álbum</h1>
-
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">Álbum</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="grid gap-4 sm:grid-cols-[1fr_140px]">
-            <form onSubmit={salvarAlbum} className="space-y-3">
-              <div className="grid grid-cols-2 gap-3">
-                <div className="space-y-1.5">
-                  <label className="text-sm font-medium" htmlFor="album-nome">Nome</label>
-                  <Input id="album-nome" value={nome} onChange={(e) => setNome(e.target.value)} maxLength={150} />
-                </div>
-                <div className="space-y-1.5">
-                  <label className="text-sm font-medium" htmlFor="album-pag">Páginas</label>
-                  <Input id="album-pag" type="number" min={1} value={paginas} onChange={(e) => setPaginas(Number(e.target.value))} />
-                </div>
-              </div>
-              <div className="flex items-center gap-2">
-                <Button type="submit" size="sm">Salvar álbum</Button>
-                <label className="inline-flex cursor-pointer items-center gap-2 rounded-md border border-border bg-card px-3 py-1.5 text-sm hover:bg-accent">
-                  <ImageIcon className="h-4 w-4" /> Trocar capa
-                  <input type="file" accept="image/png,image/jpeg,image/webp" className="hidden" onChange={(e) => enviarCapa(e.target.files?.[0])} />
-                </label>
-              </div>
-            </form>
-            <div>
-              {album?.possuiCapa ? (
-                <ImagemAuth key={capaVersao} src={albumApi.capaUrl} alt="Capa" className="aspect-square w-full rounded-lg border border-border" />
-              ) : (
-                <div className="flex aspect-square w-full items-center justify-center rounded-lg border border-dashed border-border text-xs text-muted-foreground">
-                  sem capa
-                </div>
-              )}
+    <div className="mx-auto max-w-4xl space-y-3">
+      {/* Janela FrmAutoria — dados do álbum */}
+      <div className="rounded-xl border border-border bg-card shadow-sm">
+        <div className="border-b border-border px-4 py-2.5">
+          <h1 className="text-base font-semibold">Autoria do álbum</h1>
+        </div>
+        <div className="grid gap-4 p-4 sm:grid-cols-[1fr_140px]">
+          <form onSubmit={salvarAlbum} className="space-y-3">
+            <div className="space-y-1.5">
+              <label className="text-sm font-medium" htmlFor="album-nome">Nome</label>
+              <Input id="album-nome" value={nome} onChange={(e) => setNome(e.target.value)} maxLength={150} />
             </div>
+            <div className="space-y-1.5">
+              <label className="text-sm font-medium" htmlFor="album-pag">Páginas</label>
+              <Input id="album-pag" type="number" min={1} value={paginas} onChange={(e) => setPaginas(Number(e.target.value))} />
+            </div>
+            <div className="space-y-1.5">
+              <label className="text-sm font-medium">Capa</label>
+              <div className="flex gap-1">
+                <Input value={capaNome} readOnly placeholder="nenhuma capa" />
+                <Button type="button" variant="outline" onClick={() => capaRef.current?.click()} title="Escolher capa">...</Button>
+                <input ref={capaRef} type="file" accept="image/png,image/jpeg,image/webp" className="hidden" onChange={(e) => enviarCapa(e.target.files?.[0])} />
+              </div>
+            </div>
+            <Button type="submit" size="sm">Salvar álbum</Button>
+          </form>
+          <div>
+            {album?.possuiCapa ? (
+              <ImagemAuth key={capaVersao} src={albumApi.capaUrl} alt="Capa" className="aspect-[3/4] w-full rounded-lg border border-border" />
+            ) : (
+              <div className="flex aspect-[3/4] w-full items-center justify-center rounded-lg border border-dashed border-border text-xs text-muted-foreground">
+                sem capa
+              </div>
+            )}
           </div>
-        </CardContent>
-      </Card>
-
-      <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="text-lg font-semibold">Figurinhas</h2>
-        <div className="flex flex-wrap gap-2">
-          <Button variant="outline" size="sm" onClick={() => exportar("texto")}>
-            <FileText className="h-4 w-4" /> Exportar texto
-          </Button>
-          <Button variant="outline" size="sm" onClick={() => exportar("binario")}>
-            <Download className="h-4 w-4" /> Exportar binário
-          </Button>
-          <label className="inline-flex cursor-pointer items-center gap-2 rounded-md border border-border bg-card px-3 text-sm hover:bg-accent">
-            <Upload className="h-4 w-4" /> Importar binário
-            <input ref={importRef} type="file" accept=".figb,application/octet-stream" className="hidden" onChange={(e) => importar(e.target.files?.[0])} />
-          </label>
-          <Button variant="outline" size="sm" onClick={() => setLimparAberto(true)} disabled={figs.length === 0}>
-            <Eraser className="h-4 w-4" /> Limpar
-          </Button>
-          <Button size="sm" onClick={() => setForm({ aberto: true, figurinha: null })}>
-            <Plus className="h-4 w-4" /> Nova figurinha
-          </Button>
         </div>
       </div>
 
-      <Input placeholder="Filtrar por nome ou tag..." value={filtro} onChange={(e) => setFiltro(e.target.value)} className="max-w-sm" />
+      {/* Grupo Figurinhas */}
+      <div className="rounded-xl border border-border bg-card shadow-sm">
+        <div className="border-b border-border px-4 py-2.5">
+          <h2 className="text-base font-semibold">Figurinhas</h2>
+        </div>
 
-      {carregando ? (
-        <Loading mensagem="Carregando figurinhas..." />
-      ) : figs.length === 0 ? (
-        <EmptyState titulo="Nenhuma figurinha" descricao="Adicione a primeira figurinha do álbum." />
-      ) : (
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead className="w-16">#</TableHead>
-              <TableHead className="w-16">Img</TableHead>
-              <TableHead>Nome</TableHead>
-              <TableHead className="w-16">Pág.</TableHead>
-              <TableHead>Tag</TableHead>
-              <TableHead className="text-right">Ações</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {figs.map((f) => (
-              <TableRow key={f.id}>
-                <TableCell className="font-medium">{f.numero}</TableCell>
-                <TableCell>
-                  <ImagemAuth src={figurinhasApi.imagemUrl(f.id)} alt={f.nome} className="h-9 w-9 rounded" carregar={f.possuiImagem} />
-                </TableCell>
-                <TableCell>{f.nome}</TableCell>
-                <TableCell>{f.pagina}</TableCell>
-                <TableCell className="max-w-[12rem] truncate font-mono text-xs text-muted-foreground">{f.tag}</TableCell>
-                <TableCell>
-                  <div className="flex justify-end gap-1">
-                    <Button variant="ghost" size="sm" onClick={() => setForm({ aberto: true, figurinha: f })} title="Editar">
-                      <Pencil className="h-4 w-4" />
-                    </Button>
-                    <Button variant="ghost" size="sm" onClick={() => setRemovendo(f)} title="Remover">
-                      <Trash2 className="h-4 w-4 text-destructive" />
-                    </Button>
-                  </div>
-                </TableCell>
+        {/* toolbar (PDF §8): + − E [filtro] F L */}
+        <div className="flex flex-wrap items-center gap-2 border-b border-border px-3 py-2">
+          <div className="flex items-center gap-1">
+            <Button size="icon" className="h-8 w-8" title="Inserir figurinha" onClick={() => setForm({ aberto: true, figurinha: null })}>
+              <Plus className="h-4 w-4" />
+            </Button>
+            <Button variant="outline" size="icon" className="h-8 w-8" title="Excluir selecionada" disabled={!sel} onClick={() => sel && setRemovendo(sel)}>
+              <Trash2 className="h-4 w-4 text-destructive" />
+            </Button>
+            <Button variant="outline" size="icon" className="h-8 w-8" title="Editar selecionada" disabled={!sel} onClick={() => sel && setForm({ aberto: true, figurinha: sel })}>
+              <Pencil className="h-4 w-4" />
+            </Button>
+            <Button variant="outline" size="icon" className="h-8 w-8" title="Limpar (remover todas)" disabled={figs.length === 0} onClick={() => setLimparAberto(true)}>
+              <Eraser className="h-4 w-4" />
+            </Button>
+          </div>
+          <div className="ml-auto flex items-center gap-1">
+            <Input placeholder="filtrar por nome ou tag..." value={filtro} onChange={(e) => setFiltro(e.target.value)} className="h-8 w-56" />
+            <Button variant="outline" size="icon" className="h-8 w-8" title="Filtrar">
+              <Search className="h-4 w-4" />
+            </Button>
+          </div>
+        </div>
+
+        {/* arquivo texto/binário (rubrica) */}
+        <div className="flex flex-wrap items-center gap-2 border-b border-border bg-muted/30 px-3 py-2 text-xs">
+          <span className="font-medium text-muted-foreground">Arquivo:</span>
+          <Button variant="outline" size="sm" className="h-7" onClick={() => exportar("texto")}>
+            <FileText className="h-3.5 w-3.5" /> Exportar texto
+          </Button>
+          <Button variant="outline" size="sm" className="h-7" onClick={() => exportar("binario")}>
+            <Download className="h-3.5 w-3.5" /> Exportar binário
+          </Button>
+          <label className="inline-flex h-7 cursor-pointer items-center gap-1.5 rounded-md border border-border bg-card px-2.5 hover:bg-accent">
+            <Upload className="h-3.5 w-3.5" /> Importar binário
+            <input ref={importRef} type="file" accept=".figb,application/octet-stream" className="hidden" onChange={(e) => importar(e.target.files?.[0])} />
+          </label>
+        </div>
+
+        {carregando ? (
+          <div className="p-4"><Loading mensagem="Carregando figurinhas..." /></div>
+        ) : figs.length === 0 ? (
+          <div className="p-4"><EmptyState titulo="Nenhuma figurinha" descricao="Use o botão + para adicionar a primeira." /></div>
+        ) : (
+          <Table>
+            <TableHeader>
+              <TableRow>
+                <TableHead className="w-20">#</TableHead>
+                <TableHead>Nome</TableHead>
+                <TableHead className="w-24">Página</TableHead>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      )}
+            </TableHeader>
+            <TableBody>
+              {figs.map((f) => (
+                <TableRow
+                  key={f.id}
+                  onClick={() => setSel(f)}
+                  onDoubleClick={() => setForm({ aberto: true, figurinha: f })}
+                  className={cn("cursor-pointer", sel?.id === f.id && "bg-accent/60")}
+                >
+                  <TableCell className="font-medium tabular-nums">{String(f.numero).padStart(3, "0")}</TableCell>
+                  <TableCell>{f.nome}</TableCell>
+                  <TableCell>{f.pagina}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        )}
+      </div>
 
       {form.aberto && (
         <FigurinhaFormDialog
