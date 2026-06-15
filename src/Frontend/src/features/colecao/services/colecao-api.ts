@@ -8,4 +8,5 @@ export const colecaoApi = {
     http.get<FigurinhaDto>(`/colecao/consultar/${encodeURIComponent(tag)}`).then((r) => r.data),
   adquirir: (tag: string) => http.post<FigurinhaDto>("/colecao/adquirir", { tag }).then((r) => r.data),
   imagemUrl: (id: number) => `/figurinhas/${id}/imagem`,
+  capaUrl: "/album/capa",
 };
