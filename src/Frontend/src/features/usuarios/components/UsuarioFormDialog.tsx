@@ -27,6 +27,16 @@ export function UsuarioFormDialog({ usuario, onFechar, onSalvo }: Props) {
   async function salvar(e: FormEvent) {
     e.preventDefault();
     setErro(null);
+
+    if (login.trim().length < 3) {
+      setErro("O login deve ter ao menos 3 caracteres.");
+      return;
+    }
+    if (!editando && !/^(?=.*[A-Za-z])(?=.*\d).{8,128}$/.test(senha)) {
+      setErro("A senha deve ter de 8 a 128 caracteres, com pelo menos uma letra e um número.");
+      return;
+    }
+
     setSalvando(true);
     try {
       if (editando) await usuariosApi.atualizar(usuario.id, login, perfil);
@@ -56,9 +66,13 @@ export function UsuarioFormDialog({ usuario, onFechar, onSalvo }: Props) {
               type="password"
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
+              placeholder="mín. 8 caracteres, com letra e número"
               required
               minLength={8}
             />
+            <p className="mt-1 text-xs text-muted-foreground">
+              Mínimo 8 caracteres, com pelo menos uma letra e um número (ex.: <span className="font-mono">abc12345</span>).
+            </p>
           </FormField>
         )}
 

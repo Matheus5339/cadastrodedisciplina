@@ -35,8 +35,8 @@ export function ContaPage() {
       setErro("O login deve ter ao menos 3 caracteres.");
       return;
     }
-    if (senha && senha.length < 8) {
-      setErro("A nova senha deve ter ao menos 8 caracteres.");
+    if (senha && !/^(?=.*[A-Za-z])(?=.*\d).{8,128}$/.test(senha)) {
+      setErro("A nova senha deve ter de 8 a 128 caracteres, com pelo menos uma letra e um número.");
       return;
     }
 
@@ -91,6 +91,9 @@ export function ContaPage() {
               placeholder="nova senha (deixe em branco para manter)"
               minLength={8}
             />
+            <p className="mt-1 text-xs text-muted-foreground">
+              Para alterar: mínimo 8 caracteres, com pelo menos uma letra e um número.
+            </p>
           </FormField>
 
           {/* Perfil DESABILITADO (PDF §7): o usuário não altera o próprio perfil */}
