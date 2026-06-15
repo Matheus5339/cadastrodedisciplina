@@ -14,7 +14,7 @@ import type { AlbumColecionadorDto } from "@/types/api";
 export function AlbumPage() {
   const [dados, setDados] = useState<AlbumColecionadorDto | null>(null);
   const [erro, setErro] = useState<string | null>(null);
-  const [pagina, setPagina] = useState(1);
+  const [pos, setPos] = useState(0); // 0 = capa; 1..N = páginas de figurinhas
   const [detalhe, setDetalhe] = useState<number | null>(null);
 
   async function carregar() {
@@ -31,8 +31,8 @@ export function AlbumPage() {
   }, []);
 
   const figsDaPagina = useMemo(
-    () => (dados?.figurinhas ?? []).filter((f) => f.pagina === pagina).sort((a, b) => a.numero - b.numero),
-    [dados, pagina],
+    () => (dados?.figurinhas ?? []).filter((f) => f.pagina === pos).sort((a, b) => a.numero - b.numero),
+    [dados, pos],
   );
 
   if (erro) return <ErrorState mensagem={erro} onTentarNovamente={carregar} />;
@@ -54,20 +54,32 @@ export function AlbumPage() {
         </Link>
       </div>
 
-      {/* navegação de páginas */}
+      {/* navegação: Capa + páginas de figurinhas (PDF §10/§11) */}
       <div className="flex items-center justify-center gap-3">
-        <Button variant="outline" size="icon" disabled={pagina <= 1} onClick={() => setPagina((p) => p - 1)}>
+        <Button variant="outline" size="icon" disabled={pos <= 0} onClick={() => setPos((p) => p - 1)}>
           <ChevronLeft className="h-4 w-4" />
         </Button>
         <span className="text-sm font-medium">
-          Página {pagina} de {dados.album.paginas}
+          {pos === 0 ? "Capa" : `Página ${pos} de ${dados.album.paginas}`}
         </span>
-        <Button variant="outline" size="icon" disabled={pagina >= dados.album.paginas} onClick={() => setPagina((p) => p + 1)}>
+        <Button variant="outline" size="icon" disabled={pos >= dados.album.paginas} onClick={() => setPos((p) => p + 1)}>
           <ChevronRight className="h-4 w-4" />
         </Button>
       </div>
 
-      {figsDaPagina.length === 0 ? (
+      {pos === 0 ? (
+        dados.album.possuiCapa ? (
+          <ImagemAuth
+            src={colecaoApi.capaUrl}
+            alt={`Capa de ${dados.album.nome}`}
+            className="mx-auto aspect-square w-full max-w-md rounded-xl border border-border"
+          />
+        ) : (
+          <div className="mx-auto flex aspect-square w-full max-w-md items-center justify-center rounded-xl border border-dashed border-border text-sm text-muted-foreground">
+            Este álbum ainda não tem capa.
+          </div>
+        )
+      ) : figsDaPagina.length === 0 ? (
         <p className="py-16 text-center text-sm text-muted-foreground">Nenhuma figurinha nesta página.</p>
       ) : (
         <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-4">
