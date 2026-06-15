@@ -14,7 +14,9 @@ public sealed record LoginRequest(
 
 public sealed record CriarUsuarioRequest(
     [Required, MinLength(3), MaxLength(50)] string Login,
-    [Required, MinLength(8), MaxLength(128)] string Senha,
+    // a política de senha (tamanho + letra/número) é validada no SenhaValidator,
+    // com mensagem em português; aqui só exigimos que seja informada.
+    [Required] string Senha,
     [Required] Perfil Perfil);
 
 public sealed record AtualizarUsuarioRequest(
@@ -25,7 +27,8 @@ public sealed record AtualizarContaRequest(
     [Required, MinLength(3), MaxLength(50)] string Login);
 
 public sealed record TrocarSenhaRequest(
-    [Required, MinLength(8), MaxLength(128)] string NovaSenha);
+    // política validada no SenhaValidator (mensagem em português)
+    [Required] string NovaSenha);
 
 public sealed record AtualizarAlbumRequest(
     [Required, MinLength(1), MaxLength(150)] string Nome,
