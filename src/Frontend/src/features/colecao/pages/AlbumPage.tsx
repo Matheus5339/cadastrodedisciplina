@@ -52,6 +52,18 @@ export function AlbumPage() {
   const nomePais = itensPais[0]?.nome ?? "";
   const adquiridas = dados.figurinhas.filter((f) => f.adquirida).length;
 
+  // páginas do álbum (cada país é uma página): [{ pagina, inicio (índice global) }]
+  const paginas: { pagina: number; inicio: number }[] = [];
+  {
+    const vistos = new Set<number>();
+    itens.forEach((f, gi) => {
+      if (!vistos.has(f.pagina)) {
+        vistos.add(f.pagina);
+        paginas.push({ pagina: f.pagina, inicio: gi });
+      }
+    });
+  }
+
   return (
     <div className="mx-auto max-w-3xl space-y-3">
       {/* tsbMenu (PDF §10): 1 Trocar senha · 2 Adquirir figurinha · 3 Sobre */}
@@ -79,16 +91,16 @@ export function AlbumPage() {
           </span>
         </div>
 
-        {/* botões de página (ACIMA da figurinha) — numeração por país */}
+        {/* botões de PÁGINA do álbum (ACIMA) — cada país é uma página: 1, 2, 3, ... */}
         <div className="flex flex-wrap items-center justify-center gap-1 border-b border-border px-4 py-2">
-          {itensPais.map((_, n) => (
+          {paginas.map(({ pagina, inicio }, n) => (
             <Button
-              key={n}
-              variant={n + 1 === posLocal ? "default" : "outline"}
+              key={pagina}
+              variant={pagina === atual.pagina ? "default" : "outline"}
               size="icon"
               className="h-8 w-8 tabular-nums"
-              onClick={() => setI(inicioPais + n)}
-              title={n === 0 ? "Capa do país" : `Figurinha ${n + 1}`}
+              onClick={() => setI(inicio)}
+              title={`Página ${n + 1}`}
             >
               {n + 1}
             </Button>
