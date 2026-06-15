@@ -75,7 +75,7 @@ export function UsuarioFormDialog({ usuario, onFechar, onSalvo }: Props) {
             Cancelar
           </Button>
           <Button type="submit" disabled={salvando}>
-            {salvando ? "Salvando..." : "Salvar"}
+            {salvando ? "Salvando..." : "Ok"}
           </Button>
         </div>
       </form>

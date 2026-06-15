@@ -1,10 +1,8 @@
 import { useState, type FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
-import { Check, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Alert } from "@/components/ui/alert";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { FormField } from "@/components/forms/FormField";
 import { ImagemAuth } from "@/components/ui/imagem-auth";
 import { colecaoApi } from "@/features/colecao/services/colecao-api";
@@ -50,45 +48,65 @@ export function NovaFigurinhaPage() {
   }
 
   return (
-    <div className="mx-auto max-w-xl space-y-6">
-      <div>
-        <h1 className="text-2xl font-semibold">Adquirir figurinha</h1>
-        <p className="text-sm text-muted-foreground">Informe a tag da figurinha para adicioná-la ao seu álbum.</p>
-      </div>
+    <div className="mx-auto max-w-2xl">
+      <div className="rounded-xl border border-border bg-card shadow-sm">
+        <div className="border-b border-border px-4 py-2.5">
+          <h1 className="text-base font-semibold">Adquirir figurinha</h1>
+        </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-base">Tag</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4">
+        <div className="space-y-4 p-4">
+          {/* Tag + botão "..." (PDF §12) */}
           <form onSubmit={consultar} className="flex items-end gap-2">
             <div className="flex-1">
-              <FormField id="tag" label="Tag (hash MD5)">
-                <Input id="tag" value={tag} onChange={(e) => setTag(e.target.value)} placeholder="ex.: ff4adf...22345" className="font-mono" required />
+              <FormField id="tag" label="Tag">
+                <Input id="tag" value={tag} onChange={(e) => setTag(e.target.value)} placeholder="informe a tag da figurinha" className="font-mono" required />
               </FormField>
             </div>
-            <Button type="submit" variant="outline" disabled={buscando || !tag.trim()}>
-              <Search className="h-4 w-4" /> {buscando ? "..." : "Buscar"}
+            <Button type="submit" variant="outline" className="font-mono" disabled={buscando || !tag.trim()} title="Buscar pela tag">
+              {buscando ? "..." : "..."}
             </Button>
           </form>
 
           {erro && <Alert variant="destructive">{erro}</Alert>}
 
-          {fig && (
-            <div className="grid gap-4 rounded-lg border border-border p-4 sm:grid-cols-[140px_1fr]">
-              <ImagemAuth src={colecaoApi.imagemUrl(fig.id)} alt={fig.nome} className="aspect-square w-full rounded-lg border border-border" carregar={fig.possuiImagem} />
-              <div className="space-y-2">
-                <p className="text-lg font-semibold">#{fig.numero} {fig.nome}</p>
-                <p className="text-sm text-muted-foreground">Página {fig.pagina}</p>
-                {fig.descricao && <p className="text-sm">{fig.descricao}</p>}
-                <Button onClick={inserir} disabled={inserindo}>
-                  <Check className="h-4 w-4" /> {inserindo ? "Inserindo..." : "Inserir no álbum"}
-                </Button>
+          {/* dados da figurinha + preview */}
+          <div className="grid gap-4 sm:grid-cols-[1fr_180px]">
+            <div className="space-y-3">
+              <FormField id="nome" label="Nome">
+                <Input id="nome" value={fig?.nome ?? ""} readOnly placeholder="—" />
+              </FormField>
+              <div className="grid grid-cols-2 gap-3">
+                <FormField id="pagina" label="Página">
+                  <Input id="pagina" value={fig?.pagina ?? ""} readOnly placeholder="—" />
+                </FormField>
+                <FormField id="numero" label="Número">
+                  <Input id="numero" value={fig?.numero ?? ""} readOnly placeholder="—" />
+                </FormField>
               </div>
             </div>
-          )}
-        </CardContent>
-      </Card>
+            <div>
+              <p className="mb-1.5 text-xs font-medium text-muted-foreground">Preview</p>
+              {fig?.possuiImagem ? (
+                <ImagemAuth src={colecaoApi.imagemUrl(fig.id)} alt={fig.nome} className="aspect-square w-full rounded-lg border border-border" />
+              ) : (
+                <div className="flex aspect-square w-full items-center justify-center rounded-lg border border-dashed border-border text-xs text-muted-foreground">
+                  Preview
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* botões Inserir / Voltar (PDF §12) */}
+          <div className="flex justify-end gap-2 border-t border-border pt-4">
+            <Button type="button" variant="outline" onClick={() => navigate(paths.album)}>
+              Voltar
+            </Button>
+            <Button onClick={inserir} disabled={!fig || inserindo}>
+              {inserindo ? "Inserindo..." : "Inserir"}
+            </Button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }
